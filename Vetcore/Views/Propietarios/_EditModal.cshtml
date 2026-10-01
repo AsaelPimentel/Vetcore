@@ -1,0 +1,86 @@
+﻿@model Vetcore.Models.Propietarios
+
+<div class="modal fade" id="modalEditPropietario" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-lg">
+        <div class="modal-content card-modern" style="border: none; padding: 0; overflow: hidden; border-radius: 16px;">
+<<<<<<< HEAD
+=======
+
+>>>>>>> 7af84dbc4060a8bbaa8bab50c489e93f45a0ceba
+            <!-- Cabecera del Modal -->
+            <div class="modal-header border-0 px-4 pt-4 pb-3" style="background-color: #f8fafc;">
+                <div>
+                    <h3 class="headline mb-1" style="color: #0f172a; font-size: 1.25rem;">
+                        <i class="fa-solid fa-user-pen text-primary me-2"></i> Editar Cliente
+                    </h3>
+                    <p class="body-text mb-0 small text-muted">Modifique los datos generales del propietario y su información de contacto.</p>
+                </div>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
+            </div>
+
+            <!-- Cuerpo del Modal -->
+            <div class="modal-body px-4 pb-4 pt-3">
+                <form id="frmEditPropietario">
+                    @Html.AntiForgeryToken()
+                    <!-- Campos ocultos necesarios para EF -->
+                    @Html.HiddenFor(model => model.IdPropietario)
+                    @Html.HiddenFor(model => model.FechaRegistro)
+
+                    <div class="p-3 rounded-3 mb-4" style="background-color: #f1f5f9; border: 1px solid #e2e8f0;">
+                        <div class="row g-3">
+                            <div class="col-md-6">
+                                <label class="label mb-1 fw-semibold text-secondary">
+                                    <i class="fa-solid fa-user me-1"></i> Nombre(s)
+                                </label>
+                                @Html.EditorFor(model => model.Nombre, new { htmlAttributes = new { @class = "form-control", placeholder = "Ej. Roberto" } })
+                                @Html.ValidationMessageFor(model => model.Nombre, "", new { @class = "text-danger small mt-1" })
+                            </div>
+
+                            <div class="col-md-6">
+                                <label class="label mb-1 fw-semibold text-secondary">
+                                    <i class="fa-solid fa-user-tag me-1"></i> Apellidos
+                                </label>
+                                @Html.EditorFor(model => model.Apellidos, new { htmlAttributes = new { @class = "form-control", placeholder = "Ej. Gómez" } })
+                                @Html.ValidationMessageFor(model => model.Apellidos, "", new { @class = "text-danger small mt-1" })
+                            </div>
+
+                            <div class="col-md-6">
+                                <label class="label mb-1 fw-semibold text-secondary">
+                                    <i class="fa-solid fa-phone me-1"></i> Teléfono de Contacto
+                                </label>
+                                @Html.EditorFor(model => model.Telefono, new { htmlAttributes = new { @class = "form-control", placeholder = "Ej. 6861234567" } })
+                                @Html.ValidationMessageFor(model => model.Telefono, "", new { @class = "text-danger small mt-1" })
+                            </div>
+
+                            <div class="col-md-6">
+                                <label class="label mb-1 fw-semibold text-secondary">
+                                    <i class="fa-solid fa-envelope me-1"></i> Correo Electrónico
+                                </label>
+                                @Html.EditorFor(model => model.Email, new { htmlAttributes = new { @class = "form-control", placeholder = "correo@ejemplo.com" } })
+                                @Html.ValidationMessageFor(model => model.Email, "", new { @class = "text-danger small mt-1" })
+                            </div>
+
+                            <div class="col-12">
+                                <label class="label mb-1 fw-semibold text-secondary">
+                                    <i class="fa-solid fa-location-dot me-1"></i> Dirección Domiciliaria
+                                </label>
+                                @Html.EditorFor(model => model.Direccion, new { htmlAttributes = new { @class = "form-control", placeholder = "Calle, Número, Colonia, Ciudad" } })
+                                @Html.ValidationMessageFor(model => model.Direccion, "", new { @class = "text-danger small mt-1" })
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Botones de Acción -->
+                    <div class="d-flex justify-content-end gap-3 pt-3 border-top">
+                        <button type="button" class="btn btn-light border px-4" data-bs-dismiss="modal">Cancelar</button>
+                        <button type="button" id="btnActualizarPropietario" class="btn btn-primary px-4 shadow-sm d-flex align-items-center gap-2">
+                            <i class="fa-solid fa-save"></i> <span>Guardar Cambios</span>
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+@Scripts.Render("~/bundles/jqueryval")

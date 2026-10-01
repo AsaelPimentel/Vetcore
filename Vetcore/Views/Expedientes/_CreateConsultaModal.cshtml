@@ -1,0 +1,82 @@
+﻿@model Vetcore.Models.Consultas
+
+<div class="modal fade" id="modalConsulta" tabindex="-1">
+    <div class="modal-dialog modal-dialog-centered modal-lg">
+        <div class="modal-content card-modern" style="border: none; padding: 0; overflow: hidden;">
+
+            <!-- Cabecera con fondo sutil -->
+            <div class="modal-header border-0 px-4 pt-4 pb-3" style="background-color: #f8fafc;">
+                <div>
+                    <h3 class="headline mb-1" style="color: #0f172a;"><i class="fa-solid fa-notes-medical text-primary me-2"></i> Registrar Consulta</h3>
+                    <p class="body-text mb-0 small text-muted">Complete la información clínica del paciente.</p>
+                </div>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
+            </div>
+
+            <div class="modal-body px-4 pb-4 pt-3">
+                <form id="frmCreateConsulta">
+                    @Html.AntiForgeryToken()
+                    @Html.HiddenFor(m => m.IdExpediente)
+                    @Html.HiddenFor(m => m.Fecha)
+                    @Html.HiddenFor(m => m.IdCita)
+
+                    <!-- SECCIÓN 1: Signos Vitales y Médico -->
+                    <div class="p-3 mb-4 rounded-3" style="background-color: #f1f5f9; border: 1px solid #e2e8f0;">
+                        <div class="row g-3">
+                            <div class="col-md-6">
+                                <label class="label mb-1" style="color: #475569;"><i class="fa-solid fa-user-doctor me-1"></i> Médico Tratante</label>
+                                @Html.DropDownList("IdEmpleado", null, "Seleccione el médico...", new { @class = "form-control border-0 shadow-sm", style = "max-width: 100% !important;" })
+                            </div>
+                            <div class="col-md-3">
+                                <label class="label mb-1" style="color: #475569;"><i class="fa-solid fa-weight-scale me-1"></i> Peso (Kg)</label>
+                                @Html.EditorFor(m => m.PesoKg, new { htmlAttributes = new { @class = "form-control border-0 shadow-sm", type = "number", step = "0.01", style = "max-width: 100% !important;", placeholder = "Ej. 12.50" } })
+                            </div>
+                            <div class="col-md-3">
+                                <label class="label mb-1" style="color: #475569;"><i class="fa-solid fa-temperature-half me-1"></i> Temp. (°C)</label>
+                                @Html.EditorFor(m => m.Temperatura, new { htmlAttributes = new { @class = "form-control border-0 shadow-sm", type = "number", step = "0.1", style = "max-width: 100% !important;", placeholder = "Ej. 38.5" } })
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- SECCIÓN 2: Detalles Clínicos -->
+                    <div class="row g-4">
+                        <div class="col-12">
+                            <label class="label mb-1 fw-bold" style="color: #334155;"><i class="fa-solid fa-clipboard-list text-secondary me-1"></i> Síntomas y Observaciones</label>
+                            @Html.TextAreaFor(m => m.Sintomas, new { @class = "form-control bg-light", style = "border-color: #cbd5e1; max-width: 100% !important;", rows = "2", placeholder = "Describa el estado general y síntomas con los que llega el paciente..." })
+                        </div>
+
+                        <div class="col-12">
+                            <label class="label mb-1 fw-bold" style="color: #d97706;"><i class="fa-solid fa-microscope me-1"></i> Diagnóstico Médico</label>
+                            @Html.TextAreaFor(m => m.Diagnostico, new { @class = "form-control", style = "border-color: #fde68a; background-color: #fffbeb; max-width: 100% !important;", rows = "2", placeholder = "Escriba el diagnóstico presuntivo o definitivo..." })
+                        </div>
+
+                        <div class="col-12">
+                            <label class="label mb-1 fw-bold" style="color: #059669;"><i class="fa-solid fa-prescription-bottle-medical me-1"></i> Receta / Tratamiento</label>
+                            @Html.TextAreaFor(m => m.RecetaMedica, new { @class = "form-control", style = "border-color: #a7f3d0; background-color: #ecfdf5; max-width: 100% !important;", rows = "3", placeholder = "Indique medicamentos, dosis, frecuencia y recomendaciones para casa..." })
+                        </div>
+
+                        <div class="col-12">
+                            <label class="label mb-1 fw-bold" style="color: #6366f1;"><i class="fa-solid fa-paperclip me-1"></i> Notas Internas Adicionales</label>
+                            @Html.TextAreaFor(m => m.NotasAdicionales, new { @class = "form-control", style = "border-color: #c7d2fe; background-color: #eef2ff; max-width: 100% !important;", rows = "2", placeholder = "Anotaciones privadas (Ej. Solicitar estudios, recordatorios, actitud del dueño, etc.)." })
+                        </div>
+                        <!-- NUEVO: Subida de Archivos -->
+                        <div class="col-12">
+                            <label class="label mb-1 fw-bold" style="color: #0284c7;"><i class="fa-solid fa-file-medical me-1"></i> Estudio de Laboratorio Adunto (Opcional)</label>
+                            <input type="file" id="EstudioFile" name="EstudioFile" class="form-control bg-light border-0 shadow-sm" accept=".pdf, .jpg, .jpeg, .png" />
+                            <small class="text-muted">Formatos soportados: PDF, JPG, PNG.</small>
+                        </div>
+                    </div>
+
+                    <div class="col-12 mt-4 d-flex justify-content-end gap-3 pt-3 border-top">
+                        <button type="button" class="btn btn-light border" data-bs-dismiss="modal">Cancelar</button>
+                        <button type="button" id="btnGuardarConsulta" class="btn btn-primary px-4">
+                            <i class="fa-solid fa-save me-1"></i> Guardar Consulta
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+@Scripts.Render("~/bundles/jqueryval")

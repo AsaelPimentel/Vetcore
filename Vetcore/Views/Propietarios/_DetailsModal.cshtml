@@ -1,0 +1,117 @@
+﻿@model Vetcore.Models.Propietarios
+
+<div class="modal fade" id="modalDetailsPropietario" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-md">
+        <div class="modal-content card-modern" style="border: none; padding: 0; overflow: hidden; border-radius: 16px;">
+<<<<<<< HEAD
+=======
+
+>>>>>>> 7af84dbc4060a8bbaa8bab50c489e93f45a0ceba
+            <!-- Cabecera con Avatar e Información Principal -->
+            <div class="modal-header border-0 px-4 pt-4 pb-3" style="background-color: #f8fafc;">
+                <div class="d-flex align-items-center gap-3 w-100">
+                    <div style="width: 54px; height: 54px; min-width: 54px; background: linear-gradient(135deg, #0284c7, #0ea5e9); color: white; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 1.25rem; font-weight: 700; box-shadow: 0 4px 6px -1px rgba(2, 132, 199, 0.25);">
+                        @(Model.Nombre.Substring(0, 1))@(!string.IsNullOrEmpty(Model.Apellidos) ? Model.Apellidos.Substring(0, 1) : "")
+                    </div>
+                    <div class="flex-grow-1">
+                        <div class="d-flex align-items-center gap-2">
+                            <h4 class="headline mb-0" style="color: #0f172a; font-size: 1.2rem;">@Model.Nombre @Model.Apellidos</h4>
+                            <span class="badge" style="background-color: #e0f2fe; color: #0369a1; font-size: 0.75rem;">Cliente #@Model.IdPropietario</span>
+                        </div>
+                        <p class="body-text text-muted mb-0 small">
+                            <i class="fa-regular fa-calendar-check me-1"></i> Registrado el @(Model.FechaRegistro.HasValue ? Model.FechaRegistro.Value.ToString("dd 'de' MMMM, yyyy") : "N/D")
+                        </p>
+                    </div>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
+                </div>
+            </div>
+
+            <div class="modal-body px-4 py-3">
+                <!-- Canales de Contacto -->
+                <h6 class="text-uppercase small fw-bold text-muted mb-3" style="letter-spacing: 0.5px;">
+                    <i class="fa-solid fa-address-book me-1 text-primary"></i> Información de Contacto
+                </h6>
+<<<<<<< HEAD
+=======
+
+>>>>>>> 7af84dbc4060a8bbaa8bab50c489e93f45a0ceba
+                <div class="row g-2 mb-3">
+                    <!-- Teléfono -->
+                    <div class="col-sm-6">
+                        <div class="p-3 rounded-3 h-100" style="background-color: #f8fafc; border: 1px solid #e2e8f0;">
+                            <span class="text-muted small d-block mb-1"><i class="fa-solid fa-phone text-secondary me-1"></i> Teléfono</span>
+                            <a href="tel:@Model.Telefono" class="text-dark fw-semibold text-decoration-none" style="font-size: 0.95rem;">
+                                @(string.IsNullOrEmpty(Model.Telefono) ? "Sin teléfono" : Model.Telefono)
+                            </a>
+                        </div>
+                    </div>
+<<<<<<< HEAD
+=======
+
+>>>>>>> 7af84dbc4060a8bbaa8bab50c489e93f45a0ceba
+                    <!-- Correo -->
+                    <div class="col-sm-6">
+                        <div class="p-3 rounded-3 h-100" style="background-color: #f8fafc; border: 1px solid #e2e8f0;">
+                            <span class="text-muted small d-block mb-1"><i class="fa-solid fa-envelope text-secondary me-1"></i> Correo Electrónico</span>
+                            <div class="text-dark fw-semibold text-truncate" style="font-size: 0.95rem;" title="@Model.Email">
+                                @(string.IsNullOrEmpty(Model.Email) ? "Sin registrar" : Model.Email)
+                            </div>
+                        </div>
+                    </div>
+<<<<<<< HEAD
+=======
+
+>>>>>>> 7af84dbc4060a8bbaa8bab50c489e93f45a0ceba
+                    <!-- Dirección -->
+                    <div class="col-12">
+                        <div class="p-3 rounded-3" style="background-color: #f8fafc; border: 1px solid #e2e8f0;">
+                            <span class="text-muted small d-block mb-1"><i class="fa-solid fa-location-dot text-secondary me-1"></i> Dirección Domiciliaria</span>
+                            <div class="text-dark fw-medium" style="font-size: 0.9rem;">
+                                @(string.IsNullOrEmpty(Model.Direccion) ? "Dirección no especificada" : Model.Direccion)
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Mascotas Vinculadas -->
+                <h6 class="text-uppercase small fw-bold text-muted mb-2 pt-2" style="letter-spacing: 0.5px;">
+                    <i class="fa-solid fa-paw me-1 text-primary"></i> Pacientes / Mascotas
+                </h6>
+<<<<<<< HEAD
+=======
+
+>>>>>>> 7af84dbc4060a8bbaa8bab50c489e93f45a0ceba
+                <div class="p-3 rounded-3 mb-2" style="background-color: #ffffff; border: 1px dashed #cbd5e1;">
+                    @if (Model.Mascotas != null && Model.Mascotas.Any())
+                    {
+                        <div class="d-flex flex-wrap gap-2">
+                            @foreach (var mascota in Model.Mascotas)
+                            {
+                                <span class="badge d-inline-flex align-items-center gap-1 px-3 py-2" style="background-color: #f1f5f9; color: #334155; border: 1px solid #e2e8f0; font-size: 0.85rem; font-weight: 500;">
+                                    <i class="fa-solid fa-paw text-primary"></i> @mascota.Nombre
+                                </span>
+                            }
+                        </div>
+                    }
+                    else
+                    {
+                        <div class="text-center py-2 text-muted small">
+                            <i class="fa-solid fa-circle-info me-1"></i> Este cliente no tiene mascotas vinculadas actualmente.
+                        </div>
+                    }
+                </div>
+            </div>
+
+            <!-- Footer con Botones de Acción -->
+            <div class="modal-footer border-top px-4 py-3 bg-light d-flex justify-content-end">
+                <button type="button" class="btn btn-light border px-3" data-bs-dismiss="modal">
+                    Cerrar
+                </button>
+            </div>
+<<<<<<< HEAD
+=======
+
+>>>>>>> 7af84dbc4060a8bbaa8bab50c489e93f45a0ceba
+        </div>
+    </div>
+</div>

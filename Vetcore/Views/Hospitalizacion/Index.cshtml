@@ -1,0 +1,141 @@
+<<<<<<< HEAD
+﻿@using Vetcore.Helpers <!-- Importamos la clase de Roles y Extensiones seguras -->
+@model IEnumerable<Vetcore.Models.Jaulas>
+=======
+﻿@using Vetcore.Helpers <!-- Importamos la clase de Roles -->
+@model IEnumerable<Vetcore.Models.Jaulas>
+
+>>>>>>> 7af84dbc4060a8bbaa8bab50c489e93f45a0ceba
+@{
+    ViewBag.Title = "Tablero de Hospitalización";
+    var activas = ViewBag.HospitalizacionesActivas as List<Vetcore.Models.Hospitalizaciones> ?? new List<Vetcore.Models.Hospitalizaciones>();
+}
+
+<div class="d-flex flex-column flex-md-row justify-content-between align-items-md-center gap-3 mb-4 pb-3 border-bottom">
+    <div class="d-flex align-items-center gap-3">
+        <div style="width: 50px; height: 50px; background-color: #e0f2fe; color: #0284c7; border-radius: 12px; display: flex; align-items: center; justify-content: center; font-size: 1.5rem;">
+            <i class="fa-solid fa-bed-pulse"></i>
+        </div>
+        <div>
+            <h3 class="headline mb-1" style="color: #1e293b; font-weight: 700;">Área de Hospitalización</h3>
+            <p class="body-text text-muted mb-0 small">Mapa de jaulas y control de pacientes internados.</p>
+        </div>
+    </div>
+
+<<<<<<< HEAD
+    <!-- PROTECCIÓN DE ROL MIGRADA A CLAIMS: Solo Médico y Admin pueden ingresar pacientes nuevos -->
+    @if (Context.IsMedicoOrAdmin())
+=======
+    <!-- PROTECCIÓN DE ROL: Solo Médico y Admin pueden ingresar pacientes nuevos -->
+    @if (Session["RolEmpleado"] != null && (Session["RolEmpleado"].ToString() == RolesSistema.Admin || Session["RolEmpleado"].ToString() == RolesSistema.Medico))
+>>>>>>> 7af84dbc4060a8bbaa8bab50c489e93f45a0ceba
+    {
+        <div>
+            <button onclick="abrirModalIngreso()" class="btn btn-primary px-4 shadow-sm d-flex align-items-center gap-2">
+                <i class="fa-solid fa-plus"></i> <span>Ingresar Paciente</span>
+            </button>
+        </div>
+    }
+</div>
+
+<!-- MAPA DE JAULAS (GRID VISUAL) -->
+<div class="row g-4">
+    @foreach (var jaula in Model)
+    {
+        var hospActual = activas.FirstOrDefault(h => h.IdJaula == jaula.IdJaula);
+        bool ocupada = hospActual != null;
+
+        <div class="col-md-4 col-xl-3">
+            <div class="card h-100 shadow-sm border-0" style="border-radius: 16px; border-top: 5px solid @(ocupada ? "#ef4444" : "#10b981") !important;">
+                <div class="card-body d-flex flex-column justify-content-between p-4">
+                    <div>
+                        <div class="d-flex justify-content-between align-items-center mb-3">
+                            <span class="fw-bold fs-5 text-dark"><i class="fa-solid fa-bed me-2 text-muted"></i> Jaula @jaula.Codigo</span>
+                            <span class="badge @(ocupada ? "bg-danger-subtle text-danger" : "bg-success-subtle text-success") px-3 py-1.5 rounded-pill">
+                                @(ocupada ? "Ocupada" : "Libre")
+                            </span>
+                        </div>
+                        <p class="text-muted small mb-2">Tamaño: <strong>@jaula.Tamano</strong></p>
+
+                        @if (ocupada)
+                        {
+                            <div class="p-3 rounded-3 mb-3" style="background-color: #f8fafc; border: 1px solid #e2e8f0;">
+                                <!-- SEGURIDAD NULL (?.): Evita la pantalla amarilla de la muerte si falta el dueño o mascota -->
+                                <h6 class="fw-bold text-dark mb-1">🐾 @(hospActual?.Expedientes?.Mascotas?.Nombre ?? "Paciente Desconocido")</h6>
+                                <p class="small text-muted mb-1">Dueño: @(hospActual?.Expedientes?.Mascotas?.Propietarios?.Nombre) @(hospActual?.Expedientes?.Mascotas?.Propietarios?.Apellidos)</p>
+                                <p class="small text-muted mb-0"><i class="fa-regular fa-clock me-1"></i> Ingreso: @(hospActual.FechaIngreso.HasValue ? hospActual.FechaIngreso.Value.ToString("dd/MM HH:mm") : "N/D")</p>
+                            </div>
+                        }
+                        else
+                        {
+                            <div class="text-center py-4 text-muted small opacity-50">
+                                <i class="fa-solid fa-circle-check fs-2 mb-1 d-block"></i>
+                                Jaula disponible para internamiento
+                            </div>
+                        }
+                    </div>
+
+                    <div>
+                        @if (ocupada)
+                        {
+                            <!-- Todos los roles pueden entrar a VER cómo va el paciente (lectura), pero los botones de curación/alta dentro de esa vista estarán bloqueados para Recepción -->
+                            <a href="@Url.Action("DetallesEstancia", "Hospitalizacion", new { id = hospActual.IdHospitalizacion })" class="btn btn-outline-primary w-100 fw-bold rounded-pill">
+                                <i class="fa-solid fa-notes-medical me-1"></i> Ver Expediente y Notas
+                            </a>
+                        }
+                        else
+                        {
+<<<<<<< HEAD
+                            <!-- PROTECCIÓN DE ROL MIGRADA A CLAIMS: Recepción no puede asignar jaulas -->
+                            if (Context.IsMedicoOrAdmin())
+=======
+                            <!-- PROTECCIÓN DE ROL: Recepción no puede asignar jaulas -->
+                            if (Session["RolEmpleado"] != null && (Session["RolEmpleado"].ToString() == RolesSistema.Admin || Session["RolEmpleado"].ToString() == RolesSistema.Medico))
+>>>>>>> 7af84dbc4060a8bbaa8bab50c489e93f45a0ceba
+                            {
+                                <button onclick="abrirModalIngreso()" class="btn btn-light border w-100 fw-semibold text-secondary rounded-pill">
+                                    Asignar Paciente
+                                </button>
+                            }
+                            else
+                            {
+                                <div class="text-center text-muted small fw-medium mt-2">
+                                    <i class="fa-solid fa-lock text-secondary me-1"></i> Solo personal médico
+                                </div>
+                            }
+                        }
+                    </div>
+                </div>
+            </div>
+        </div>
+    }
+</div>
+
+<div id="modalContainer"></div>
+
+@section Scripts {
+    <script>
+        function abrirModalIngreso() {
+            $.get('@Url.Action("Ingresar", "Hospitalizacion")', function (data) {
+                $('#modalContainer').html(data);
+                $('#modalIngreso').modal('show');
+            });
+        }
+
+        $(document).on('click', '#btnGuardarIngreso', function () {
+            var form = $('#frmIngreso');
+            var btn = $(this);
+            btn.html('<i class="fa-solid fa-spinner fa-spin"></i> Guardando...').prop('disabled', true);
+
+            $.post('@Url.Action("Ingresar", "Hospitalizacion")', form.serialize(), function (response) {
+                if (response.success) {
+                    $('#modalIngreso').modal('hide');
+                    location.reload();
+                } else {
+                    $('#modalContainer').html(response);
+                    $('#modalIngreso').modal('show');
+                }
+            });
+        });
+    </script>
+}

@@ -1,0 +1,77 @@
+﻿@model Vetcore.Models.Empleados
+
+<div class="modal fade" id="modalEditEmpleado" tabindex="-1">
+    <div class="modal-dialog modal-dialog-centered modal-lg">
+        <div class="modal-content card-modern" style="border: none; padding: 0; overflow: hidden;">
+            <div class="modal-header border-0 px-4 pt-4 pb-3" style="background-color: #f8fafc;">
+                <div>
+                    <h3 class="headline mb-1" style="color: #0f172a;"><i class="fa-solid fa-pen text-warning me-2"></i> Editar Empleado</h3>
+                    <p class="body-text mb-0 small text-muted">Modifique los datos del personal y sus accesos.</p>
+                </div>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
+            </div>
+            <div class="modal-body px-4 pb-4 pt-3">
+                <form id="frmEditEmpleado">
+                    @Html.AntiForgeryToken()
+                    @Html.HiddenFor(m => m.IdEmpleado)
+                    @Html.HiddenFor(m => m.Activo)
+
+                    <!-- Información Laboral -->
+                    <h6 class="text-uppercase small fw-bold text-muted mb-3"><i class="fa-solid fa-id-card me-1"></i> Información General</h6>
+                    <div class="p-3 mb-4 rounded-3" style="background-color: #f1f5f9; border: 1px solid #e2e8f0;">
+                        <div class="row g-3">
+                            <div class="col-md-6">
+                                <label class="label mb-1">Nombre(s)</label>
+                                @Html.EditorFor(m => m.Nombre, new { htmlAttributes = new { @class = "form-control" } })
+                            </div>
+                            <div class="col-md-6">
+                                <label class="label mb-1">Apellidos</label>
+                                @Html.EditorFor(m => m.Apellidos, new { htmlAttributes = new { @class = "form-control" } })
+                            </div>
+                            <div class="col-md-4">
+                                <label class="label mb-1">Teléfono</label>
+                                @Html.EditorFor(m => m.Telefono, new { htmlAttributes = new { @class = "form-control" } })
+                            </div>
+                            <div class="col-md-4">
+                                <label class="label mb-1">Puesto</label>
+                                @Html.DropDownList("IdPuesto", null, new { @class = "form-control" })
+                            </div>
+                            <div class="col-md-4">
+                                <label class="label mb-1">Especialidad</label>
+                                @Html.EditorFor(m => m.Especialidad, new { htmlAttributes = new { @class = "form-control" } })
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Credenciales Opcionales -->
+                    <h6 class="text-uppercase small fw-bold text-muted mb-3"><i class="fa-solid fa-lock me-1"></i> Credenciales de Acceso</h6>
+                    <div class="p-3 mb-3 rounded-3" style="background-color: #f8fafc; border: 1px solid #cbd5e1;">
+                        <div class="row g-3">
+                            <div class="col-md-4">
+                                <label class="label mb-1">Usuario</label>
+                                <input type="text" name="Username" class="form-control" value="@ViewBag.Username" placeholder="Ej. cperez" />
+                            </div>
+                            <div class="col-md-4">
+                                <label class="label mb-1">Nueva Contraseña (Opcional)</label>
+                                <input type="password" name="PasswordHash" class="form-control" placeholder="Dejar en blanco para no cambiar" />
+                            </div>
+                            <div class="col-md-4">
+                                <label class="label mb-1">Rol en Sistema</label>
+                                @Html.DropDownList("IdRol", null, "Sin acceso al sistema", new { @class = "form-control" })
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-12 mt-4 d-flex justify-content-end gap-3 pt-3 border-top">
+                        <button type="button" class="btn btn-light border px-4" data-bs-dismiss="modal">Cancelar</button>
+                        <!-- Ajustado al botón primario corporativo con icono de guardar -->
+                        <button type="button" id="btnActualizarEmpleado" class="btn btn-primary px-4 shadow-sm d-flex align-items-center gap-2">
+                            <i class="fa-solid fa-save"></i> <span>Guardar Cambios</span>
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+@Scripts.Render("~/bundles/jqueryval")

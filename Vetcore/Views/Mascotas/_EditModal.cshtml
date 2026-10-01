@@ -1,0 +1,111 @@
+﻿@model Vetcore.Models.Mascotas
+
+<div class="modal fade" id="modalEditMascota" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-lg">
+        <div class="modal-content card-modern" style="border: none; padding: 0; overflow: hidden; border-radius: 16px;">
+
+            <!-- Cabecera del Modal -->
+            <div class="modal-header border-0 px-4 pt-4 pb-3" style="background-color: #f8fafc;">
+                <div>
+                    <h3 class="headline mb-1" style="color: #0f172a; font-size: 1.25rem;">
+                        <i class="fa-solid fa-pen-to-square text-primary me-2"></i> Editar Paciente
+                    </h3>
+                    <p class="body-text mb-0 small text-muted">Modifique los datos generales de la mascota y su estado clínico.</p>
+                </div>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
+            </div>
+
+            <!-- Cuerpo del Modal -->
+            <div class="modal-body px-4 pb-4 pt-3">
+                <form id="frmEditMascota">
+                    @Html.AntiForgeryToken()
+                    @Html.HiddenFor(m => m.IdMascota)
+
+                    <div class="p-3 rounded-3 mb-4" style="background-color: #f1f5f9; border: 1px solid #e2e8f0;">
+                        <div class="row g-3">
+                            <!-- Dueño -->
+                            <div class="col-md-6">
+                                <label class="label mb-1 fw-semibold text-secondary">
+                                    <i class="fa-solid fa-user me-1 text-primary"></i> Propietario / Dueño
+                                </label>
+                                @Html.DropDownList("IdPropietario", null, "Seleccione...", new { @class = "form-control" })
+                            </div>
+
+                            <!-- Raza -->
+                            <div class="col-md-6">
+                                <label class="label mb-1 fw-semibold text-secondary">
+                                    <i class="fa-solid fa-paw me-1 text-primary"></i> Raza / Especie
+                                </label>
+                                @Html.DropDownList("IdRaza", null, "Seleccione...", new { @class = "form-control" })
+                            </div>
+
+                            <!-- Nombre -->
+                            <div class="col-md-6">
+                                <label class="label mb-1 fw-semibold text-secondary">
+                                    <i class="fa-solid fa-signature me-1"></i> Nombre de la Mascota
+                                </label>
+                                @Html.EditorFor(m => m.Nombre, new { htmlAttributes = new { @class = "form-control", placeholder = "Ej. Firulais" } })
+                            </div>
+
+                            <!-- Sexo -->
+                            <div class="col-md-6">
+                                <label class="label mb-1 fw-semibold text-secondary">
+                                    <i class="fa-solid fa-venus-mars me-1"></i> Sexo
+                                </label>
+                                <select class="form-control" id="Sexo" name="Sexo">
+                                    <option value="M" @(Model.Sexo == "M" ? "selected" : "")>Macho</option>
+                                    <option value="H" @(Model.Sexo == "H" ? "selected" : "")>Hembra</option>
+                                </select>
+                            </div>
+
+                            <!-- Fecha Nacimiento -->
+                            <div class="col-md-4">
+                                <label class="label mb-1 fw-semibold text-secondary">
+                                    <i class="fa-regular fa-calendar me-1"></i> Fecha Nacimiento
+                                </label>
+                                @Html.EditorFor(m => m.FechaNacimiento, new { htmlAttributes = new { @class = "form-control", type = "date" } })
+                            </div>
+
+                            <!-- Peso -->
+                            <div class="col-md-4">
+                                <label class="label mb-1 fw-semibold text-secondary">
+                                    <i class="fa-solid fa-weight-scale me-1"></i> Peso (Kg)
+                                </label>
+                                @Html.EditorFor(m => m.PesoActual, new { htmlAttributes = new { @class = "form-control", type = "number", step = "0.01", placeholder = "0.00" } })
+                            </div>
+
+                            <!-- Estado del Paciente -->
+                            <div class="col-md-4">
+                                <label class="label mb-1 fw-semibold text-secondary">
+                                    <i class="fa-solid fa-heart-pulse me-1"></i> Estado del Paciente
+                                </label>
+                                <select class="form-control fw-medium" id="Fallecido" name="Fallecido" style="@(Model.Fallecido == true ? "color: #b91c1c; background-color: #fef2f2; border-color: #fecaca;" : "color: #047857; background-color: #ecfdf5; border-color: #a7f3d0;")">
+                                    <option value="false" @(Model.Fallecido != true ? "selected" : "")>Vivo (Activo)</option>
+                                    <option value="true" @(Model.Fallecido == true ? "selected" : "")>Finado (Inactivo)</option>
+                                </select>
+                            </div>
+
+                            <!-- Alergias -->
+                            <div class="col-12">
+                                <label class="label mb-1 fw-semibold text-secondary">
+                                    <i class="fa-solid fa-triangle-exclamation me-1"></i> Alergias / Condiciones Médicas
+                                </label>
+                                @Html.TextAreaFor(m => m.Alergias, new { @class = "form-control", rows = "2", placeholder = "Indique si padece alergias o tratamientos especiales..." })
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Botones de Acción -->
+                    <div class="d-flex justify-content-end gap-3 pt-3 border-top">
+                        <button type="button" class="btn btn-light border px-4" data-bs-dismiss="modal">Cancelar</button>
+                        <button type="button" id="btnActualizarMascota" class="btn btn-primary px-4 shadow-sm d-flex align-items-center gap-2">
+                            <i class="fa-solid fa-save"></i> <span>Guardar Cambios</span>
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+@Scripts.Render("~/bundles/jqueryval")

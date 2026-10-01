@@ -1,0 +1,25 @@
+﻿@model Vetcore.Models.Empleados
+
+<div class="modal fade" id="modalDeleteEmpleado" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content card-modern" style="border: none; padding: 0;">
+            <div class="modal-body p-4 text-center">
+                <div class="mb-3">
+                    <i class="fa-solid fa-triangle-exclamation" style="font-size: 3rem; color: #ef4444;"></i>
+                </div>
+                <h3 class="headline mb-2">¿Eliminar Empleado?</h3>
+                <p class="body-text mb-4">Estás a punto de borrar el registro de <strong>@Model.Nombre @Model.Apellidos</strong>.</p>
+
+                <form id="frmDeleteEmpleado">
+                    @Html.AntiForgeryToken()
+                    @Html.HiddenFor(m => m.IdEmpleado)
+
+                    <div class="d-flex justify-content-center gap-3">
+                        <button type="button" class="btn btn-outlined" data-bs-dismiss="modal">Cancelar</button>
+                        <button type="button" id="btnConfirmarEliminar" class="btn" style="background-color: #ef4444; color: white;">Sí, eliminar</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,763 @@
+﻿@{
+    ViewBag.Title = "Punto de Venta (POS)";
+}
+
+<style>
+    /* Diseño full-screen responsivo para el POS */
+    .pos-container {
+        height: calc(100vh - 160px);
+        min-height: 600px;
+    }
+
+    /* Mosaico mejorado para pantallas táctiles */
+    .item-mosaico {
+        cursor: pointer;
+        transition: all 0.1s ease-in-out;
+        border: 2px solid transparent;
+        background-color: #ffffff;
+        user-select: none; /* Evita que el texto se sombree al tocar rápido */
+    }
+
+        .item-mosaico:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 15px rgba(0,0,0,0.1) !important;
+            border-color: #3b82f6;
+        }
+
+        .item-mosaico:active {
+            transform: scale(0.96);
+            background-color: #f8fafc;
+        }
+
+    /* Indicador especial para Servicios (Consultas, Estética) */
+    .mosaico-servicio {
+        background-color: #f8fafc;
+        border: 1px dashed #cbd5e1;
+    }
+
+    /* Scrollbars elegantes para no estorbar visualmente */
+    .scroll-panel {
+        overflow-y: auto;
+    }
+
+        .scroll-panel::-webkit-scrollbar {
+            width: 6px;
+            height: 6px;
+        }
+
+        .scroll-panel::-webkit-scrollbar-thumb {
+            background-color: #cbd5e1;
+            border-radius: 10px;
+        }
+
+    /* Pestañas grandes táctiles */
+    .nav-categorias {
+        flex-wrap: nowrap;
+        overflow-x: auto;
+        padding-bottom: 8px;
+    }
+
+        .nav-categorias::-webkit-scrollbar {
+            height: 4px;
+        }
+
+        .nav-categorias::-webkit-scrollbar-thumb {
+            background-color: #e2e8f0;
+            border-radius: 10px;
+        }
+
+    .btn-categoria {
+        white-space: nowrap;
+        border-radius: 12px;
+        font-weight: 600;
+        color: #64748b;
+        background: #ffffff;
+        border: 1px solid #e2e8f0;
+        transition: all 0.2s;
+        padding: 0.6rem 1.5rem;
+    }
+
+        .btn-categoria.active {
+            background: #3b82f6;
+            color: white;
+            border-color: #3b82f6;
+            box-shadow: 0 4px 6px rgba(59, 130, 246, 0.25);
+        }
+
+    /* Ocultar flechas numéricas */
+    input[type="number"]::-webkit-inner-spin-button,
+    input[type="number"]::-webkit-outer-spin-button {
+        -webkit-appearance: none;
+        margin: 0;
+    }
+</style>
+
+<!-- Encabezado -->
+<div class="d-flex justify-content-between align-items-center mb-3 pb-2 border-bottom">
+    <div class="d-flex align-items-center gap-2">
+        <div style="width: 40px; height: 40px; background-color: #e0f2fe; color: #0284c7; border-radius: 10px; display: flex; align-items: center; justify-content: center; font-size: 1.2rem;">
+            <i class="fa-solid fa-cash-register"></i>
+        </div>
+        <h4 class="mb-0 fw-bold text-dark" style="letter-spacing: -0.5px;">Punto de Venta</h4>
+    </div>
+
+    @if (ViewBag.CajaAbierta == true)
+    {
+        <div class="d-flex align-items-center gap-3">
+            <div class="text-end lh-sm d-none d-md-block">
+                <span class="d-block fw-bold text-dark">Recepcionista: Admin</span>
+                <span class="small text-muted">Fondo: $@Convert.ToDecimal(ViewBag.MontoApertura).ToString("N2")</span>
+            </div>
+            <span class="badge bg-success-subtle text-success px-3 py-2 border border-success-subtle rounded-pill">
+                <i class="fa-solid fa-circle text-success me-1" style="font-size: 8px;"></i> Abierta
+            </span>
+            <button class="btn btn-sm btn-outline-danger shadow-sm fw-bold d-flex align-items-center gap-2" onclick="abrirModalCorte()">
+                <i class="fa-solid fa-lock"></i> Cerrar Caja
+            </button>
+        </div>
+    }
+</div>
+
+@if (ViewBag.CajaAbierta == false)
+{
+    <!-- CAJA CERRADA -->
+    <div class="card-modern shadow-sm border-0 d-flex flex-column align-items-center justify-content-center py-5" style="background: #ffffff; border-radius: 16px; min-height: 50vh;">
+        <div class="text-center mb-4">
+            <i class="fa-solid fa-lock text-secondary opacity-25 mb-3" style="font-size: 5rem;"></i>
+            <h3 class="fw-bold text-dark mb-2">Caja Cerrada</h3>
+            <p class="text-muted">Necesitas registrar el fondo inicial para habilitar la terminal de cobro.</p>
+        </div>
+        <button class="btn btn-primary btn-lg px-5 shadow-sm d-flex align-items-center gap-2 rounded-pill fw-bold" onclick="abrirModalApertura()">
+            <i class="fa-solid fa-key"></i> Realizar Apertura
+        </button>
+    </div>
+}
+else
+{
+    <!-- PANTALLA POS -->
+    <div class="row g-3 pos-container">
+
+        <!-- PANEL IZQUIERDO: CATÁLOGO Y MOSAICO -->
+        <div class="col-lg-7 col-xl-8 d-flex flex-column">
+
+            <div class="card shadow-sm border-0 mb-3" style="border-radius: 16px;">
+                <div class="p-3">
+                    <div class="input-group input-group-lg shadow-sm mb-3 border rounded-pill overflow-hidden bg-white">
+                        <span class="input-group-text bg-transparent border-0 pe-1 text-primary"><i class="fa-solid fa-barcode"></i></span>
+                        <input type="text" id="buscadorPos" class="form-control bg-transparent border-0 shadow-none fs-5 px-2 fw-semibold text-dark" placeholder="Escanea código de barras o busca un producto..." autofocus autocomplete="off">
+                    </div>
+
+                    <!-- Pestañas Táctiles -->
+                    <div class="nav nav-categorias d-flex gap-2">
+                        <button class="btn btn-categoria active" data-cat="0">
+                            <i class="fa-solid fa-border-all me-1"></i> Todo
+                        </button>
+                        @if (ViewBag.ListaCategorias != null)
+                        {
+                            foreach (var cat in (IEnumerable<Vetcore.Models.Categorias>)ViewBag.ListaCategorias)
+                            {
+                                <button class="btn btn-categoria" data-cat="@cat.IdCategoria">@cat.Nombre</button>
+                            }
+                        }
+                    </div>
+                </div>
+            </div>
+
+            <!-- Grilla -->
+            <div class="card shadow-sm border-0 flex-grow-1" style="border-radius: 16px; background-color: #f8fafc;">
+                <div class="p-3 scroll-panel h-100">
+                    <div class="row g-3" id="contenedorMosaico">
+
+                        @if (ViewBag.CatalogoProductos != null)
+                        {
+                            foreach (var p in (IEnumerable<Vetcore.Models.Productos>)ViewBag.CatalogoProductos)
+                            {
+                                bool esServicio = p.StockActual == null;
+                                int stockDisponible = esServicio ? 9999 : p.StockActual.Value;
+                                bool sinStock = stockDisponible <= 0 && !esServicio;
+
+                                string icono = "fa-box";
+                                string color = "text-secondary";
+                                if (p.Nombre.ToLower().Contains("vacuna") || p.Nombre.ToLower().Contains("inyec")) { icono = "fa-syringe"; color = "text-danger"; }
+                                else if (p.Nombre.ToLower().Contains("consulta")) { icono = "fa-stethoscope"; color = "text-primary"; }
+                                else if (p.Nombre.ToLower().Contains("baño") || p.Nombre.ToLower().Contains("corte") || p.Nombre.ToLower().Contains("shampoo")) { icono = "fa-scissors"; color = "text-info"; }
+                                else if (p.Nombre.ToLower().Contains("croqueta") || p.Nombre.ToLower().Contains("alimento")) { icono = "fa-bone"; color = "text-warning"; }
+
+                                <div class="col-6 col-md-4 col-xl-3 item-buscar" data-cat-id="@p.IdCategoria">
+                                    <div class="card h-100 shadow-sm item-mosaico @(sinStock ? "opacity-50" : "") @(esServicio ? "mosaico-servicio" : "")"
+                                         style="border-radius: 14px;"
+                                         data-id="@p.IdProducto"
+                                         data-nombre="@p.Nombre"
+                                         data-precio="@p.PrecioVenta"
+                                         data-stock="@stockDisponible"
+                                         data-codigo="@p.CodigoBarras">
+
+                                        <div class="position-absolute top-0 end-0 m-2 z-1 text-end">
+                                            <span class="badge bg-dark fw-bold px-2 py-1 shadow-sm fs-6 d-block mb-1">$@p.PrecioVenta.ToString("N2")</span>
+                                            @if (esServicio)
+                                            {
+                                                <span class="badge bg-primary-subtle text-primary shadow-sm" style="font-size: 0.65rem;">SERVICIO</span>
+                                            }
+                                        </div>
+
+                                        <div class="card-body text-center d-flex flex-column align-items-center justify-content-center pt-4 pb-3">
+                                            <div class="mb-3 mt-3">
+                                                <i class="fa-solid @icono fa-2x @color opacity-75"></i>
+                                            </div>
+                                            <h6 class="fw-bold text-dark mb-1 lh-sm" style="font-size: 0.9rem; height: 2.4em; overflow: hidden;">@p.Nombre</h6>
+                                            <small class="text-muted fw-bold" style="font-size: 0.75rem;">
+                                                @(esServicio ? "Ilimitado" : $"Stock: {p.StockActual}")
+                                            </small>
+                                        </div>
+                                    </div>
+                                </div>
+                            }
+                        }
+
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+        <!-- PANEL DERECHO: TICKET Y COBRO -->
+        <div class="col-lg-5 col-xl-4 d-flex flex-column">
+            <div class="card shadow-sm border-0 d-flex flex-column h-100" style="border-radius: 16px; overflow: hidden;">
+
+                <div class="bg-light p-3 border-bottom d-flex justify-content-between align-items-center">
+                    <span class="fw-bold text-dark fs-5"><i class="fa-solid fa-receipt text-secondary me-2"></i>Ticket</span>
+                    <button class="btn btn-sm btn-outline-danger rounded-pill fw-semibold" onclick="vaciarCarrito()">
+                        <i class="fa-solid fa-trash-can"></i> Vaciar
+                    </button>
+                </div>
+
+                <div class="flex-grow-1 p-0 scroll-panel bg-white" id="listaCarrito" style="position: relative;">
+                    <div class="text-center position-absolute top-50 start-50 translate-middle text-muted w-100 px-4 empty-cart-msg">
+                        <i class="fa-solid fa-cart-arrow-down fs-1 mb-3 d-block opacity-25"></i>
+                        Aún no hay artículos.
+                    </div>
+                </div>
+
+                <div class="bg-light p-3 border-top">
+                    <div class="d-flex justify-content-between text-muted mb-1 small fw-semibold">
+                        <span>Subtotal:</span>
+                        <span id="lblSubtotal">$0.00</span>
+                    </div>
+
+                    <div class="d-flex justify-content-between text-danger mb-1 small fw-semibold" id="rowDescuento" style="display:none;">
+                        <span>Descuento (<span id="lblPorcentajeDesc">0</span>%):</span>
+                        <span id="lblMontoDesc">-$0.00</span>
+                    </div>
+
+                    <div class="d-flex justify-content-between text-muted mb-2 border-bottom pb-2 small fw-semibold">
+                        <span>Impuestos (0%):</span>
+                        <span>$0.00</span>
+                    </div>
+                    <div class="d-flex justify-content-between align-items-center mb-3">
+                        <span class="fs-4 fw-bold text-dark">Total</span>
+                        <span class="fs-1 fw-black text-success lh-1" id="lblTotal" style="letter-spacing: -1px;">$0.00</span>
+                    </div>
+
+                    <div class="row g-2">
+                        <div class="col-6">
+                            <button type="button" onclick="$('#modalCliente').modal('show')" class="btn btn-white border shadow-sm w-100 py-2 text-dark fw-bold text-truncate">
+                                <i class="fa-solid fa-user-tag text-primary d-block mb-1"></i> <span id="lblBtnCliente">Cliente</span>
+                            </button>
+                        </div>
+                        <div class="col-6">
+                            <button type="button" onclick="$('#modalDescuento').modal('show')" class="btn btn-white border shadow-sm w-100 py-2 text-dark fw-bold">
+                                <i class="fa-solid fa-percent text-danger d-block mb-1"></i> <span id="lblBtnDescuento">Descuento</span>
+                            </button>
+                        </div>
+                        <div class="col-12 mt-2">
+                            <button class="btn btn-success btn-lg w-100 py-3 shadow text-white fw-bold d-flex justify-content-center align-items-center gap-2" id="btnCobrar" disabled style="border-radius: 12px; font-size: 1.3rem;">
+                                <i class="fa-solid fa-circle-chevron-right fs-4"></i> COBRAR
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+}
+
+<!-- Modal de Venta Exitosa (Ticket) -->
+<div class="modal fade" id="modalVentaExitosa" tabindex="-1" aria-hidden="true" data-bs-backdrop="static">
+    <div class="modal-dialog modal-dialog-centered modal-sm">
+        <div class="modal-content border-0 shadow-lg text-center p-4" style="border-radius: 16px;">
+            <div class="mb-3">
+                <div style="width: 80px; height: 80px; background-color: #d1fae5; color: #10b981; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 3rem; margin: 0 auto;">
+                    <i class="fa-solid fa-check"></i>
+                </div>
+            </div>
+            <h4 class="fw-bold text-dark mb-1">¡Cobro Exitoso!</h4>
+            <p class="text-muted small mb-4">La venta ha sido registrada correctamente.</p>
+
+            <div class="d-grid gap-2">
+                <button type="button" id="btnImprimirTicket" class="btn btn-primary fw-bold shadow-sm">
+                    <i class="fa-solid fa-print me-2"></i> Imprimir Ticket
+                </button>
+                <button type="button" class="btn btn-light border fw-semibold" onclick="cerrarVentaExitosa()">
+                    <i class="fa-solid fa-arrow-rotate-right me-2"></i> Nueva Venta
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div id="modalContainer"></div>
+
+<!-- Modal Asignar Cliente -->
+<div class="modal fade" id="modalCliente" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content border-0 shadow-lg" style="border-radius: 16px;">
+            <div class="modal-header border-0 pb-0">
+                <h5 class="fw-bold text-dark"><i class="fa-solid fa-user-tag text-primary me-2"></i> Asignar Cliente al Ticket</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+            </div>
+            <div class="modal-body py-4">
+                <label class="text-muted small mb-2">Seleccione un cliente registrado:</label>
+                <select id="selectCliente" class="form-control form-control-lg bg-light border-0 shadow-sm">
+                    <option value="">-- Público en General --</option>
+                    @if (ViewBag.ListaClientes != null)
+                    {
+                        foreach (var c in (IEnumerable<Vetcore.Models.Propietarios>)ViewBag.ListaClientes)
+                        {
+                            <option value="@c.IdPropietario">@c.Nombre @c.Apellidos (@c.Telefono)</option>
+                        }
+                    }
+                </select>
+            </div>
+            <div class="modal-footer border-0 pt-0">
+                <button type="button" class="btn btn-primary w-100 fw-bold shadow-sm" onclick="asignarCliente()">Confirmar Cliente</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Modal Aplicar Descuento -->
+<div class="modal fade" id="modalDescuento" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-sm">
+        <div class="modal-content border-0 shadow-lg" style="border-radius: 16px;">
+            <div class="modal-header border-0 pb-0">
+                <h5 class="fw-bold text-dark"><i class="fa-solid fa-percent text-danger me-2"></i> Aplicar Descuento</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+            </div>
+            <div class="modal-body py-4 text-center">
+                <label class="text-muted small mb-2">Porcentaje de descuento (%)</label>
+                <input type="number" id="inputDescuento" class="form-control form-control-lg text-center bg-light border-0 shadow-sm fw-bold" min="0" max="100" value="0" />
+            </div>
+            <div class="modal-footer border-0 pt-0">
+                <button type="button" class="btn btn-danger w-100 fw-bold shadow-sm" onclick="aplicarDescuento()">Aplicar Descuento</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <script>
+        function abrirModalApertura() {
+            $.get('@Url.Action("AbrirCaja", "Ventas")', function (data) {
+                $('#modalContainer').html(data);
+                $('#abrirCajaModal').modal('show');
+            });
+        }
+
+        // Interceptar el envío del formulario de Abrir Caja
+        $(document).on('submit', '#formAbrirCaja', function (e) {
+            e.preventDefault();
+
+            var form = $(this);
+            var $btn = $('#btnGuardarApertura');
+            var textoOriginal = $btn.html();
+
+            $btn.html('<i class="fa-solid fa-spinner fa-spin"></i> Abriendo...').prop('disabled', true);
+
+            $.post('@Url.Action("AbrirCaja", "Ventas")', form.serialize())
+            .done(function (response) {
+                if (response.success) {
+                    $('#abrirCajaModal').modal('hide');
+                    window.location.reload();
+                } else {
+                    Swal.fire({
+                        icon: 'warning',
+                        title: 'Aviso',
+                        text: response.message,
+                        confirmButtonColor: '#0ea5e9'
+                    });
+                    $btn.html(textoOriginal).prop('disabled', false);
+                }
+            })
+            .fail(function () {
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Error',
+                    text: 'Ocurrió un error al intentar abrir la caja.',
+                    confirmButtonColor: '#ef4444'
+                });
+                $btn.html(textoOriginal).prop('disabled', false);
+            });
+        });
+
+        let categoriaFiltro = 0;
+        let textoFiltro = "";
+
+        // Pestañas
+        $('.btn-categoria').on('click', function() {
+            $('.btn-categoria').removeClass('active');
+            $(this).addClass('active');
+            categoriaFiltro = parseInt($(this).data('cat'));
+            aplicarFiltros();
+            $('#buscadorPos').focus();
+        });
+
+        // Buscador normal (Keyup)
+        $('#buscadorPos').on('keyup', function(e) {
+            textoFiltro = $(this).val().toLowerCase();
+            aplicarFiltros();
+        });
+
+        // AUTO-AGREGAR POR ESCÁNER (Tecla Enter)
+        $('#buscadorPos').on('keypress', function(e) {
+            if(e.which === 13) {
+                e.preventDefault();
+                let codigoEscaneado = $(this).val().trim();
+
+                if(codigoEscaneado !== "") {
+                    let $productoEncontrado = $('.item-mosaico').filter(function() {
+                        return $(this).data('codigo') == codigoEscaneado;
+                    }).first();
+
+                    if($productoEncontrado.length > 0) {
+                        $productoEncontrado.click();
+                        $(this).val('').trigger('keyup');
+                    }
+                }
+            }
+        });
+
+        function aplicarFiltros() {
+            $('.item-buscar').each(function() {
+                var itemCat = parseInt($(this).data('cat-id')) || 0;
+                var itemNom = $(this).find('h6').text().toLowerCase();
+                var itemCod = $(this).find('.item-mosaico').data('codigo') ? $(this).find('.item-mosaico').data('codigo').toString().toLowerCase() : "";
+
+                var pasaCategoria = (categoriaFiltro === 0) || (itemCat === categoriaFiltro);
+                var pasaTexto = (textoFiltro === "") || (itemNom.indexOf(textoFiltro) > -1) || (itemCod.indexOf(textoFiltro) > -1);
+
+                $(this).toggle(pasaCategoria && pasaTexto);
+            });
+        }
+
+        // ==========================================
+        // VARIABLES GLOBALES DEL CARRITO Y CLIENTE
+        // ==========================================
+        let carrito = [];
+        let idClienteSeleccionado = null;
+        let porcentajeDescuento = 0;
+
+        // Agregar al carrito
+        $(document).on('click', '.item-mosaico', function () {
+            var id = $(this).data('id');
+            var nombre = $(this).data('nombre');
+            var precio = parseFloat($(this).data('precio'));
+            var stock = parseInt($(this).data('stock'));
+
+            if (stock <= 0) {
+                Swal.fire({
+                    icon: 'warning',
+                    title: 'Producto Agotado',
+                    text: 'Este producto físico no cuenta con stock disponible en farmacia.',
+                    confirmButtonColor: '#0ea5e9'
+                });
+                $('#buscadorPos').focus();
+                return;
+            }
+
+            var itemExistente = carrito.find(x => x.id === id);
+
+            if (itemExistente) {
+                if (itemExistente.cantidad < stock) {
+                    itemExistente.cantidad++;
+                } else {
+                    Swal.fire({
+                        icon: 'info',
+                        title: 'Stock Máximo',
+                        text: 'Has alcanzado la cantidad máxima disponible en stock.',
+                        confirmButtonColor: '#0ea5e9'
+                    });
+                }
+            } else {
+                carrito.push({ id: id, nombre: nombre, precio: precio, cantidad: 1, stock: stock });
+            }
+
+            renderizarCarrito();
+            $('#buscadorPos').focus();
+        });
+
+        function cambiarCantidad(id, delta) {
+            var item = carrito.find(x => x.id === id);
+            if (item) {
+                var nuevaCant = item.cantidad + delta;
+                if (nuevaCant <= 0) eliminarItem(id);
+                else if (nuevaCant > item.stock) {
+                    Swal.fire({
+                        icon: 'info',
+                        title: 'Stock Máximo',
+                        text: 'Has alcanzado la cantidad máxima disponible en stock.',
+                        confirmButtonColor: '#0ea5e9'
+                    });
+                } else {
+                    item.cantidad = nuevaCant;
+                    renderizarCarrito();
+                }
+            }
+            $('#buscadorPos').focus();
+        }
+
+        function eliminarItem(id) {
+            carrito = carrito.filter(x => x.id !== id);
+            renderizarCarrito();
+            $('#buscadorPos').focus();
+        }
+
+        function vaciarCarrito() {
+            if (carrito.length > 0) {
+                Swal.fire({
+                    title: '¿Deseas cancelar el ticket actual?',
+                    text: "Se perderán los artículos agregados en este momento.",
+                    icon: 'question',
+                    showCancelButton: true,
+                    confirmButtonColor: '#ef4444',
+                    cancelButtonColor: '#64748b',
+                    confirmButtonText: 'Sí, vaciar',
+                    cancelButtonText: 'Cancelar'
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        carrito = [];
+                        porcentajeDescuento = 0;
+                        idClienteSeleccionado = null;
+                        $('#lblBtnCliente').text('Cliente');
+                        $('#lblBtnDescuento').text('Descuento');
+                        renderizarCarrito();
+                        $('#buscadorPos').val('').trigger('keyup').focus();
+                    }
+                });
+            }
+        }
+
+        // DIBUJAR EL CARRITO Y CALCULAR TOTALES
+        function renderizarCarrito() {
+            var html = '';
+            var subtotal = 0;
+
+            if (carrito.length === 0) {
+                $('.empty-cart-msg').show();
+                $('#btnCobrar').prop('disabled', true);
+            } else {
+                $('.empty-cart-msg').hide();
+                carrito.forEach(function (item) {
+                    var totalItem = item.cantidad * item.precio;
+                    subtotal += totalItem;
+
+                    html += `
+                    <div class="d-flex flex-column px-3 py-3 border-bottom" style="background-color: #f8fafc;">
+                        <div class="d-flex justify-content-between mb-2">
+                            <span class="fw-bold text-dark text-truncate pe-2 fs-6">${item.nombre}</span>
+                            <span class="fw-bold text-dark fs-6">$${totalItem.toFixed(2)}</span>
+                        </div>
+                        <div class="d-flex justify-content-between align-items-center">
+                            <div class="text-muted fw-semibold">$${item.precio.toFixed(2)} c/u</div>
+                            <div class="d-flex align-items-center gap-2">
+                                <button class="btn btn-white border shadow-sm rounded text-primary fw-bold px-3 py-1" onclick="cambiarCantidad(${item.id}, -1)">-</button>
+                                <span class="fw-black px-2 fs-5">${item.cantidad}</span>
+                                <button class="btn btn-white border shadow-sm rounded text-primary fw-bold px-3 py-1" onclick="cambiarCantidad(${item.id}, 1)">+</button>
+                            </div>
+                        </div>
+                    </div>`;
+                });
+                $('#btnCobrar').prop('disabled', false);
+            }
+
+            $('#listaCarrito').find('.d-flex.flex-column').remove();
+            $('#listaCarrito').append(html);
+
+            // --- CÁLCULO DE DESCUENTO ---
+            var totalDescuento = subtotal * (porcentajeDescuento / 100);
+            var totalFinal = subtotal - totalDescuento;
+
+            $('#lblSubtotal').text('$' + subtotal.toFixed(2));
+
+            if (porcentajeDescuento > 0) {
+                $('#rowDescuento').show();
+                $('#lblPorcentajeDesc').text(porcentajeDescuento);
+                $('#lblMontoDesc').text('-$' + totalDescuento.toFixed(2));             } else {$('#rowDescuento').hide();
+            }
+
+            $('#lblTotal').text('$' + totalFinal.toFixed(2));
+
+            var container = document.getElementById("listaCarrito");
+            if(container) container.scrollTop = container.scrollHeight;
+        }
+
+        // ==========================================
+        // FUNCIONES DE CLIENTE Y DESCUENTO
+        // ==========================================
+        function asignarCliente() {
+            var val = $('#selectCliente').val();
+            var text = $('#selectCliente option:selected').text();
+
+            if (val) {
+                idClienteSeleccionado = val;
+                $('#lblBtnCliente').text(text.split(' ')[0]);
+            } else {
+                idClienteSeleccionado = null;
+                $('#lblBtnCliente').text('Cliente');
+            }
+            $('#modalCliente').modal('hide');
+        }
+
+        function aplicarDescuento() {
+            var desc = parseFloat($('#inputDescuento').val()) || 0;
+            if (desc < 0) desc = 0;
+            if (desc > 100) desc = 100;
+
+            porcentajeDescuento = desc;
+
+            if (desc > 0) {
+                $('#lblBtnDescuento').text(desc + '% Desc');
+            } else {
+                $('#lblBtnDescuento').text('Descuento');
+            }
+
+            $('#modalDescuento').modal('hide');
+            renderizarCarrito();
+        }
+
+        // ==========================================
+        // PROCESAR LA VENTA EN EL BACKEND (CON CERROJO ANTIDOBLE CLIC)
+        // ==========================================
+        let isSubmitting = false; // Cerrojo de estado global anti-doble submit
+
+        $('#btnCobrar').on('click', function () {
+            if (carrito.length === 0) return;
+
+            // Frena los clics fantasma adicionales si ya hay una petición en curso
+            if (isSubmitting) return;
+            isSubmitting = true;
+
+            var $btn =$(this);
+            var textoOriginal = $btn.html();$btn.html('<i class="fa-solid fa-spinner fa-spin"></i> PROCESANDO...').prop('disabled', true);
+
+            var subtotal = 0;
+            var detallesVenta = [];
+
+            carrito.forEach(function (item) {
+                var subtotalItem = item.cantidad * item.precio;
+                subtotal += subtotalItem;
+
+                detallesVenta.push({
+                    IdProducto: item.id,
+                    Cantidad: item.cantidad,
+                    PrecioUnitario: item.precio,
+                    Subtotal: subtotalItem
+                });
+            });
+
+            var totalDescuento = subtotal * (porcentajeDescuento / 100);
+            var totalFinal = subtotal - totalDescuento;
+
+            var datosVenta = {
+                subtotal: subtotal,
+                total: totalFinal,
+                metodoPago: 'Efectivo',
+                idPropietario: idClienteSeleccionado,
+                carrito: detallesVenta
+            };
+
+            $.ajax({
+                url: '@Url.Action("ProcesarVenta", "Ventas")',
+                type: 'POST',
+                contentType: 'application/json',
+                data: JSON.stringify(datosVenta),
+                success: function (response) {
+                    if (response.success) {
+                        $('#btnImprimirTicket').data('idventa', response.idVenta);
+                        $('#modalVentaExitosa').modal('show');
+                        // Nota: Si la venta es exitosa la pantalla se reiniciará con el ticket, mantenemos el cerrojo activo.
+                    } else {
+                        Swal.fire({
+                            icon: 'error',
+                            title: 'Error al cobrar',
+                            text: response.message,
+                            confirmButtonColor: '#ef4444'
+                        });
+                        // Si ocurre un error lógico del servidor, liberamos el cerrojo y el botón
+                        $btn.html(textoOriginal).prop('disabled', false);
+                        isSubmitting = false;
+                    }
+                },
+                error: function () {
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Error de conexión',
+                        text: 'Ocurrió un error al intentar procesar el cobro.',
+                        confirmButtonColor: '#ef4444'
+                    });
+                    // Liberamos el cerrojo en caso de fallo de red
+                    $btn.html(textoOriginal).prop('disabled', false);
+                    isSubmitting = false;
+                }
+            });
+        });
+
+        // Imprimir Ticket
+        $('#btnImprimirTicket').on('click', function() {
+            var idVenta = $(this).data('idventa');
+            var url = '@Url.Action("ImprimirTicket", "Ventas")?id=' + idVenta;
+            window.open(url, '_blank', 'width=400,height=600');
+            cerrarVentaExitosa();
+        });
+
+        function cerrarVentaExitosa() {
+            $('#modalVentaExitosa').modal('hide');
+            carrito = [];
+            porcentajeDescuento = 0;
+            idClienteSeleccionado = null;
+
+            renderizarCarrito();
+            window.location.reload();
+        }
+
+        function abrirModalCorte() {
+            $.get('@Url.Action("CorteCaja", "Ventas")', function (data) {
+                $('#modalContainer').html(data);
+                $('#corteCajaModal').modal('show');
+            });
+        }
+
+        $(document).on('click', '#btnConfirmarCierre', function () {
+            var form = $('#formCorteCaja');
+            var $btn = $(this);$btn.html('<i class="fa-solid fa-spinner fa-spin"></i> CERRANDO...').prop('disabled', true);
+
+            $.post('@Url.Action("CerrarCaja", "Ventas")', form.serialize(), function(response){
+                 if(response.success){
+                     window.location.reload();
+                 } else {
+                     Swal.fire({
+                         icon: 'error',
+                         title: 'Error',
+                         text: response.message,
+                         confirmButtonColor: '#ef4444'
+                     });
+                     $btn.html('Confirmar Corte y Cerrar Caja').prop('disabled', false);
+                 }
+            });
+        });
+
+        // Auto focus al cargar la página
+        $(document).ready(function() {$('#buscadorPos').focus();
+        });
+    </script>
+}

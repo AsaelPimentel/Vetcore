@@ -1,0 +1,63 @@
+﻿@model Vetcore.Models.Mascotas
+
+<div class="modal fade" id="modalMascota" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-lg">
+        <div class="modal-content card-modern" style="border: none; padding: 0;">
+            <div class="modal-header border-0 pb-0 px-4 pt-4">
+                <div>
+                    <h3 class="headline mb-0">Registrar Paciente</h3>
+                    <p class="body-text mb-0 small">Añade una nueva mascota al sistema.</p>
+                </div>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
+            </div>
+            <div class="modal-body px-4 pb-4">
+                <form id="frmCreateMascota">
+                    @Html.AntiForgeryToken()
+                    <div class="row g-4 mt-1">
+                        <div class="col-md-6">
+                            <label class="label mb-2"><i class="fa-solid fa-user text-primary me-1"></i> Dueño</label>
+                            @Html.DropDownList("IdPropietario", null, "Seleccione...", new { @class = "form-control" })
+                            @Html.ValidationMessageFor(m => m.IdPropietario, "", new { @class = "text-danger small" })
+                        </div>
+                        <div class="col-md-6">
+                            <label class="label mb-2"><i class="fa-solid fa-paw text-secondary me-1"></i> Raza</label>
+                            @Html.DropDownList("IdRaza", null, "Seleccione...", new { @class = "form-control" })
+                            @Html.ValidationMessageFor(m => m.IdRaza, "", new { @class = "text-danger small" })
+                        </div>
+                        <div class="col-md-6">
+                            <label class="label mb-2">Nombre</label>
+                            @Html.EditorFor(m => m.Nombre, new { htmlAttributes = new { @class = "form-control", placeholder = "Ej. Max, Luna..." } })
+                            @Html.ValidationMessageFor(m => m.Nombre, "", new { @class = "text-danger small" })
+                        </div>
+                        <div class="col-md-6">
+                            <label class="label mb-2">Sexo</label>
+                            <select class="form-control" id="Sexo" name="Sexo">
+                                <option value="">Seleccione...</option>
+                                <option value="M" @(Model?.Sexo == "M" ? "selected" : "")>Macho</option>
+                                <option value="H" @(Model?.Sexo == "H" ? "selected" : "")>Hembra</option>
+                            </select>
+                            @Html.ValidationMessageFor(m => m.Sexo, "", new { @class = "text-danger small" })
+                        </div>
+                        <div class="col-md-6">
+                            <label class="label mb-2">Fecha Nacimiento</label>
+                            @Html.EditorFor(m => m.FechaNacimiento, new { htmlAttributes = new { @class = "form-control", type = "date" } })
+                        </div>
+                        <div class="col-md-6">
+                            <label class="label mb-2">Peso (Kg)</label>
+                            @Html.EditorFor(m => m.PesoActual, new { htmlAttributes = new { @class = "form-control", type = "number", step = "0.01", placeholder = "Ej. 12.5" } })
+                        </div>
+                        <div class="col-12">
+                            <label class="label mb-2">Alergias / Condiciones</label>
+                            @Html.TextAreaFor(m => m.Alergias, new { @class = "form-control", rows = "2", placeholder = "Si no tiene alergias conocidas, deje en blanco." })
+                        </div>
+                        <div class="col-12 mt-4 d-flex justify-content-end gap-3 pt-3 border-top">
+                            <button type="button" class="btn btn-outlined" data-bs-dismiss="modal">Cancelar</button>
+                            <button type="button" id="btnGuardarMascota" class="btn btn-primary"><i class="fa-solid fa-save"></i> Guardar</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+@Scripts.Render("~/bundles/jqueryval")

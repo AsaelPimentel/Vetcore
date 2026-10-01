@@ -1,0 +1,192 @@
+<<<<<<< HEAD
+﻿@using Vetcore.Helpers
+@model IEnumerable<Vetcore.Models.Productos>
+=======
+﻿@model IEnumerable<Vetcore.Models.Productos>
+
+>>>>>>> 7af84dbc4060a8bbaa8bab50c489e93f45a0ceba
+@{
+    ViewBag.Title = "Reporte de Inventario";
+}
+
+<!-- Encabezado con Botón de Regresar -->
+<div class="d-flex flex-column flex-md-row justify-content-between align-items-md-center gap-3 mb-4 pb-3 border-bottom">
+    <div class="d-flex align-items-center gap-3">
+        <div style="width: 50px; height: 50px; background-color: #e0f2fe; color: #0284c7; border-radius: 12px; display: flex; align-items: center; justify-content: center; font-size: 1.5rem;">
+            <i class="fa-solid fa-file-invoice-dollar"></i>
+        </div>
+        <div>
+            <h3 class="headline mb-1" style="color: #1e293b; font-weight: 700;">Reporte de Valorización y Stock</h3>
+            <p class="body-text text-muted mb-0 small">Estado actual de la farmacia, costos de inversión y proyecciones de venta.</p>
+        </div>
+    </div>
+<<<<<<< HEAD
+    <!-- Botones de Acción Superior -->
+=======
+
+    <!-- Botones de Acción Superior -->
+    <!-- En el grupo de botones superiores de ReporteInventario.cshtml -->
+>>>>>>> 7af84dbc4060a8bbaa8bab50c489e93f45a0ceba
+    <div class="d-flex align-items-center gap-2">
+        <a href="@Url.Action("Index", "Productos")" class="btn btn-light border px-3 shadow-sm d-flex align-items-center gap-2 text-secondary">
+            <i class="fa-solid fa-arrow-left"></i> <span>Regresar a Inventario</span>
+        </a>
+<<<<<<< HEAD
+        @if (Context.IsAdmin())
+=======
+        @if (Session["RolEmpleado"] != null && Session["RolEmpleado"].ToString() == "Administrador")
+>>>>>>> 7af84dbc4060a8bbaa8bab50c489e93f45a0ceba
+        {
+            <!-- Botón para Exportar a Excel -->
+            <a href="@Url.Action("ExportarExcel", "Productos")" class="btn btn-success px-4 shadow-sm d-flex align-items-center gap-2 text-white fw-bold">
+                <i class="fa-solid fa-file-excel"></i> <span>Exportar a Excel</span>
+            </a>
+        }
+<<<<<<< HEAD
+        <button type="button" onclick="window.open('@Url.Action("ReporteInventarioImprimir", "Productos")', '_blank')" class="btn btn-outlined px-4 shadow-sm d-flex align-items-center gap-2">
+            <i class="fa-solid fa-print"></i> <span>Imprimir Reporte</span>
+        </button>
+    </div>
+=======
+            <button type="button" onclick="window.open('@Url.Action("ReporteInventarioImprimir", "Productos")', '_blank')" class="btn btn-outlined px-4 shadow-sm d-flex align-items-center gap-2">
+                <i class="fa-solid fa-print"></i> <span>Imprimir Reporte</span>
+            </button>
+        </div>
+>>>>>>> 7af84dbc4060a8bbaa8bab50c489e93f45a0ceba
+</div>
+
+<!-- Tarjetas de Resumen -->
+<div class="row g-3 mb-4">
+    <div class="col-md-3">
+        <div class="card-modern p-3 border-0 shadow-sm" style="background: #f8fafc; border-left: 4px solid #0284c7 !important;">
+            <span class="text-muted small fw-semibold">Total SKUs Activos</span>
+            <h4 class="fw-bold mb-0 text-dark mt-1">@ViewBag.TotalProductos</h4>
+        </div>
+    </div>
+    <div class="col-md-3">
+        <div class="card-modern p-3 border-0 shadow-sm" style="background: #f8fafc; border-left: 4px solid #d97706 !important;">
+            <span class="text-muted small fw-semibold">Alertas Stock Bajo</span>
+            <h4 class="fw-bold mb-0 text-warning mt-1">@ViewBag.ProductosStockBajo</h4>
+        </div>
+    </div>
+    <div class="col-md-3">
+        <div class="card-modern p-3 border-0 shadow-sm" style="background: #f8fafc; border-left: 4px solid #64748b !important;">
+            <span class="text-muted small fw-semibold">Inversión (Costo Total)</span>
+            <h4 class="fw-bold mb-0 text-dark mt-1">$@(((decimal)ViewBag.InversionTotal).ToString("N2"))</h4>
+        </div>
+    </div>
+    <div class="col-md-3">
+        <div class="card-modern p-3 border-0 shadow-sm" style="background: #f8fafc; border-left: 4px solid #10b981 !important;">
+            <span class="text-muted small fw-semibold">Valor Venta Potencial</span>
+            <h4 class="fw-bold mb-0 text-success mt-1">$@(((decimal)ViewBag.ValorVentaTotal).ToString("N2"))</h4>
+        </div>
+    </div>
+</div>
+
+<!-- Barra de Herramientas de la Tabla (Buscador instantáneo) -->
+<div class="card-modern p-4 shadow-sm border-0 mb-4" style="background: #ffffff; border-radius: 16px;">
+    <div class="row g-3 align-items-center justify-content-between">
+        <div class="col-md-5">
+            <div class="input-group">
+                <span class="input-group-text bg-light border-end-0 text-muted"><i class="fa-solid fa-search"></i></span>
+                <input type="text" id="inputFiltroReporte" class="form-control border-start-0 bg-light" placeholder="Filtrar por producto, código o categoría...">
+            </div>
+        </div>
+        <div class="col-md-3 text-md-end">
+            <span class="text-muted small">Mostrando <strong id="contadorVisibles">@Model.Count()</strong> registros</span>
+        </div>
+    </div>
+</div>
+
+<!-- Tabla Detallada con Paginación Visual / Filtrado -->
+<div class="card-modern p-4 shadow-sm border-0" style="background: #ffffff; border-radius: 16px;">
+    <div class="table-responsive">
+        <table class="table-modern align-middle mb-0" id="tablaReporteInventario">
+            <thead>
+                <tr>
+                    <th class="ps-4">Producto</th>
+                    <th>Categoría</th>
+                    <th class="text-center">Stock Actual</th>
+                    <th class="text-end">Costo Unit.</th>
+                    <th class="text-end">Inversión Parcial</th>
+                    <th class="text-end pe-4">Valor Venta Potencial</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model)
+                {
+                    string nombreCategoria = item.Categorias != null ? item.Categorias.Nombre : "Sin Categoría";
+                    string codigoStr = string.IsNullOrEmpty(item.CodigoBarras) ? "N/D" : item.CodigoBarras;
+
+                    // Variables seguras para evitar la explosión por NULL
+                    bool esServicio = item.StockActual == null;
+                    int stockDisponible = item.StockActual ?? 0;
+                    int stockMinimo = item.StockMinimo ?? 0;
+
+                    <tr class="fila-producto" data-search="@item.Nombre.ToLower() @codigoStr.ToLower() @nombreCategoria.ToLower()">
+                        <td class="ps-4">
+                            <div class="fw-bold text-dark">@item.Nombre</div>
+                            <small class="text-muted">Cód: @codigoStr</small>
+                        </td>
+                        <td>
+                            <span class="badge px-2.5 py-1.5" style="background-color: #f1f5f9; color: #475569; border: 1px solid #cbd5e1;">
+                                @nombreCategoria
+                            </span>
+                        </td>
+                        <td class="text-center">
+                            @if (esServicio)
+                            {
+                                <span class="badge bg-primary-subtle text-primary border border-primary-subtle">Servicio</span>
+                            }
+                            else
+                            {
+                                <span class="fw-bold @(stockDisponible <= stockMinimo ? "text-danger" : "text-dark")">
+                                    @stockDisponible
+                                </span>
+                            }
+                        </td>
+                        <td class="text-end">$@item.PrecioCosto.ToString("N2")</td>
+<<<<<<< HEAD
+=======
+
+>>>>>>> 7af84dbc4060a8bbaa8bab50c489e93f45a0ceba
+                        <!-- Cálculos protegidos: Si es servicio muestra "-", si es producto físico hace la multiplicación -->
+                        <td class="text-end text-muted">
+                            @(esServicio ? "-" : "$" + ((decimal)(stockDisponible * item.PrecioCosto)).ToString("N2"))
+                        </td>
+                        <td class="text-end pe-4 fw-bold text-success">
+                            @(esServicio ? "-" : "$" + ((decimal)(stockDisponible * item.PrecioVenta)).ToString("N2"))
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</div>
+
+@section Scripts {
+    <script>
+        // Script de filtrado instantáneo en vivo para la tabla de reportes
+        $(document).ready(function () {
+            $('#inputFiltroReporte').on('keyup', function () {
+                var valor = $(this).val().toLowerCase();
+                var visibles = 0;
+<<<<<<< HEAD
+=======
+
+>>>>>>> 7af84dbc4060a8bbaa8bab50c489e93f45a0ceba
+                $('#tablaReporteInventario tbody tr.fila-producto').filter(function () {
+                    var textoFila = $(this).data('search');
+                    var coincide = textoFila.indexOf(valor) > -1;
+                    $(this).toggle(coincide);
+                    if (coincide) visibles++;
+                });
+<<<<<<< HEAD
+=======
+
+>>>>>>> 7af84dbc4060a8bbaa8bab50c489e93f45a0ceba
+                $('#contadorVisibles').text(visibles);
+            });
+        });
+    </script>
+}

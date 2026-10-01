@@ -1,0 +1,223 @@
+﻿@model Vetcore.Models.Consultas
+@{
+    Layout = null; // Sin layout para usar la pantalla completa en modo impresión
+}
+
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="utf-8" />
+    <title>Receta Médica - @Model.Expedientes.Mascotas.Nombre</title>
+    <!-- Bootstrap para la cuadrícula -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- FontAwesome para íconos -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <style>
+        :root {
+            --vet-primary: #0ea5e9;
+            --vet-dark: #0f172a;
+            --vet-text: #334155;
+        }
+
+        /* En pantalla normal, el fondo es gris para que la "hoja" blanca resalte */
+        body {
+            font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+            color: var(--vet-text);
+            background: #f1f5f9;
+        }
+
+        /* Contenedor simulando una hoja de papel (A4 / Carta) */
+        .hoja-receta {
+            max-width: 800px;
+            margin: 40px auto;
+            padding: 50px;
+            background: #fff;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+            position: relative;
+            overflow: hidden;
+            border-radius: 8px;
+        }
+
+        /* Marca de agua (Logo gigante translúcido en el centro) */
+        .marca-agua {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            font-size: 350px;
+            color: var(--vet-primary);
+            opacity: 0.04;
+            z-index: 0;
+            pointer-events: none;
+        }
+
+        /* Aseguramos que el texto quede por encima de la marca de agua */
+        .contenido-receta {
+            position: relative;
+            z-index: 1;
+        }
+
+        /* Estructura del Header */
+        header {
+            border-bottom: 3px solid var(--vet-primary);
+            padding-bottom: 20px;
+            margin-bottom: 30px;
+        }
+
+        .logo-text {
+            color: var(--vet-primary);
+            font-weight: 900;
+            font-size: 2.2rem;
+            letter-spacing: -1px;
+            margin: 0;
+        }
+
+        /* Caja de Info del Paciente (Usa bordes en vez de fondos para impresoras) */
+        .info-paciente {
+            border: 2px solid #e2e8f0;
+            border-radius: 12px;
+            padding: 20px;
+            margin-bottom: 40px;
+            background-color: transparent;
+        }
+
+        .info-label { color: #64748b; font-size: 0.80rem; text-transform: uppercase; letter-spacing: 0.5px; font-weight: 700; display: block; margin-bottom: 2px;}
+        .info-value { font-weight: 600; color: var(--vet-dark); font-size: 1.15rem; }
+
+        /* Estilo clásico para el Símbolo Rx */
+        .rx-symbol {
+            font-size: 3.5rem;
+            font-weight: bold;
+            color: var(--vet-dark);
+            line-height: 1;
+            float: left;
+            margin-right: 15px;
+            margin-top: -10px;
+            font-family: 'Times New Roman', Times, serif;
+            font-style: italic;
+        }
+
+        /* Forzar una altura mínima asegura que la firma siempre quede hasta abajo de la hoja */
+        .cuerpo-receta {
+            min-height: 400px;
+        }
+
+        /* Footer y Firma */
+        footer {
+            margin-top: 30px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .linea-firma {
+            width: 320px;
+            border-bottom: 1px solid var(--vet-dark);
+            height: 50px;
+            margin-bottom: 10px;
+        }
+
+        /* Configuraciones exclusivas al momento de abrir el diálogo de impresión */
+        @@media print {
+            @@page { margin: 15mm; size: letter; }
+            body { background: #fff; }
+            .hoja-receta {
+                box-shadow: none;
+                margin: 0;
+                padding: 0;
+                border-radius: 0;
+                max-width: 100%;
+            }
+            .no-print { display: none !important; }
+            /* Fuerza al navegador a imprimir estilos y bordes suaves */
+            * { -webkit-print-color-adjust: exact !important; print-color-adjust: exact !important; }
+        }
+    </style>
+</head>
+<!-- Lanza el diálogo de impresión automáticamente al abrir la pestaña -->
+<body onload="window.print()">
+
+    <!-- Controles en pantalla (Botones web que desaparecerán en el papel) -->
+    <div class="text-center mt-4 mb-3 no-print">
+        <button onclick="window.close()" class="btn btn-light border me-2"><i class="fa-solid fa-arrow-left me-1"></i> Cerrar Pestaña</button>
+        <button onclick="window.print()" class="btn btn-primary px-4 shadow-sm"><i class="fa-solid fa-print me-1"></i> Imprimir Receta</button>
+    </div>
+
+    <!-- Hoja simulada -->
+    <div class="hoja-receta">
+        <!-- Marca de agua de fondo -->
+        <i class="fa-solid fa-stethoscope marca-agua"></i>
+
+        <div class="contenido-receta">
+
+            <!-- HEADER -->
+            <header class="d-flex justify-content-between align-items-center">
+                <div class="d-flex align-items-center gap-3">
+                    <i class="fa-solid fa-house-medical" style="font-size: 2.8rem; color: var(--vet-primary);"></i>
+                    <div>
+                        <h1 class="logo-text">VetCore</h1>
+                        <p class="mb-0 text-muted fw-bold" style="letter-spacing: 1px; font-size: 0.85rem; text-transform: uppercase;">Clínica Veterinaria</p>
+                    </div>
+                </div>
+                <div class="text-end text-muted" style="font-size: 0.95rem;">
+                    <p class="mb-1"><i class="fa-solid fa-location-dot me-1"></i> Av. Principal #123, Centro</p>
+                    <p class="mb-1"><i class="fa-solid fa-phone me-1"></i> (555) 123-4567</p>
+                    <p class="mb-0 fw-bold mt-1" style="color: var(--vet-dark);"><i class="fa-regular fa-calendar-days me-1"></i> Fecha: @Model.Fecha.Value.ToString("dd/MMM/yyyy")</p>
+                </div>
+            </header>
+
+            <main>
+                <!-- INFO DEL PACIENTE (Enmarcado clínico) -->
+                <section class="info-paciente row g-3 align-items-center">
+                    <div class="col-sm-5 border-end">
+                        <span class="info-label">Paciente</span>
+                        <span class="info-value"><i class="fa-solid fa-paw text-muted me-1 small"></i> @Model.Expedientes.Mascotas.Nombre</span>
+                    </div>
+                    <div class="col-sm-4 border-end pl-sm-4">
+                        <span class="info-label">Propietario</span>
+                        <span class="info-value"><i class="fa-solid fa-user text-muted me-1 small"></i> @Model.Expedientes.Mascotas.Propietarios.Nombre @Model.Expedientes.Mascotas.Propietarios.Apellidos</span>
+                    </div>
+                    <div class="col-sm-3 text-center">
+                        <div class="d-flex justify-content-around">
+                            <div>
+                                <span class="info-label">Peso</span>
+                                <span class="info-value">@(Model.PesoKg?.ToString("0.00") ?? "-") <small class="text-muted" style="font-size: 0.8rem;">Kg</small></span>
+                            </div>
+                            <div>
+                                <span class="info-label">Temp</span>
+                                <span class="info-value">@(Model.Temperatura?.ToString("0.0") ?? "-") <small class="text-muted" style="font-size: 0.8rem;">°C</small></span>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- CUERPO DE LA RECETA -->
+                <section class="cuerpo-receta">
+                    <div class="clearfix mb-3">
+                        <span class="rx-symbol">Rx</span>
+                        <h5 style="color: var(--vet-primary); border-bottom: 2px solid #e2e8f0; padding-bottom: 8px; margin-top: 18px; padding-left: 65px;">
+                            <strong>Tratamiento Médico / Indicaciones</strong>
+                        </h5>
+                    </div>
+
+                    <!-- Pre-wrap respeta los saltos de línea ingresados por el doctor en el Textarea -->
+                    <div style="white-space: pre-wrap; font-size: 1.15rem; line-height: 1.8; margin-top: 25px; padding-left: 10px; color: #1e293b;">
+                        @Model.RecetaMedica
+                    </div>
+                </section>
+            </main>
+
+            <!-- FIRMA -->
+            <footer>
+                <div class="linea-firma"></div>
+                <p class="mt-2 mb-0 fw-bold" style="font-size: 1.15rem; color: var(--vet-dark);">MVZ. @Model.Empleados.Nombre @Model.Empleados.Apellidos</p>
+                <p class="text-muted small mb-0">Médico Veterinario Zootecnista</p>
+                @*<p class="text-muted small mt-1">Cédula Profesional: <strong style="color: #64748b;">En trámite</strong></p>*@
+            </footer>
+
+        </div>
+    </div>
+
+</body>
+</html>

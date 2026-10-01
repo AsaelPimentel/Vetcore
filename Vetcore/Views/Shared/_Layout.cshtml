@@ -1,0 +1,380 @@
+﻿@using Vetcore.Helpers <!-- Importamos el namespace para acceder a los Helpers -->
+
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@ViewBag.Title - Vetcore</title>
+    @Styles.Render("~/Content/css")
+    @Scripts.Render("~/bundles/modernizr")
+
+    <link href="~/Content/Vetcore.css" rel="stylesheet" />
+    <!-- Font Awesome 6 -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" rel="stylesheet" />
+    <!-- SweetAlert2 CSS & JS CDN -->
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+    <style>
+        body {
+            background-color: var(--vc-bg-color, #f8fafc);
+            margin: 0;
+            overflow-x: hidden;
+            font-family: var(--vc-font-body, 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif);
+        }
+
+        #wrapper {
+            display: flex;
+            min-height: 100vh;
+            transition: all 0.3s ease;
+        }
+
+        /* --- MENÚ LATERAL (SIDEBAR) --- */
+        #sidebar-wrapper {
+            width: 260px;
+            background-color: #ffffff;
+            border-right: 1px solid var(--vc-border, #e2e8f0);
+            display: flex;
+            flex-direction: column;
+            position: fixed;
+            height: 100vh;
+            z-index: 1040;
+            transition: all 0.3s ease;
+            margin-left: -260px;
+        }
+
+        .sidebar-brand {
+            padding: 1.5rem;
+            font-size: 1.4rem;
+            font-weight: 800;
+            color: var(--vc-primary, #0ea5e9);
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            letter-spacing: -0.5px;
+        }
+
+        .sidebar-nav {
+            list-style: none;
+            padding: 0 1rem;
+            margin: 0;
+            flex-grow: 1;
+            overflow-y: auto;
+        }
+
+            .sidebar-nav::-webkit-scrollbar {
+                width: 4px;
+            }
+
+            .sidebar-nav::-webkit-scrollbar-thumb {
+                background-color: #e2e8f0;
+                border-radius: 10px;
+            }
+
+            .sidebar-nav li {
+                margin-bottom: 0.4rem;
+            }
+
+            .sidebar-nav a {
+                display: flex;
+                align-items: center;
+                padding: 0.8rem 1rem;
+                color: #64748b;
+                text-decoration: none;
+                border-radius: 10px;
+                font-weight: 500;
+                font-size: 0.95rem;
+                transition: all 0.2s ease;
+            }
+
+                .sidebar-nav a i {
+                    width: 26px;
+                    font-size: 1.1rem;
+                    text-align: center;
+                    margin-right: 12px;
+                    transition: transform 0.2s;
+                }
+
+                .sidebar-nav a:hover {
+                    background-color: #f1f5f9;
+                    color: #0f172a;
+                }
+
+                .sidebar-nav a.active {
+                    background-color: var(--vc-primary-light, #e0f2fe);
+                    color: var(--vc-primary, #0ea5e9);
+                    font-weight: 700;
+                    box-shadow: 0 2px 4px rgba(14, 165, 233, 0.08);
+                }
+
+                    .sidebar-nav a.active i {
+                        transform: scale(1.1);
+                    }
+
+        /* --- ÁREA PRINCIPAL --- */
+        #page-content-wrapper {
+            flex-grow: 1;
+            width: 100%;
+            display: flex;
+            flex-direction: column;
+            transition: all 0.3s ease;
+            margin-left: 0;
+        }
+
+        .top-navbar {
+            background-color: #ffffff;
+            height: 70px;
+            border-bottom: 1px solid var(--vc-border, #e2e8f0);
+            display: flex;
+            align-items: center;
+            padding: 0 1.5rem;
+            justify-content: space-between;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.02);
+            position: sticky;
+            top: 0;
+            z-index: 1020;
+        }
+
+        .main-content {
+            padding: 1.5rem;
+            flex-grow: 1;
+        }
+
+        /* Avatar con iniciales corporativo */
+        .user-avatar-initials {
+            background: linear-gradient(135deg, #0284c7, #0ea5e9);
+            color: white;
+            border-radius: 50%;
+            width: 42px;
+            height: 42px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-weight: 700;
+            font-size: 0.95rem;
+            box-shadow: 0 4px 6px -1px rgba(2, 132, 199, 0.25);
+        }
+
+        /* --- RESPONSIVIDAD Y COMPORTAMIENTO TOGGLE --- */
+        #wrapper.toggled #sidebar-wrapper {
+            margin-left: 0;
+        }
+
+        .sidebar-overlay {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: rgba(0,0,0,0.4);
+            z-index: 1030;
+            backdrop-filter: blur(2px);
+        }
+
+        #wrapper.toggled .sidebar-overlay {
+            display: block;
+        }
+
+        @@media (min-width: 768px) {
+            #sidebar-wrapper {
+                margin-left: 0;
+            }
+
+            #page-content-wrapper {
+                margin-left: 260px;
+                width: calc(100% - 260px);
+            }
+
+            #wrapper.toggled #sidebar-wrapper {
+                margin-left: -260px;
+            }
+
+            #wrapper.toggled #page-content-wrapper {
+                margin-left: 0;
+                width: 100%;
+            }
+
+            #wrapper.toggled .sidebar-overlay {
+                display: none;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div id="wrapper">
+
+        <!-- Capa oscura para móviles -->
+        <div class="sidebar-overlay" id="sidebarOverlay"></div>
+
+        <!-- SIDEBAR -->
+        <div id="sidebar-wrapper">
+            <a href="@Url.Action("Index", "Home")" class="sidebar-brand">
+                <i class="fa-solid fa-briefcase-medical"></i> VetCore
+            </a>
+
+            <ul class="sidebar-nav mt-3">
+                <li>
+                    <a href="@Url.Action("Index", "Home")" class="@(ViewContext.RouteData.Values["Controller"].ToString() == "Home" ? "active" : "")">
+                        <i class="fa-solid fa-chart-pie"></i> Dashboard
+                    </a>
+                </li>
+                <li>
+                    <a href="@Url.Action("Index", "Citas")" class="@(ViewContext.RouteData.Values["Controller"].ToString() == "Citas" ? "active" : "")">
+                        <i class="fa-regular fa-calendar-days"></i> Agenda de Citas
+                    </a>
+                </li>
+
+                <!-- SECCIÓN: CONTROL CLÍNICO -->
+                <li class="mt-4 mb-2 ps-3 text-uppercase" style="font-size: 0.7rem; color: #94a3b8; font-weight: 700; letter-spacing: 0.5px;">
+                    Control Clínico
+                </li>
+
+                <li>
+                    <a href="@Url.Action("Index", "Propietarios")" class="@(ViewContext.RouteData.Values["Controller"].ToString() == "Propietarios" ? "active" : "")">
+                        <i class="fa-solid fa-users"></i> Clientes
+                    </a>
+                </li>
+                <li>
+                    <a href="@Url.Action("Index", "Mascotas")" class="@(ViewContext.RouteData.Values["Controller"].ToString() == "Mascotas" ? "active" : "")">
+                        <i class="fa-solid fa-paw"></i> Pacientes
+                    </a>
+                </li>
+
+                <!-- Opciones restringidas por Rol: Personal Médico (Solo Administrador) -->
+<<<<<<< HEAD
+=======
+                <!-- MEJORA APLICADA: Uso de Context.IsAdmin() con Claims -->
+>>>>>>> 7af84dbc4060a8bbaa8bab50c489e93f45a0ceba
+                @if (Context.IsAdmin())
+                {
+                    <li>
+                        <a href="@Url.Action("Index", "Empleados")" class="@(ViewContext.RouteData.Values["Controller"].ToString() == "Empleados" ? "active" : "")">
+                            <i class="fa-solid fa-user-doctor"></i> Personal Médico
+                        </a>
+                    </li>
+                }
+
+                <li>
+                    <a href="@Url.Action("Index", "Productos")" class="@(ViewContext.RouteData.Values["Controller"].ToString() == "Productos" ? "active" : "")">
+                        <i class="fa-solid fa-boxes-stacked"></i> Productos
+                    </a>
+                </li>
+
+                <!-- Hospitalización visible para Administradores y Médicos Veterinarios -->
+<<<<<<< HEAD
+=======
+                <!-- MEJORA APLICADA: Uso de Context.IsMedicoOrAdmin() con Claims -->
+>>>>>>> 7af84dbc4060a8bbaa8bab50c489e93f45a0ceba
+                @if (Context.IsMedicoOrAdmin())
+                {
+                    <li>
+                        <a href="@Url.Action("Index", "Hospitalizacion")" class="@(ViewContext.RouteData.Values["Controller"].ToString() == "Hospitalizacion" ? "active" : "")">
+                            <i class="fa-solid fa-bed-pulse"></i> Hospitalización
+                        </a>
+                    </li>
+                }
+
+                <!-- SECCIÓN: COMERCIAL -->
+                <li class="mt-4 mb-2 ps-3 text-uppercase" style="font-size: 0.7rem; color: #94a3b8; font-weight: 700; letter-spacing: 0.5px;">
+                    Comercial
+                </li>
+
+                <li>
+                    <a href="@Url.Action("Index", "Ventas")" class="@(ViewContext.RouteData.Values["Controller"].ToString() == "Ventas" ? "active" : "")">
+                        <i class="fa-solid fa-cash-register"></i> Punto de Venta
+                    </a>
+                </li>
+
+                <!-- SECCIÓN: CONFIGURACIÓN (Estrictamente Administrador) -->
+<<<<<<< HEAD
+=======
+                <!-- MEJORA APLICADA: Uso de Context.IsAdmin() con Claims -->
+>>>>>>> 7af84dbc4060a8bbaa8bab50c489e93f45a0ceba
+                @if (Context.IsAdmin())
+                {
+                    <li>
+                        <div class="nav-label mt-4 mb-2 small text-muted fw-bold text-uppercase px-3" style="letter-spacing: 1px;">Configuración</div>
+                        <a href="@Url.Action("Index", "Catalogos")" class="nav-item @(ViewContext.RouteData.Values["Controller"].ToString() == "Catalogos" ? "active" : "")">
+                            <i class="fa-solid fa-sliders"></i> Ajustes del Sistema
+                        </a>
+                    </li>
+                }
+            </ul>
+
+            <div class="p-4 border-top text-center" style="font-size: 0.8rem; color: #94a3b8;">
+                &copy; @DateTime.Now.Year - Vetcore V1.0
+            </div>
+        </div>
+
+        <!-- CONTENIDO PRINCIPAL -->
+        <div id="page-content-wrapper">
+
+            <!-- BARRA SUPERIOR -->
+            <div class="top-navbar">
+                <button id="menu-toggle" style="border: none; background-color: #f1f5f9; font-size: 1.4rem; padding: 6px 14px; color: #64748b; border-radius: 8px; cursor: pointer; transition: all 0.2s ease;" onmouseover="this.style.backgroundColor='#e2e8f0'" onmouseout="this.style.backgroundColor='#f1f5f9'">
+                    <i class="fa-solid fa-bars"></i>
+                </button>
+
+<<<<<<< HEAD
+                <!-- Perfil del Usuario Logueado con Iniciales Dinámicas -->
+=======
+                <!-- Perfil del Usuario Logueado con Iniciales Dinámicas (Modificado para Claims) -->
+>>>>>>> 7af84dbc4060a8bbaa8bab50c489e93f45a0ceba
+                <div class="d-flex align-items-center gap-3">
+                    <div class="text-end d-none d-md-block">
+                        <div class="fw-bold text-dark" style="font-size: 0.9rem;">
+                            @(Context.ObtenerNombreEmpleado())
+                        </div>
+                        <div class="text-muted" style="font-size: 0.75rem;">
+                            @(Context.ObtenerRolEmpleado())
+                        </div>
+                    </div>
+
+                    @{
+                        string nombreUsuario = Context.ObtenerNombreEmpleado();
+                        string iniciales = (!string.IsNullOrEmpty(nombreUsuario) && nombreUsuario != "Invitado")
+                                            ? nombreUsuario.Substring(0, 1).ToUpper()
+                                            : "I";
+                    }
+                    <div class="user-avatar-initials" title="@nombreUsuario">
+                        @iniciales
+                    </div>
+
+                    <a href="@Url.Action("Logout", "Auth")" class="btn btn-sm btn-outline-danger ms-2 rounded-pill px-3" title="Cerrar Sesión">
+                        <i class="fa-solid fa-power-off me-1"></i> Salir
+                    </a>
+                </div>
+            </div>
+
+            <!-- VISTAS -->
+            <div class="main-content container-fluid">
+                @RenderBody()
+            </div>
+
+        </div>
+    </div>
+
+    @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/bundles/bootstrap")
+    <script src="~/Scripts/vetcore-catalogos.js"></script>
+    <script src="~/Scripts/vetcore-listados.js"></script>
+
+    <script>
+        $(document).ready(function () {
+            $("#menu-toggle").click(function (e) {
+                e.preventDefault();
+                $("#wrapper").toggleClass("toggled");
+            });
+
+            $("#sidebarOverlay").click(function () {
+                $("#wrapper").removeClass("toggled");
+            });
+        });
+    </script>
+
+    @RenderSection("scripts", required: false)
+</body>
+</html>

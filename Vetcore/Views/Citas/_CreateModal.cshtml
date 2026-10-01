@@ -1,0 +1,70 @@
+﻿@model Vetcore.Models.Citas
+
+<div class="modal fade" id="modalCita" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-lg">
+        <div class="modal-content card-modern" style="border: none; padding: 0;">
+            <div class="modal-header border-0 pb-0 px-4 pt-4">
+                <div>
+                    <h3 class="headline mb-0">Agendar Cita</h3>
+                    <p class="body-text mb-0 small">Programa un servicio para un paciente.</p>
+                </div>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
+            </div>
+            <div class="modal-body px-4 pb-4">
+                <form id="frmCreateCita">
+                    @Html.AntiForgeryToken()
+                    <div class="row g-4 mt-1">
+
+                        <div class="col-md-6">
+                            <label class="label mb-2"><i class="fa-solid fa-paw text-primary me-1"></i> Paciente</label>
+                            <!-- El tercer parámetro actúa como el placeholder del DropDownList -->
+                            @Html.DropDownList("IdMascota", null, "Seleccione el paciente...", new { @class = "form-control" })
+                            @Html.ValidationMessageFor(m => m.IdMascota, "", new { @class = "text-danger small" })
+                        </div>
+
+                        <div class="col-md-6">
+                            <label class="label mb-2"><i class="fa-solid fa-user-doctor text-secondary me-1"></i> Médico/Estilista</label>
+                            @Html.DropDownList("IdEmpleado", null, "Seleccione al especialista...", new { @class = "form-control" })
+                            @Html.ValidationMessageFor(m => m.IdEmpleado, "", new { @class = "text-danger small" })
+                        </div>
+
+                        <div class="col-md-6">
+                            <label class="label mb-2">Fecha y Hora</label>
+                            <input type="datetime-local" id="FechaHora" name="FechaHora" class="form-control" required value="@ViewBag.FechaSeleccionada" />
+                            @Html.ValidationMessageFor(m => m.FechaHora, "", new { @class = "text-danger small" })
+                        </div>
+
+                        <div class="col-md-6">
+                            <label class="label mb-2">Tipo de Servicio</label>
+                            <select class="form-control" id="Tipo" name="Tipo" required>
+                                <!-- La primera opción vacía actúa como placeholder -->
+                                <option value="">Seleccione el servicio...</option>
+                                <option value="Consulta">Consulta Médica</option>
+                                <option value="Estetica">Estética / Spa</option>
+                                <option value="Vacunacion">Vacunación</option>
+                                <option value="Cirugia">Cirugía</option>
+                            </select>
+                            @Html.ValidationMessageFor(m => m.Tipo, "", new { @class = "text-danger small" })
+                        </div>
+
+                        <div class="col-12">
+                            <label class="label mb-2">Motivo / Observaciones</label>
+                            <!-- Aquí agregamos el placeholder real para guiar al recepcionista -->
+                            @Html.TextAreaFor(m => m.Motivo, new { @class = "form-control", rows = "2", placeholder = "Ej. Revisión general, corte de pelo, limpieza dental..." })
+                            @Html.ValidationMessageFor(m => m.Motivo, "", new { @class = "text-danger small" })
+                        </div>
+
+                        <div class="col-12 mt-4 d-flex justify-content-end gap-3 pt-3 border-top">
+                            <button type="button" class="btn btn-outlined" data-bs-dismiss="modal">Cancelar</button>
+                            <button type="button" id="btnGuardarCita" class="btn btn-primary">
+                                <i class="fa-solid fa-calendar-check"></i> Confirmar Cita
+                            </button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+@Scripts.Render("~/bundles/jqueryval")

@@ -1,0 +1,137 @@
+﻿@using Vetcore.Helpers <!-- Importamos la clase de Roles y Extensiones -->
+@model IEnumerable<Vetcore.Models.Productos>
+
+<div class="table-responsive">
+    <table class="table-modern align-middle mb-0 w-100">
+        <thead>
+            <tr>
+                <th class="ps-4">Código / Producto & Lote</th>
+                <th>Categoría</th>
+                <th>Costo / Venta</th>
+                <th class="text-center">Stock Actual</th>
+                <th class="text-center">Estado Stock</th>
+                <th class="text-end pe-4">Acciones</th>
+            </tr>
+        </thead>
+        <tbody>
+            @if (!Model.Any())
+            {
+                <tr>
+                    <td colspan="6" class="text-center py-5">
+                        <div style="color: #cbd5e1; font-size: 2.5rem; margin-bottom: 10px;">
+                            <i class="fa-solid fa-box-open"></i>
+                        </div>
+                        <p class="body-text fw-medium text-dark mb-0">No se encontraron productos registrados.</p>
+                        <small class="text-muted">Agrega medicamentos, alimentos o artículos al inventario.</small>
+                    </td>
+                </tr>
+            }
+            else
+            {
+                foreach (var item in Model)
+                {
+                    bool esServicio = item.StockActual == null;
+                    int stockDisponible = esServicio ? 0 : item.StockActual.Value;
+                    int stockMinimo = item.StockMinimo ?? 0;
+<<<<<<< HEAD
+
+=======
+>>>>>>> 7af84dbc4060a8bbaa8bab50c489e93f45a0ceba
+                    <tr>
+                        <td class="ps-4">
+                            <div class="fw-bold text-dark" style="font-size: 0.95rem;">@item.Nombre</div>
+                            <small class="text-muted d-block">
+                                <i class="fa-solid fa-barcode me-1"></i> @(string.IsNullOrEmpty(item.CodigoBarras) ? "Sin código" : item.CodigoBarras)
+                            </small>
+                            @if (!string.IsNullOrEmpty(item.Lote) || item.FechaCaducidad != null)
+                            {
+                                <small class="text-secondary fw-medium">
+                                    @if (!string.IsNullOrEmpty(item.Lote))
+                                    {
+                                        <span><i class="fa-solid fa-layer-group me-1"></i> Lote: @item.Lote</span>
+                                    }
+                                    @if (item.FechaCaducidad != null)
+                                    {
+                                        <span class="ms-2"><i class="fa-regular fa-calendar-days me-1"></i> Cad: @item.FechaCaducidad.Value.ToString("dd/MM/yyyy")</span>
+                                    }
+                                </small>
+                            }
+                        </td>
+                        <td>
+                            <span class="badge" style="background-color: #f1f5f9; color: #475569; border: 1px solid #cbd5e1;">
+                                <!-- NULL SAFETY MEJORADO -->
+                                @(item.Categorias?.Nombre ?? "Sin categoría")
+                            </span>
+                        </td>
+                        <td>
+                            <!-- MIGRACIÓN A CLAIMS: Cambiamos Session por Context -->
+                            @if (Context.IsMedicoOrAdmin())
+                            {
+                                <div class="text-muted small">Costo: $@item.PrecioCosto.ToString("N2")</div>
+                            }
+                            <div class="fw-bold text-success">Venta: $@item.PrecioVenta.ToString("N2")</div>
+                        </td>
+                        <td class="text-center">
+                            @if (esServicio)
+                            {
+                                <span class="text-muted fst-italic small">Ilimitado</span>
+                            }
+                            else
+                            {
+                                <span class="fw-bold fs-6 @(stockDisponible <= stockMinimo ? "text-danger" : "text-dark")">
+                                    @stockDisponible
+                                </span>
+                            }
+                        </td>
+                        <td class="text-center">
+                            @if (esServicio)
+                            {
+                                <span class="badge px-2.5 py-1.5 bg-primary-subtle text-primary border border-primary-subtle">Servicio</span>
+                            }
+                            else if (stockDisponible <= 0)
+                            {
+                                <span class="badge px-2.5 py-1.5" style="background-color: #fee2e2; color: #b91c1c;">Agotado</span>
+                            }
+                            else if (stockDisponible <= stockMinimo)
+                            {
+                                <span class="badge px-2.5 py-1.5" style="background-color: #fef3c7; color: #d97706;">Stock Bajo</span>
+                            }
+                            else
+                            {
+                                <span class="badge px-2.5 py-1.5" style="background-color: #d1fae5; color: #047857;">Disponible</span>
+                            }
+                        </td>
+                        <td class="text-end pe-4">
+                            <!-- EDITAR: Estrictamente Administrador. MIGRACIÓN A CLAIMS -->
+                            @if (Context.IsAdmin())
+                            {
+                                <button type="button" onclick="abrirModalEdit(@item.IdProducto)" class="btn btn-icon btn-outlined btn-sm shadow-sm me-1" title="Editar Producto">
+                                    <i class="fa-solid fa-pen-to-square text-primary"></i>
+                                </button>
+                            }
+
+<<<<<<< HEAD
+                            <!-- AJUSTE / MERMA: Administrador y Médico (Corrección de rol según tu controlador) -->
+                            @if (Context.IsMedicoOrAdmin())
+=======
+                            <!-- AJUSTE / MERMA: Administrador y Médico. MIGRACIÓN A CLAIMS -->
+                            @if (Context.IsAdmin())
+>>>>>>> 7af84dbc4060a8bbaa8bab50c489e93f45a0ceba
+                            {
+                                if (!esServicio)
+                                {
+                                    <button type="button" onclick="abrirModalAjuste(@item.IdProducto)" class="btn btn-icon btn-outlined btn-sm shadow-sm" title="Registrar entrada, salida o merma">
+                                        <i class="fa-solid fa-right-left text-secondary"></i>
+                                    </button>
+                                }
+                            }
+                        </td>
+                    </tr>
+                }
+            }
+        </tbody>
+    </table>
+</div>
+
+<!-- Componente Global de Paginación -->
+@Html.Partial("_Paginacion")

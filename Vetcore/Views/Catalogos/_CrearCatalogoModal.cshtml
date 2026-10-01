@@ -1,0 +1,104 @@
+﻿<div class="modal fade" id="modalCatalogo" tabindex="-1">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content card-modern" style="border: none; padding: 0; overflow: hidden; border-radius: 16px;">
+            <div class="modal-header border-0 px-4 pt-4 pb-3" style="background-color: #f8fafc;">
+                <div>
+                    <h3 class="headline mb-1" style="color: #0f172a; font-size: 1.25rem;">
+                        <i class="fa-solid fa-plus text-primary me-2"></i> Nuevo Registro (@ViewBag.Entidad)
+                    </h3>
+                    <p class="body-text mb-0 small text-muted">Ingrese los datos correspondientes para el catálogo.</p>
+                </div>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
+            </div>
+            <div class="modal-body px-4 pb-4 pt-3">
+                <form id="frmCatalogo">
+                    @Html.AntiForgeryToken()
+                    <input type="hidden" name="entidad" value="@ViewBag.Entidad" />
+
+                    <div class="p-3 rounded-3 mb-3" style="background-color: #f1f5f9; border: 1px solid #e2e8f0;">
+                        <div class="row g-3">
+                            @if (ViewBag.Entidad == "Roles")
+                            {
+                                <div class="col-12">
+                                    <label class="label mb-1 fw-semibold text-secondary">Nombre del Rol</label>
+                                    <input type="text" name="Nombre" class="form-control" required placeholder="Ej. Gerente, Doctor..." autocomplete="off" />
+                                </div>
+                                <div class="col-12">
+                                    <label class="label mb-1 fw-semibold text-secondary">Descripción</label>
+                                    <textarea name="Descripcion" class="form-control" rows="2" placeholder="Breve descripción de permisos..."></textarea>
+                                </div>
+                            }
+                            else if (ViewBag.Entidad == "Puestos")
+                            {
+                                <div class="col-12">
+                                    <label class="label mb-1 fw-semibold text-secondary">Nombre del Puesto</label>
+                                    <input type="text" name="Nombre" class="form-control" required placeholder="Ej. Cirujano" autocomplete="off" />
+                                </div>
+                                <div class="col-12">
+                                    <label class="label mb-1 fw-semibold text-secondary">Nivel de Acceso (1 a 3)</label>
+                                    <input type="number" name="NivelAcceso" class="form-control" value="1" min="1" max="3" />
+                                </div>
+                            }
+                            else if (ViewBag.Entidad == "Razas")
+                            {
+                                <div class="col-12">
+                                    <label class="label mb-1 fw-semibold text-secondary">Seleccionar Especie</label>
+                                    @Html.DropDownList("IdEspecie", null, "Seleccione...", new { @class = "form-control", required = "required" })
+                                </div>
+                                <div class="col-12">
+                                    <label class="label mb-1 fw-semibold text-secondary">Nombre de la Raza</label>
+                                    <input type="text" name="Nombre" class="form-control" required placeholder="Ej. Golden Retriever" autocomplete="off" />
+                                </div>
+                            }
+                            else if (ViewBag.Entidad == "Categorias")
+                            {
+                                <div class="col-12">
+                                    <label class="label mb-1 fw-semibold text-secondary">Nombre de Categoría</label>
+                                    <input type="text" name="Nombre" class="form-control" required placeholder="Ej. Medicamentos, Alimentos" autocomplete="off" />
+                                </div>
+                                <div class="col-12 mt-2">
+                                    <div class="form-check p-3 rounded bg-white border">
+                                        <input class="form-check-input" type="checkbox" name="EsServicio" value="true" id="EsServicioCheck">
+                                        <label class="form-check-label fw-bold text-dark small ms-1" for="EsServicioCheck">
+                                            ¿Es un servicio intangible? <span class="text-muted fw-normal d-block" style="font-size: 0.8rem;">(No maneja inventario o stock físico en farmacia/POS)</span>
+                                        </label>
+                                    </div>
+                                </div>
+                            }
+                            else if (ViewBag.Entidad == "Jaulas")
+                            {
+                                <div class="col-12">
+                                    <label class="label mb-1 fw-semibold text-secondary">Código o Número de Jaula</label>
+                                    <input type="text" name="Codigo" class="form-control" required placeholder="Ej. J-01" autocomplete="off" />
+                                </div>
+                                <div class="col-12">
+                                    <label class="label mb-1 fw-semibold text-secondary">Tamaño</label>
+                                    <select name="Tamano" class="form-control">
+                                        <option value="Pequeña">Pequeña (Gatos / Perros chicos)</option>
+                                        <option value="Mediana">Mediana</option>
+                                        <option value="Grande">Grande (Razas grandes)</option>
+                                    </select>
+                                </div>
+                            }
+                            else // Especies por defecto
+                            {
+                                <div class="col-12">
+                                    <label class="label mb-1 fw-semibold text-secondary">Nombre de la Especie</label>
+                                    <input type="text" name="Nombre" class="form-control" required placeholder="Ej. Reptil, Aves..." autocomplete="off" />
+                                </div>
+                            }
+                        </div>
+                    </div>
+
+                    <!-- Botones de Acción -->
+                    <div class="d-flex justify-content-end gap-3 pt-3 border-top">
+                        <button type="button" class="btn btn-light border px-4" data-bs-dismiss="modal">Cancelar</button>
+                        <button type="button" id="btnGuardarCatalogo" class="btn btn-primary px-4 shadow-sm d-flex align-items-center gap-2">
+                            <i class="fa-solid fa-save"></i> <span>Guardar Registro</span>
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>

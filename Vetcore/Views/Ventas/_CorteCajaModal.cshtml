@@ -1,0 +1,70 @@
+﻿@model Vetcore.Models.CajasSesion
+@{
+    Layout = null;
+}
+
+<div class="modal fade" id="corteCajaModal" tabindex="-1" aria-hidden="true" data-bs-backdrop="static">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content border-0 shadow-lg" style="border-radius: 16px;">
+            <div class="modal-header border-bottom-0 pb-0">
+                <h5 class="modal-title fw-bold text-dark d-flex align-items-center gap-2">
+                    <div style="width: 40px; height: 40px; background-color: #fee2e2; color: #ef4444; border-radius: 10px; display: flex; align-items: center; justify-content: center;">
+                        <i class="fa-solid fa-cash-register"></i>
+                    </div>
+                    Corte y Cierre de Caja
+                </h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
+            </div>
+
+            @using (Html.BeginForm("CerrarCaja", "Ventas", FormMethod.Post, new { id = "formCorteCaja" }))
+            {
+                @Html.AntiForgeryToken()
+                @Html.HiddenFor(m => m.IdSesion)
+
+                <div class="modal-body py-4">
+                    <!-- Resumen del Sistema -->
+                    <div class="p-3 mb-4 rounded-3" style="background-color: #f8fafc; border: 1px solid #e2e8f0;">
+                        <h6 class="text-muted small fw-bold text-uppercase mb-3" style="letter-spacing: 0.5px;">Resumen del Sistema</h6>
+
+                        <div class="d-flex justify-content-between mb-2 small">
+                            <span class="text-secondary">Fondo Inicial de Caja:</span>
+                            <span class="fw-medium text-dark">$@(((decimal)ViewBag.FondoInicial).ToString("N2"))</span>
+                        </div>
+                        <div class="d-flex justify-content-between mb-2 small">
+                            <span class="text-secondary">Ventas en Efectivo:</span>
+                            <span class="fw-medium text-success">+$@(((decimal)ViewBag.VentasEfectivo).ToString("N2"))</span>
+                        </div>
+                        <div class="d-flex justify-content-between mb-2 small border-bottom pb-2">
+                            <span class="text-secondary">Ventas con Tarjeta:</span>
+                            <span class="fw-medium text-primary">+$@(((decimal)ViewBag.VentasTarjeta).ToString("N2"))</span>
+                        </div>
+
+                        <div class="d-flex justify-content-between align-items-center mt-3">
+                            <span class="fw-bold text-dark" style="font-size: 0.9rem;">Total de Ventas (Turno):</span>
+                            <span class="fw-bold text-dark" style="font-size: 1.1rem;">$@(((decimal)ViewBag.TotalVentas).ToString("N2"))</span>
+                        </div>
+                    </div>
+
+                    <!-- Input para contar el efectivo -->
+                    <div class="p-3 rounded-3" style="background-color: #fef2f2; border: 1px dashed #fca5a5;">
+                        <label class="form-label fw-bold text-danger mb-1"><i class="fa-solid fa-money-bill-wave me-1"></i> Efectivo a entregar (Cierre)</label>
+                        <p class="small text-danger opacity-75 mb-2">Cuente los billetes y monedas del cajón e ingrese el total real.</p>
+
+                        <div class="input-group input-group-lg shadow-sm">
+                            <span class="input-group-text bg-white border-end-0 fw-bold text-danger">$</span>
+                            <!-- El valor por defecto es lo que el sistema espera (Fondo + Efectivo vendido) -->
+                            <input type="number" name="MontoCierre" class="form-control border-start-0 text-danger fw-bold" step="0.01" min="0" value="@(((decimal)ViewBag.EfectivoEsperado).ToString("0.00"))" required />
+                        </div>
+                    </div>
+                </div>
+
+                <div class="modal-footer border-top-0 pt-0">
+                    <button type="button" class="btn btn-light px-4 fw-semibold border" data-bs-dismiss="modal">Cancelar</button>
+                    <button type="button" id="btnConfirmarCierre" class="btn btn-danger px-4 fw-bold shadow-sm d-flex align-items-center gap-2">
+                        <i class="fa-solid fa-lock"></i> Confirmar Corte y Cerrar Caja
+                    </button>
+                </div>
+            }
+        </div>
+    </div>
+</div>

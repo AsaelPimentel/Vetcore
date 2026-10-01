@@ -1,0 +1,185 @@
+﻿@model IEnumerable<Vetcore.Models.Empleados>
+<<<<<<< HEAD
+=======
+
+>>>>>>> 7af84dbc4060a8bbaa8bab50c489e93f45a0ceba
+@{
+    ViewBag.Title = "Personal de la Clínica";
+}
+
+<!-- Encabezado Mejorado con Icono y Descripción Estilizada -->
+<div class="d-flex flex-column flex-md-row justify-content-between align-items-md-center gap-3 mb-4 pb-3 border-bottom">
+    <div class="d-flex align-items-center gap-3">
+        <div style="width: 50px; height: 50px; background-color: var(--vc-primary-light, #e0f2fe); color: var(--vc-primary, #0284c7); border-radius: 12px; display: flex; align-items: center; justify-content: center; font-size: 1.5rem;">
+            <i class="fa-solid fa-user-doctor"></i>
+        </div>
+        <div>
+            <h3 class="headline mb-1" style="color: #1e293b; font-weight: 700;">Directorio de Personal</h3>
+            <p class="body-text text-muted mb-0 small">Gestión integral de médicos veterinarios, estilistas y personal administrativo.</p>
+        </div>
+    </div>
+<<<<<<< HEAD
+=======
+
+>>>>>>> 7af84dbc4060a8bbaa8bab50c489e93f45a0ceba
+    <!-- Botón que abre el modal de Crear -->
+    <div>
+        <button onclick="abrirModalCreate()" class="btn btn-primary px-4 shadow-sm d-flex align-items-center gap-2">
+            <i class="fa-solid fa-user-plus"></i> <span>Registrar Empleado</span>
+        </button>
+    </div>
+</div>
+
+<!-- Contenedor Principal de la Tabla y Filtros -->
+<div class="card-modern p-4 shadow-sm border-0" style="background: #ffffff; border-radius: 16px;">
+    <div class="row mb-4">
+        <div class="col-md-6 col-lg-5">
+            <div class="search-container">
+                <i class="fa-solid fa-magnifying-glass text-muted"></i>
+                <input type="text" id="searchInput" data-url="@Url.Action("Index", "Empleados")" class="search-input form-control" placeholder="Buscar por nombre o puesto..." value="@ViewBag.SearchTerm" autocomplete="off" />
+            </div>
+        </div>
+    </div>
+<<<<<<< HEAD
+=======
+
+>>>>>>> 7af84dbc4060a8bbaa8bab50c489e93f45a0ceba
+    <div id="table-container">
+        @Html.Partial("_TablaEmpleados", Model)
+    </div>
+</div>
+
+<!-- Contenedor del Modal -->
+<div id="modal-container"></div>
+
+@section Scripts {
+    <script>
+        // 1. FUNCIONES GLOBALES
+        function loadTable(search, page) {
+            $('#table-container').css('opacity', '0.5');
+            $.ajax({
+                url: '@Url.Action("Index", "Empleados")',
+                type: 'GET',
+                data: { search: search, page: page },
+                success: function (result) {
+                    $('#table-container').html(result).css('opacity', '1');
+                }
+            });
+        }
+
+        function abrirModalCreate() {
+            $.get('@Url.Action("Create", "Empleados")', function (data) {
+                $('#modal-container').html(data);
+                $('#modalCreateEmpleado').modal('show');
+            });
+        }
+
+        function abrirModalEdit(id) {
+            $.get('@Url.Action("Edit", "Empleados")/' + id, function (data) {
+                $('#modal-container').html(data);
+                $('#modalEditEmpleado').modal('show');
+            });
+        }
+
+        function abrirModalDetails(id) {
+            $.get('@Url.Action("Details", "Empleados")/' + id, function (data) {
+                $('#modal-container').html(data);
+                $('#modalDetailsEmpleado').modal('show');
+            });
+        }
+
+        function abrirModalDelete(id) {
+            $.get('@Url.Action("Delete", "Empleados")/' + id, function (data) {
+                $('#modal-container').html(data);
+                $('#modalDeleteEmpleado').modal('show');
+            });
+        }
+
+        // 2. LISTENERS
+        $(document).ready(function () {
+            let timeout = null;
+            $('#searchInput').on('keyup', function () {
+                clearTimeout(timeout);
+                var query = $(this).val();
+                timeout = setTimeout(function () { loadTable(query, 1); }, 400);
+            });
+
+            $(document).on('click', '.page-link-ajax', function (e) {
+                e.preventDefault();
+                loadTable($('#searchInput').val(), $(this).data('page'));
+            });
+
+            // CREATE
+            $(document).on('click', '#btnGuardarEmpleado', function () {
+                var form = $('#frmCreateEmpleado');
+                $.post('@Url.Action("Create", "Empleados")', form.serialize(), function (response) {
+                    if (response.success) {
+                        var myModalEl = document.getElementById('modalCreateEmpleado');
+                        var modal = bootstrap.Modal.getInstance(myModalEl);
+                        if (modal) modal.hide();
+<<<<<<< HEAD
+                        $('.modal-backdrop').remove();
+                        $('body').removeClass('modal-open');
+=======
+
+                        $('.modal-backdrop').remove();
+                        $('body').removeClass('modal-open');
+
+>>>>>>> 7af84dbc4060a8bbaa8bab50c489e93f45a0ceba
+                        loadTable($('#searchInput').val(), 1);
+                    } else {
+                        $('#modal-container').html(response);
+                        $('#modalCreateEmpleado').modal('show');
+                    }
+                });
+            });
+
+            // EDIT
+            $(document).on('click', '#btnActualizarEmpleado', function () {
+                var form = $('#frmEditEmpleado');
+                $.post('@Url.Action("Edit", "Empleados")', form.serialize(), function (response) {
+                    if (response.success) {
+                        var myModalEl = document.getElementById('modalEditEmpleado');
+                        var modal = bootstrap.Modal.getInstance(myModalEl);
+                        if (modal) modal.hide();
+<<<<<<< HEAD
+                        $('.modal-backdrop').remove();
+                        $('body').removeClass('modal-open');
+=======
+
+                        $('.modal-backdrop').remove();
+                        $('body').removeClass('modal-open');
+
+>>>>>>> 7af84dbc4060a8bbaa8bab50c489e93f45a0ceba
+                        loadTable($('#searchInput').val(), 1);
+                    } else {
+                        $('#modal-container').html(response);
+                        $('#modalEditEmpleado').modal('show');
+                    }
+                });
+            });
+
+            // DELETE
+            $(document).on('click', '#btnConfirmarEliminar', function () {
+                var form = $('#frmDeleteEmpleado');
+                $.post('@Url.Action("Delete", "Empleados")', form.serialize(), function (response) {
+                    if (response.success) {
+                        var myModalEl = document.getElementById('modalDeleteEmpleado');
+                        var modal = bootstrap.Modal.getInstance(myModalEl);
+                        if (modal) modal.hide();
+<<<<<<< HEAD
+                        $('.modal-backdrop').remove();
+                        $('body').removeClass('modal-open');
+=======
+
+                        $('.modal-backdrop').remove();
+                        $('body').removeClass('modal-open');
+
+>>>>>>> 7af84dbc4060a8bbaa8bab50c489e93f45a0ceba
+                        loadTable($('#searchInput').val(), 1);
+                    }
+                });
+            });
+        });
+    </script>
+}

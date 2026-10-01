@@ -1,0 +1,211 @@
+﻿@using Vetcore.Helpers
+@model IEnumerable<Vetcore.Models.Productos>
+@{
+    ViewBag.Title = "Inventario y Farmacia";
+}
+
+<!-- Encabezado Mejorado con Botones de Reportes -->
+<div class="d-flex flex-column flex-md-row justify-content-between align-items-md-center gap-3 mb-4 pb-3 border-bottom">
+    <div class="d-flex align-items-center gap-3">
+        <div style="width: 50px; height: 50px; background-color: var(--vc-primary-light, #e0f2fe); color: var(--vc-primary, #0284c7); border-radius: 12px; display: flex; align-items: center; justify-content: center; font-size: 1.5rem;">
+            <i class="fa-solid fa-boxes-stacked"></i>
+        </div>
+        <div>
+            <h3 class="headline mb-1" style="color: #1e293b; font-weight: 700;">Farmacia e Inventario</h3>
+            <p class="body-text text-muted mb-0 small">Control integral de stock, medicamentos, alimentos y suministros de la clínica.</p>
+        </div>
+    </div>
+<<<<<<< HEAD
+    <!-- Grupo de Botones de Acción y Reportes -->
+    <div class="d-flex flex-wrap align-items-center gap-2">
+        <!-- PROTECCIÓN TOTAL: Reportes financieros, Bitácora y Creación son EXCLUSIVOS del Admin -->
+        @if (Context.IsAdmin())
+=======
+
+    <!-- Grupo de Botones de Acción y Reportes -->
+    <div class="d-flex flex-wrap align-items-center gap-2">
+
+        <!-- PROTECCIÓN TOTAL: Reportes financieros, Bitácora y Creación son EXCLUSIVOS del Admin -->
+        @if (Session["RolEmpleado"] != null && Session["RolEmpleado"].ToString() == RolesSistema.Admin)
+>>>>>>> 7af84dbc4060a8bbaa8bab50c489e93f45a0ceba
+        {
+            <!-- Enlace al Reporte de Valorización (Contiene costos financieros privados) -->
+            <a href="@Url.Action("ReporteInventario", "Productos")" class="btn btn-light border px-3 shadow-sm d-flex align-items-center gap-2 text-secondary">
+                <i class="fa-solid fa-file-invoice-dollar text-primary"></i> <span>Reporte Stock</span>
+            </a>
+<<<<<<< HEAD
+=======
+
+>>>>>>> 7af84dbc4060a8bbaa8bab50c489e93f45a0ceba
+            <!-- Enlace a la Bitácora de Kardex -->
+            <a href="@Url.Action("KardexHistorial", "Productos")" class="btn btn-light border px-3 shadow-sm d-flex align-items-center gap-2 text-secondary">
+                <i class="fa-solid fa-clock-rotate-left text-secondary"></i> <span>Bitácora Kardex</span>
+            </a>
+<<<<<<< HEAD
+            <!-- Botón para Nuevo Producto -->
+=======
+
+            <!-- Botón para Nuevo Producto (Corregido para que no se escape del if) -->
+>>>>>>> 7af84dbc4060a8bbaa8bab50c489e93f45a0ceba
+            <button onclick="abrirModalCreate()" class="btn btn-primary px-4 shadow-sm d-flex align-items-center gap-2">
+                <i class="fa-solid fa-plus"></i> <span>Nuevo Producto</span>
+            </button>
+        }
+    </div>
+</div>
+
+<!-- Tarjeta de Contenedor General de la Tabla y Filtros -->
+<div class="card-modern p-4 shadow-sm border-0" style="background: #ffffff; border-radius: 16px;">
+    <div class="row mb-4">
+        <div class="col-md-6 col-lg-5">
+            <div class="search-container">
+                <i class="fa-solid fa-magnifying-glass text-muted"></i>
+                <input type="text" id="searchInput" data-url="@Url.Action("Index", "Productos")" class="search-input form-control" placeholder="Buscar por nombre, código de barras o categoría..." value="@ViewBag.SearchTerm" autocomplete="off" />
+            </div>
+        </div>
+    </div>
+
+    <!-- Contenedor de la Tabla -->
+    <div id="table-container">
+        @Html.Partial("_TablaProductos", Model)
+    </div>
+</div>
+
+<!-- Contenedor vacío donde se cargará el HTML del Modal -->
+<div id="modal-container"></div>
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+<<<<<<< HEAD
+=======
+
+>>>>>>> 7af84dbc4060a8bbaa8bab50c489e93f45a0ceba
+    <script>
+        // ==========================================
+        // 1. FUNCIONES PARA ABRIR MODALES Y CARGAR TABLA
+        // ==========================================
+        function loadTable(search, page) {
+            $('#table-container').css('opacity', '0.5');
+            $.ajax({
+                url: '@Url.Action("Index", "Productos")',
+                type: 'GET',
+                data: { search: search, page: page },
+                success: function (result) {
+                    $('#table-container').html(result).css('opacity', '1');
+                }
+            });
+        }
+
+        function abrirModalCreate() {
+            $.get('@Url.Action("Create", "Productos")', function (data) {
+                $('#modal-container').html(data);
+                $('#modalCreateProducto').modal('show');
+            });
+        }
+
+        function abrirModalEdit(id) {
+            $.get('@Url.Action("Edit", "Productos")/' + id, function (data) {
+                $('#modal-container').html(data);
+                $('#modalEditProducto').modal('show');
+            });
+        }
+
+        function abrirModalAjuste(id) {
+            $.get('@Url.Action("AjusteInventario", "Productos")/' + id, function (data) {
+                $('#modal-container').html(data);
+                $('#modalAjusteInventario').modal('show');
+            });
+        }
+
+        // ==========================================
+        // 2. EVENTOS DEL DOCUMENTO (Buscador y Loader Unificado)
+        // ==========================================
+        $(document).ready(function () {
+<<<<<<< HEAD
+=======
+
+>>>>>>> 7af84dbc4060a8bbaa8bab50c489e93f45a0ceba
+            // Búsqueda Dinámica con Retraso (Debounce)
+            let timeout = null;
+            $('#searchInput').on('keyup', function () {
+                clearTimeout(timeout);
+                var query = $(this).val();
+                timeout = setTimeout(function () {
+                    loadTable(query, 1);
+                }, 400);
+            });
+
+<<<<<<< HEAD
+            // Paginación AJAX
+=======
+            // Paginación vía AJAX
+>>>>>>> 7af84dbc4060a8bbaa8bab50c489e93f45a0ceba
+            $(document).on('click', '.page-link-ajax', function (e) {
+                e.preventDefault();
+                var page = $(this).data('page');
+                var query = $('#searchInput').val();
+                loadTable(query, page);
+            });
+
+            // Motor Genérico de Guardado (con Loader visual)
+            $(document).on('submit', '#frmCreateProducto, #frmEditProducto, #frmAjusteInventario', function (e) {
+                e.preventDefault();
+<<<<<<< HEAD
+=======
+
+>>>>>>> 7af84dbc4060a8bbaa8bab50c489e93f45a0ceba
+                var $form = $(this);
+                var formId = $form.attr('id');
+                var $btn = $form.find('button[type="submit"]');
+                var textoOriginal = $btn.html();
+
+                // Determinamos dinámicamente la URL dependiendo de qué modal estamos enviando
+                var urlPost = "";
+                if (formId === 'frmCreateProducto') urlPost = '@Url.Action("Create", "Productos")';
+                else if (formId === 'frmEditProducto') urlPost = '@Url.Action("Edit", "Productos")';
+                else if (formId === 'frmAjusteInventario') urlPost = '@Url.Action("AjusteInventario", "Productos")';
+
+                // Bloqueo visual: Spinner activado
+                $btn.html('<i class="fa-solid fa-spinner fa-spin"></i> Procesando...').prop('disabled', true);
+
+                $.ajax({
+                    url: urlPost,
+                    type: 'POST',
+                    data: $form.serialize(),
+                    success: function (response) {
+                        if (response.success) {
+                            // Éxito: Palomita verde y cierre
+                            $btn.removeClass('btn-primary').addClass('btn-success').html('<i class="fa-solid fa-check"></i> ¡Guardado!');
+<<<<<<< HEAD
+=======
+
+>>>>>>> 7af84dbc4060a8bbaa8bab50c489e93f45a0ceba
+                            setTimeout(function() {
+                                $('.modal').modal('hide');
+                                $('.modal-backdrop').remove();
+                                $('body').removeClass('modal-open');
+<<<<<<< HEAD
+=======
+
+>>>>>>> 7af84dbc4060a8bbaa8bab50c489e93f45a0ceba
+                                // Recarga solo la tabla, manteniendo el valor de la búsqueda actual
+                                loadTable($('#searchInput').val(), 1);
+                            }, 500);
+                        } else {
+                            // Error de validación: Devolvemos el HTML con los mensajes rojos
+                            $form.closest('.modal-body').html(response);
+                        }
+                    },
+                    error: function () {
+                        alert("Ocurrió un error de conexión con el servidor.");
+                        $btn.html(textoOriginal).prop('disabled', false); // Restaurar botón
+                    }
+                });
+            });
+<<<<<<< HEAD
+=======
+
+>>>>>>> 7af84dbc4060a8bbaa8bab50c489e93f45a0ceba
+        });
+    </script>
+}

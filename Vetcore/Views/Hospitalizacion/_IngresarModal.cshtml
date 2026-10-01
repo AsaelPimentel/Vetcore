@@ -1,0 +1,46 @@
+﻿@model Vetcore.Models.Hospitalizaciones
+
+<div class="modal fade" id="modalIngreso" tabindex="-1" aria-hidden="true" data-bs-backdrop="static">
+    <div class="modal-dialog modal-dialog-centered modal-lg">
+        <div class="modal-content border-0 shadow-lg" style="border-radius: 16px;">
+            <div class="modal-header border-bottom-0 pb-0 px-4 pt-4">
+                <h5 class="modal-title fw-bold text-dark d-flex align-items-center gap-2">
+                    <div style="width: 40px; height: 40px; background-color: #e0f2fe; color: #0284c7; border-radius: 10px; display: flex; align-items: center; justify-content: center;">
+                        <i class="fa-solid fa-bed-pulse"></i>
+                    </div>
+                    Ingresar Paciente a Hospitalización
+                </h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
+            </div>
+
+            @using (Html.BeginForm("Ingresar", "Hospitalizacion", FormMethod.Post, new { id = "frmIngreso" }))
+            {
+                @Html.AntiForgeryToken()
+                <div class="modal-body px-4 py-3">
+                    <div class="p-3 rounded-3 mb-3" style="background-color: #f8fafc; border: 1px solid #e2e8f0;">
+                        <div class="row g-3">
+                            <div class="col-md-6">
+                                <label class="label mb-1 fw-semibold text-secondary">Paciente (Expediente)</label>
+                                @Html.DropDownList("IdExpediente", null, "Seleccione el paciente...", new { @class = "form-control", required = "required" })
+                            </div>
+                            <div class="col-md-6">
+                                <label class="label mb-1 fw-semibold text-secondary">Jaula Disponible</label>
+                                @Html.DropDownList("IdJaula", null, "Seleccione la jaula...", new { @class = "form-control", required = "required" })
+                            </div>
+                            <div class="col-12">
+                                <label class="label mb-1 fw-semibold text-secondary">Motivo de Ingreso / Diagnóstico Presuntivo</label>
+                                @Html.TextAreaFor(m => m.Motivo, new { @class = "form-control", rows = "3", placeholder = "Describa el motivo por el cual el paciente requiere internamiento...", required = "required" })
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer border-top-0 pt-0 px-4 pb-4">
+                    <button type="button" class="btn btn-light px-4 fw-semibold border" data-bs-dismiss="modal">Cancelar</button>
+                    <button type="button" id="btnGuardarIngreso" class="btn btn-primary px-4 fw-bold shadow-sm d-flex align-items-center gap-2">
+                        <i class="fa-solid fa-check"></i> Confirmar Ingreso
+                    </button>
+                </div>
+            }
+        </div>
+    </div>
+</div>

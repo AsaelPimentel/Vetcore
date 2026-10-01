@@ -1,0 +1,39 @@
+﻿<div class="modal fade" id="abrirCajaModal" tabindex="-1" aria-hidden="true" data-bs-backdrop="static">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content border-0 shadow-lg" style="border-radius: 16px;">
+
+            <div class="modal-header border-bottom-0 pb-0">
+                <h5 class="modal-title fw-bold text-dark d-flex align-items-center gap-2">
+                    <div style="width: 40px; height: 40px; background-color: #f1f5f9; color: #3b82f6; border-radius: 10px; display: flex; align-items: center; justify-content: center;">
+                        <i class="fa-solid fa-key"></i>
+                    </div>
+                    Apertura de Caja
+                </h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
+            </div>
+
+            @using (Html.BeginForm("AbrirCaja", "Ventas", FormMethod.Post, new { id = "formAbrirCaja" }))
+            {
+                @Html.AntiForgeryToken()
+                <div class="modal-body py-4">
+                    <p class="text-muted small mb-4">Ingresa el monto de efectivo inicial (fondo de caja) con el que comenzarás el turno para dar cambio.</p>
+
+                    <div class="mb-3">
+                        <label class="form-label fw-semibold text-secondary">Monto Inicial (Efectivo en cajón)</label>
+                        <div class="input-group input-group-lg shadow-sm">
+                            <span class="input-group-text bg-light border-end-0 fw-bold text-success">$</span>
+                            <input type="number" name="MontoApertura" class="form-control border-start-0" step="0.01" min="0" value="0.00" required autofocus />
+                        </div>
+                    </div>
+                </div>
+
+                <div class="modal-footer border-top-0 pt-0">
+                    <button type="button" class="btn btn-light px-4 fw-semibold" data-bs-dismiss="modal">Cancelar</button>
+                    <button type="submit" id="btnGuardarApertura" class="btn btn-primary px-4 fw-bold shadow-sm d-flex align-items-center gap-2">
+                        <i class="fa-solid fa-check"></i> Abrir Turno
+                    </button>
+                </div>
+            }
+        </div>
+    </div>
+</div>

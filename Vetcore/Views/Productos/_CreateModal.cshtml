@@ -1,0 +1,94 @@
+﻿@model Vetcore.Models.Productos
+
+<div class="modal fade" id="modalCreateProducto" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-lg">
+        <div class="modal-content card-modern" style="border: none; padding: 0; overflow: hidden; border-radius: 16px;">
+            <div class="modal-header border-0 px-4 pt-4 pb-3" style="background-color: #f8fafc;">
+                <div>
+                    <h3 class="headline mb-1" style="color: #0f172a; font-size: 1.25rem;">
+                        <i class="fa-solid fa-box-archive text-primary me-2"></i> Nuevo Producto / Servicio
+                    </h3>
+                    <p class="body-text mb-0 small text-muted">Ingresa los datos generales, costos, lotes y control de stock.</p>
+                </div>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
+            </div>
+            <div class="modal-body px-4 pb-4 pt-3">
+                <form id="frmCreateProducto">
+                    @Html.AntiForgeryToken()
+                    <div class="p-3 rounded-3 mb-4" style="background-color: #f1f5f9; border: 1px solid #e2e8f0;">
+                        <div class="row g-3">
+                            <div class="col-md-8">
+                                <label class="label mb-1 fw-semibold text-secondary">Nombre del Producto / Servicio</label>
+                                @Html.EditorFor(m => m.Nombre, new { htmlAttributes = new { @class = "form-control", placeholder = "Ej. Amoxicilina 500mg o Consulta", autocomplete = "off", required = "required" } })
+                            </div>
+                            <div class="col-md-4">
+                                <label class="label mb-1 fw-semibold text-secondary">Código de Barras</label>
+                                @Html.EditorFor(m => m.CodigoBarras, new { htmlAttributes = new { @class = "form-control", placeholder = "Opcional", autocomplete = "off" } })
+                            </div>
+                            <div class="col-md-6">
+                                <label class="label mb-1 fw-semibold text-secondary">Categoría</label>
+                                @Html.DropDownList("IdCategoria", null, "Seleccione...", new { @class = "form-control", id = "IdCategoria", required = "required" })
+                            </div>
+                            <div class="col-md-3">
+                                <label class="label mb-1 fw-semibold text-secondary">Precio Costo ($)</label>
+                                @Html.EditorFor(m => m.PrecioCosto, new { htmlAttributes = new { @class = "form-control", type = "number", step = "0.01", required = "required", id = "PrecioCosto" } })
+                            </div>
+                            <div class="col-md-3">
+                                <label class="label mb-1 fw-semibold text-secondary">Precio Venta ($)</label>
+                                @Html.EditorFor(m => m.PrecioVenta, new { htmlAttributes = new { @class = "form-control", type = "number", step = "0.01", required = "required" } })
+                            </div>
+
+                            <!-- NUEVO: Campos de Lote y Caducidad -->
+                            <div class="col-md-6">
+                                <label class="label mb-1 fw-semibold text-secondary">Número de Lote</label>
+                                @Html.EditorFor(m => m.Lote, new { htmlAttributes = new { @class = "form-control", placeholder = "Ej. L-2026A", autocomplete = "off" } })
+                            </div>
+                            <div class="col-md-6">
+                                <label class="label mb-1 fw-semibold text-secondary">Fecha de Caducidad</label>
+                                @Html.EditorFor(m => m.FechaCaducidad, new { htmlAttributes = new { @class = "form-control", type = "date" } })
+                            </div>
+
+                            <!-- Contenedor de Stock Dinámico -->
+                            <div class="col-12 m-0 p-0" id="panelStock">
+                                <div class="row g-3 m-0 mt-1 p-0">
+                                    <div class="col-md-6">
+                                        <label class="label mb-1 fw-semibold text-secondary">Stock Inicial</label>
+                                        @Html.EditorFor(m => m.StockActual, new { htmlAttributes = new { @class = "form-control", type = "number", id = "StockActual" } })
+                                    </div>
+                                    <div class="col-md-6">
+                                        <label class="label mb-1 fw-semibold text-secondary">Stock Mínimo (Alerta)</label>
+                                        @Html.EditorFor(m => m.StockMinimo, new { htmlAttributes = new { @class = "form-control", type = "number", id = "StockMinimo" } })
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="d-flex justify-content-end gap-3 pt-3 border-top">
+                        <button type="button" class="btn btn-light border px-4" data-bs-dismiss="modal">Cancelar</button>
+                        <button type="submit" id="btnGuardarProducto" class="btn btn-primary px-4 shadow-sm d-flex align-items-center gap-2">
+                            <i class="fa-solid fa-save"></i> <span>Guardar</span>
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+@Scripts.Render("~/bundles/jqueryval")
+<script>
+    var categoriasServicio = [@ViewBag.CategoriasServicio];
+    $('#IdCategoria').change(function () {
+        var idSeleccionado = parseInt($(this).val());
+        if (categoriasServicio.includes(idSeleccionado)) {
+            $('#panelStock').slideUp(200);
+            $('#StockActual').val('');
+            $('#StockMinimo').val('');
+            $('#PrecioCosto').val('0.00');
+        } else {
+            $('#panelStock').slideDown(200);
+            if ($('#StockActual').val() === '') $('#StockActual').val('0');
+            if ($('#StockMinimo').val() === '') $('#StockMinimo').val('5');
+        }
+    });
+</script>

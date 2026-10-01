@@ -1,0 +1,162 @@
+﻿@model IEnumerable<Vetcore.Models.Mascotas>
+
+@{
+    ViewBag.Title = "Pacientes Registrados";
+}
+
+<!-- Encabezado Mejorado con Icono y Descripción Estilizada -->
+<div class="d-flex flex-column flex-md-row justify-content-between align-items-md-center gap-3 mb-4 pb-3 border-bottom">
+    <div class="d-flex align-items-center gap-3">
+        <div style="width: 50px; height: 50px; background-color: var(--vc-primary-light, #e0f2fe); color: var(--vc-primary, #0284c7); border-radius: 12px; display: flex; align-items: center; justify-content: center; font-size: 1.5rem;">
+            <i class="fa-solid fa-paw"></i>
+        </div>
+        <div>
+            <h3 class="headline mb-1" style="color: #1e293b; font-weight: 700;">Directorio de Pacientes</h3>
+            <p class="body-text text-muted mb-0 small">Gestión integral de mascotas y acceso rápido a expedientes clínicos.</p>
+        </div>
+    </div>
+
+    <!-- Botón que abre el modal de Crear -->
+    <div>
+        <button onclick="abrirModalCreate()" class="btn btn-primary px-4 shadow-sm d-flex align-items-center gap-2">
+            <i class="fa-solid fa-plus"></i> <span>Registrar Paciente</span>
+        </button>
+    </div>
+</div>
+
+<!-- Contenedor Principal de la Tabla y Filtros -->
+<div class="card-modern p-4 shadow-sm border-0" style="background: #ffffff; border-radius: 16px;">
+    <div class="row mb-4">
+        <div class="col-md-6 col-lg-5">
+            <div class="search-container">
+                <i class="fa-solid fa-magnifying-glass text-muted"></i>
+                <input type="text" id="searchInput" data-url="@Url.Action("Index", "Mascotas")" class="search-input form-control" placeholder="Buscar paciente por nombre o especie..." value="@ViewBag.SearchTerm" autocomplete="off" />
+            </div>
+        </div>
+    </div>
+
+    <div id="table-container">
+        @Html.Partial("_TablaMascotas", Model)
+    </div>
+</div>
+
+<!-- Contenedor del Modal -->
+<div id="modal-container"></div>
+
+@section Scripts {
+    <script>
+        // 1. FUNCIONES GLOBALES
+        function loadTable(search, page) {
+            $('#table-container').css('opacity', '0.5');
+            $.ajax({
+                url: '@Url.Action("Index", "Mascotas")',
+                type: 'GET',
+                data: { search: search, page: page },
+                success: function (result) {
+                    $('#table-container').html(result).css('opacity', '1');
+                }
+            });
+        }
+
+        function abrirModalCreate() {
+            $.get('@Url.Action("Create", "Mascotas")', function (data) {
+                $('#modal-container').html(data);
+                $('#modalMascota').modal('show');
+            });
+        }
+
+        function abrirModalEdit(id) {
+            $.get('@Url.Action("Edit", "Mascotas")/' + id, function (data) {
+                $('#modal-container').html(data);
+                $('#modalEditMascota').modal('show');
+            });
+        }
+
+        function abrirModalDetails(id) {
+            $.get('@Url.Action("Details", "Mascotas")/' + id, function (data) {
+                $('#modal-container').html(data);
+                $('#modalDetailsMascota').modal('show');
+            });
+        }
+
+        function abrirModalDelete(id) {
+            $.get('@Url.Action("Delete", "Mascotas")/' + id, function (data) {
+                $('#modal-container').html(data);
+                $('#modalDeleteMascota').modal('show');
+            });
+        }
+
+        // 2. LISTENERS
+        $(document).ready(function () {
+            let timeout = null;
+            $('#searchInput').on('keyup', function () {
+                clearTimeout(timeout);
+                var query = $(this).val();
+                timeout = setTimeout(function () { loadTable(query, 1); }, 400);
+            });
+
+            $(document).on('click', '.page-link-ajax', function (e) {
+                e.preventDefault();
+                loadTable($('#searchInput').val(), $(this).data('page'));
+            });
+
+            // CREATE
+            $(document).on('click', '#btnGuardarMascota', function () {
+                var form = $('#frmCreateMascota');
+                if (form.valid()) {
+                    $.post('@Url.Action("Create", "Mascotas")', form.serialize(), function (response) {
+                        if (response.success) {
+                            var modalEl = document.getElementById('modalMascota');
+                            var modal = bootstrap.Modal.getInstance(modalEl);
+                            if (modal) modal.hide();
+                            $('.modal-backdrop').remove();
+                            $('body').removeClass('modal-open');
+
+                            loadTable($('#searchInput').val(), 1);
+                        } else {
+                            $('#modal-container').html(response);
+                            $('#modalMascota').modal('show');
+                        }
+                    });
+                }
+            });
+
+            // EDIT
+            $(document).on('click', '#btnActualizarMascota', function () {
+                var form = $('#frmEditMascota');
+                if (form.valid()) {
+                    $.post('@Url.Action("Edit", "Mascotas")', form.serialize(), function (response) {
+                        if (response.success) {
+                            var modalEl = document.getElementById('modalEditMascota');
+                            var modal = bootstrap.Modal.getInstance(modalEl);
+                            if (modal) modal.hide();
+                            $('.modal-backdrop').remove();
+                            $('body').removeClass('modal-open');
+
+                            loadTable($('#searchInput').val(), 1);
+                        } else {
+                            $('#modal-container').html(response);
+                            $('#modalEditMascota').modal('show');
+                        }
+                    });
+                }
+            });
+
+            // DELETE
+            $(document).on('click', '#btnConfirmarEliminar', function () {
+                var form = $('#frmDeleteMascota');
+                $.post('@Url.Action("Delete", "Mascotas")', form.serialize(), function (response) {
+                    if (response.success) {
+                        var modalEl = document.getElementById('modalDeleteMascota');
+                        var modal = bootstrap.Modal.getInstance(modalEl);
+                        if (modal) modal.hide();
+                        $('.modal-backdrop').remove();
+                        $('body').removeClass('modal-open');
+
+                        loadTable($('#searchInput').val(), 1);
+                    }
+                });
+            });
+        });
+    </script>
+}

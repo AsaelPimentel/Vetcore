@@ -1,0 +1,61 @@
+﻿@model Vetcore.Models.Citas
+
+<div class="modal fade" id="modalEditCita" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-lg">
+        <div class="modal-content card-modern" style="border: none; padding: 0;">
+            <div class="modal-header border-0 pb-0 px-4 pt-4">
+                <div>
+                    <h3 class="headline mb-0">Reagendar / Editar Cita</h3>
+                    <p class="body-text mb-0 small">Modifica fecha, estado o especialista.</p>
+                </div>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
+            </div>
+            <div class="modal-body px-4 pb-4">
+                <form id="frmEditCita">
+                    @Html.AntiForgeryToken()
+                    @Html.HiddenFor(m => m.IdCita)
+                    <div class="row g-4 mt-1">
+                        <div class="col-md-6">
+                            <label class="label mb-2">Paciente</label>
+                            @Html.DropDownList("IdMascota", null, new { @class = "form-control" })
+                        </div>
+                        <div class="col-md-6">
+                            <label class="label mb-2">Médico/Estilista</label>
+                            @Html.DropDownList("IdEmpleado", null, new { @class = "form-control" })
+                        </div>
+                        <div class="col-md-4">
+                            <label class="label mb-2">Fecha y Hora</label>
+                            <input type="datetime-local" id="FechaHora" name="FechaHora" class="form-control" required value="@Model.FechaHora.ToString("yyyy-MM-ddTHH:mm")" />
+                        </div>
+                        <div class="col-md-4">
+                            <label class="label mb-2">Tipo de Servicio</label>
+                            <select class="form-control" id="Tipo" name="Tipo">
+                                <option value="Consulta" @(Model.Tipo == "Consulta" ? "selected" : "")>Consulta Médica</option>
+                                <option value="Estetica" @(Model.Tipo == "Estetica" ? "selected" : "")>Estética / Spa</option>
+                                <option value="Vacunacion" @(Model.Tipo == "Vacunacion" ? "selected" : "")>Vacunación</option>
+                                <option value="Cirugia" @(Model.Tipo == "Cirugia" ? "selected" : "")>Cirugía</option>
+                            </select>
+                        </div>
+                        <div class="col-md-4">
+                            <label class="label mb-2">Estado de la Cita</label>
+                            <select class="form-control fw-medium" id="Estado" name="Estado">
+                                <option value="Pendiente" @(Model.Estado == "Pendiente" ? "selected" : "")>Pendiente (Por atender)</option>
+                                <option value="Completada" @(Model.Estado == "Completada" ? "selected" : "")>Completada</option>
+                                <option value="Cancelada" @(Model.Estado == "Cancelada" ? "selected" : "")>Cancelada / No asistió</option>
+                            </select>
+                        </div>
+                        <div class="col-12">
+                            <label class="label mb-2">Motivo / Observaciones</label>
+                            @Html.TextAreaFor(m => m.Motivo, new { @class = "form-control", rows = "2" })
+                        </div>
+                        <div class="col-12 mt-4 d-flex justify-content-end gap-3 pt-3 border-top">
+                            <button type="button" class="btn btn-outlined" data-bs-dismiss="modal">Cancelar</button>
+                            <button type="button" id="btnActualizarCita" class="btn btn-primary"><i class="fa-solid fa-save"></i> Guardar Cambios</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+@Scripts.Render("~/bundles/jqueryval")

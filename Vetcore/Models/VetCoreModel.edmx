@@ -1,0 +1,1948 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="VetcoreModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="AuditoriaLogs">
+          <Key>
+            <PropertyRef Name="IdLog" />
+          </Key>
+          <Property Name="IdLog" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="IdEmpleado" Type="int" />
+          <Property Name="Accion" Type="varchar" MaxLength="100" Nullable="false" />
+          <Property Name="Detalle" Type="varchar" MaxLength="500" Nullable="false" />
+          <Property Name="IpAddress" Type="varchar" MaxLength="50" />
+          <Property Name="FechaHora" Type="datetime" Nullable="false" />
+        </EntityType>
+        <EntityType Name="CajasSesion">
+          <Key>
+            <PropertyRef Name="IdSesion" />
+          </Key>
+          <Property Name="IdSesion" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="IdEmpleado" Type="int" Nullable="false" />
+          <Property Name="FechaApertura" Type="datetime" />
+          <Property Name="FechaCierre" Type="datetime" />
+          <Property Name="MontoApertura" Type="decimal" Precision="10" Scale="2" Nullable="false" />
+          <Property Name="MontoCierre" Type="decimal" Precision="10" Scale="2" />
+          <Property Name="Estado" Type="varchar" MaxLength="20" />
+        </EntityType>
+        <EntityType Name="CarnetVacunacion">
+          <Key>
+            <PropertyRef Name="IdRegistro" />
+          </Key>
+          <Property Name="IdRegistro" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="IdMascota" Type="int" Nullable="false" />
+          <Property Name="IdEmpleado" Type="int" Nullable="false" />
+          <Property Name="Tipo" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="NombreProducto" Type="varchar" MaxLength="150" Nullable="false" />
+          <Property Name="FechaAplicacion" Type="date" Nullable="false" />
+          <Property Name="FechaProxima" Type="date" />
+        </EntityType>
+        <EntityType Name="Categorias">
+          <Key>
+            <PropertyRef Name="IdCategoria" />
+          </Key>
+          <Property Name="IdCategoria" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Nombre" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="EsServicio" Type="bit" />
+        </EntityType>
+        <EntityType Name="Citas">
+          <Key>
+            <PropertyRef Name="IdCita" />
+          </Key>
+          <Property Name="IdCita" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="IdMascota" Type="int" Nullable="false" />
+          <Property Name="IdEmpleado" Type="int" Nullable="false" />
+          <Property Name="FechaHora" Type="datetime" Nullable="false" />
+          <Property Name="Tipo" Type="varchar" MaxLength="30" />
+          <Property Name="Motivo" Type="varchar" MaxLength="200" />
+          <Property Name="Estado" Type="varchar" MaxLength="30" />
+        </EntityType>
+        <EntityType Name="Consultas">
+          <Key>
+            <PropertyRef Name="IdConsulta" />
+          </Key>
+          <Property Name="IdConsulta" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="IdExpediente" Type="int" Nullable="false" />
+          <Property Name="IdCita" Type="int" />
+          <Property Name="IdEmpleado" Type="int" Nullable="false" />
+          <Property Name="Fecha" Type="datetime" />
+          <Property Name="PesoKg" Type="decimal" Precision="5" Scale="2" />
+          <Property Name="Temperatura" Type="decimal" Precision="4" Scale="2" />
+          <Property Name="Sintomas" Type="varchar(max)" />
+          <Property Name="Diagnostico" Type="varchar(max)" />
+          <Property Name="RecetaMedica" Type="varchar(max)" />
+          <Property Name="NotasAdicionales" Type="varchar(max)" />
+          <Property Name="ArchivoEstudio" Type="varchar" MaxLength="255" />
+        </EntityType>
+        <EntityType Name="Empleados">
+          <Key>
+            <PropertyRef Name="IdEmpleado" />
+          </Key>
+          <Property Name="IdEmpleado" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="IdPuesto" Type="int" Nullable="false" />
+          <Property Name="Nombre" Type="varchar" MaxLength="60" Nullable="false" />
+          <Property Name="Apellidos" Type="varchar" MaxLength="60" Nullable="false" />
+          <Property Name="Telefono" Type="varchar" MaxLength="20" />
+          <Property Name="Especialidad" Type="varchar" MaxLength="50" />
+          <Property Name="Activo" Type="bit" />
+        </EntityType>
+        <EntityType Name="Especies">
+          <Key>
+            <PropertyRef Name="IdEspecie" />
+          </Key>
+          <Property Name="IdEspecie" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Nombre" Type="varchar" MaxLength="50" Nullable="false" />
+        </EntityType>
+        <EntityType Name="EsteticaRegistros">
+          <Key>
+            <PropertyRef Name="IdEstetica" />
+          </Key>
+          <Property Name="IdEstetica" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="IdMascota" Type="int" Nullable="false" />
+          <Property Name="IdCita" Type="int" />
+          <Property Name="IdEmpleado" Type="int" Nullable="false" />
+          <Property Name="Fecha" Type="datetime" />
+          <Property Name="TipoCorte" Type="varchar" MaxLength="100" />
+          <Property Name="NotasPiel" Type="text" />
+        </EntityType>
+        <EntityType Name="Expedientes">
+          <Key>
+            <PropertyRef Name="IdExpediente" />
+          </Key>
+          <Property Name="IdExpediente" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="IdMascota" Type="int" Nullable="false" />
+          <Property Name="FechaCreacion" Type="datetime" />
+        </EntityType>
+        <EntityType Name="Hospitalizaciones">
+          <Key>
+            <PropertyRef Name="IdHospitalizacion" />
+          </Key>
+          <Property Name="IdHospitalizacion" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="IdExpediente" Type="int" Nullable="false" />
+          <Property Name="IdJaula" Type="int" Nullable="false" />
+          <Property Name="IdEmpleado" Type="int" Nullable="false" />
+          <Property Name="FechaIngreso" Type="datetime" />
+          <Property Name="FechaAlta" Type="datetime" />
+          <Property Name="Motivo" Type="text" />
+          <Property Name="Estado" Type="varchar" MaxLength="30" />
+        </EntityType>
+        <EntityType Name="HospitalizacionNotas">
+          <Key>
+            <PropertyRef Name="IdNota" />
+          </Key>
+          <Property Name="IdNota" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="IdHospitalizacion" Type="int" Nullable="false" />
+          <Property Name="IdEmpleado" Type="int" Nullable="false" />
+          <Property Name="FechaHora" Type="datetime" Nullable="false" />
+          <Property Name="NotasMedicas" Type="text" Nullable="false" />
+          <Property Name="CostoConsumo" Type="decimal" Precision="18" Scale="2" />
+          <Property Name="ConceptoConsumo" Type="varchar" MaxLength="200" />
+        </EntityType>
+        <EntityType Name="Jaulas">
+          <Key>
+            <PropertyRef Name="IdJaula" />
+          </Key>
+          <Property Name="IdJaula" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Codigo" Type="varchar" MaxLength="20" Nullable="false" />
+          <Property Name="Tamano" Type="varchar" MaxLength="30" />
+          <Property Name="Ocupada" Type="bit" />
+        </EntityType>
+        <EntityType Name="KardexInventario">
+          <Key>
+            <PropertyRef Name="IdKardex" />
+          </Key>
+          <Property Name="IdKardex" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="IdProducto" Type="int" Nullable="false" />
+          <Property Name="IdEmpleado" Type="int" Nullable="false" />
+          <Property Name="TipoMovimiento" Type="varchar" MaxLength="30" Nullable="false" />
+          <Property Name="Cantidad" Type="int" Nullable="false" />
+          <Property Name="StockResultante" Type="int" Nullable="false" />
+          <Property Name="FechaHora" Type="datetime" />
+          <Property Name="Motivo" Type="varchar" MaxLength="200" />
+        </EntityType>
+        <EntityType Name="Mascotas">
+          <Key>
+            <PropertyRef Name="IdMascota" />
+          </Key>
+          <Property Name="IdMascota" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="IdPropietario" Type="int" Nullable="false" />
+          <Property Name="IdRaza" Type="int" Nullable="false" />
+          <Property Name="Nombre" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="FechaNacimiento" Type="date" />
+          <Property Name="Sexo" Type="char" MaxLength="1" />
+          <Property Name="PesoActual" Type="decimal" Precision="5" Scale="2" />
+          <Property Name="Alergias" Type="varchar" MaxLength="255" />
+          <Property Name="Fallecido" Type="bit" />
+          <Property Name="Activo" Type="bit" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Productos">
+          <Key>
+            <PropertyRef Name="IdProducto" />
+          </Key>
+          <Property Name="IdProducto" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="IdCategoria" Type="int" Nullable="false" />
+          <Property Name="CodigoBarras" Type="varchar" MaxLength="50" />
+          <Property Name="Nombre" Type="varchar" MaxLength="100" Nullable="false" />
+          <Property Name="PrecioCosto" Type="decimal" Precision="10" Scale="2" Nullable="false" />
+          <Property Name="PrecioVenta" Type="decimal" Precision="10" Scale="2" Nullable="false" />
+          <Property Name="StockActual" Type="int" />
+          <Property Name="StockMinimo" Type="int" />
+          <Property Name="Activo" Type="bit" />
+          <Property Name="Lote" Type="varchar" MaxLength="50" />
+          <Property Name="FechaCaducidad" Type="date" />
+        </EntityType>
+        <EntityType Name="Propietarios">
+          <Key>
+            <PropertyRef Name="IdPropietario" />
+          </Key>
+          <Property Name="IdPropietario" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Nombre" Type="varchar" MaxLength="60" Nullable="false" />
+          <Property Name="Apellidos" Type="varchar" MaxLength="60" Nullable="false" />
+          <Property Name="Telefono" Type="varchar" MaxLength="20" Nullable="false" />
+          <Property Name="Email" Type="varchar" MaxLength="100" />
+          <Property Name="Direccion" Type="varchar" MaxLength="200" />
+          <Property Name="FechaRegistro" Type="datetime" />
+        </EntityType>
+        <EntityType Name="Puestos">
+          <Key>
+            <PropertyRef Name="IdPuesto" />
+          </Key>
+          <Property Name="IdPuesto" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Nombre" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="NivelAcceso" Type="int" />
+        </EntityType>
+        <EntityType Name="Razas">
+          <Key>
+            <PropertyRef Name="IdRaza" />
+          </Key>
+          <Property Name="IdRaza" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="IdEspecie" Type="int" Nullable="false" />
+          <Property Name="Nombre" Type="varchar" MaxLength="60" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Roles">
+          <Key>
+            <PropertyRef Name="IdRol" />
+          </Key>
+          <Property Name="IdRol" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Nombre" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="Descripcion" Type="varchar" MaxLength="150" />
+        </EntityType>
+        <EntityType Name="Usuarios">
+          <Key>
+            <PropertyRef Name="IdUsuario" />
+          </Key>
+          <Property Name="IdUsuario" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="IdEmpleado" Type="int" Nullable="false" />
+          <Property Name="IdRol" Type="int" Nullable="false" />
+          <Property Name="Username" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="PasswordHash" Type="varchar" MaxLength="255" Nullable="false" />
+          <Property Name="Activo" Type="bit" />
+        </EntityType>
+        <EntityType Name="Ventas">
+          <Key>
+            <PropertyRef Name="IdVenta" />
+          </Key>
+          <Property Name="IdVenta" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="IdSesion" Type="int" Nullable="false" />
+          <Property Name="IdPropietario" Type="int" />
+          <Property Name="FechaHora" Type="datetime" />
+          <Property Name="Subtotal" Type="decimal" Precision="10" Scale="2" Nullable="false" />
+          <Property Name="Impuestos" Type="decimal" Precision="10" Scale="2" Nullable="false" />
+          <Property Name="Total" Type="decimal" Precision="10" Scale="2" Nullable="false" />
+          <Property Name="MetodoPago" Type="varchar" MaxLength="30" />
+        </EntityType>
+        <EntityType Name="VentasDetalle">
+          <Key>
+            <PropertyRef Name="IdDetalle" />
+          </Key>
+          <Property Name="IdDetalle" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="IdVenta" Type="int" Nullable="false" />
+          <Property Name="IdProducto" Type="int" Nullable="false" />
+          <Property Name="Cantidad" Type="decimal" Precision="8" Scale="2" Nullable="false" />
+          <Property Name="PrecioUnitario" Type="decimal" Precision="10" Scale="2" Nullable="false" />
+          <Property Name="Subtotal" Type="decimal" Precision="10" Scale="2" Nullable="false" />
+        </EntityType>
+        <Association Name="FK__Auditoria__IdEmp__4F47C5E3">
+          <End Role="Empleados" Type="Self.Empleados" Multiplicity="0..1" />
+          <End Role="AuditoriaLogs" Type="Self.AuditoriaLogs" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Empleados">
+              <PropertyRef Name="IdEmpleado" />
+            </Principal>
+            <Dependent Role="AuditoriaLogs">
+              <PropertyRef Name="IdEmpleado" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__CajasSesi__IdEmp__208CD6FA">
+          <End Role="Empleados" Type="Self.Empleados" Multiplicity="1" />
+          <End Role="CajasSesion" Type="Self.CajasSesion" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Empleados">
+              <PropertyRef Name="IdEmpleado" />
+            </Principal>
+            <Dependent Role="CajasSesion">
+              <PropertyRef Name="IdEmpleado" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__CarnetVac__IdEmp__3D2915A8">
+          <End Role="Empleados" Type="Self.Empleados" Multiplicity="1" />
+          <End Role="CarnetVacunacion" Type="Self.CarnetVacunacion" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Empleados">
+              <PropertyRef Name="IdEmpleado" />
+            </Principal>
+            <Dependent Role="CarnetVacunacion">
+              <PropertyRef Name="IdEmpleado" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__CarnetVac__IdMas__3C34F16F">
+          <End Role="Mascotas" Type="Self.Mascotas" Multiplicity="1" />
+          <End Role="CarnetVacunacion" Type="Self.CarnetVacunacion" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Mascotas">
+              <PropertyRef Name="IdMascota" />
+            </Principal>
+            <Dependent Role="CarnetVacunacion">
+              <PropertyRef Name="IdMascota" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Citas__IdEmplead__02FC7413">
+          <End Role="Empleados" Type="Self.Empleados" Multiplicity="1" />
+          <End Role="Citas" Type="Self.Citas" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Empleados">
+              <PropertyRef Name="IdEmpleado" />
+            </Principal>
+            <Dependent Role="Citas">
+              <PropertyRef Name="IdEmpleado" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Citas__IdMascota__02084FDA">
+          <End Role="Mascotas" Type="Self.Mascotas" Multiplicity="1" />
+          <End Role="Citas" Type="Self.Citas" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Mascotas">
+              <PropertyRef Name="IdMascota" />
+            </Principal>
+            <Dependent Role="Citas">
+              <PropertyRef Name="IdMascota" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Consultas__IdCit__0C85DE4D">
+          <End Role="Citas" Type="Self.Citas" Multiplicity="0..1" />
+          <End Role="Consultas" Type="Self.Consultas" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Citas">
+              <PropertyRef Name="IdCita" />
+            </Principal>
+            <Dependent Role="Consultas">
+              <PropertyRef Name="IdCita" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Consultas__IdEmp__0D7A0286">
+          <End Role="Empleados" Type="Self.Empleados" Multiplicity="1" />
+          <End Role="Consultas" Type="Self.Consultas" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Empleados">
+              <PropertyRef Name="IdEmpleado" />
+            </Principal>
+            <Dependent Role="Consultas">
+              <PropertyRef Name="IdEmpleado" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Consultas__IdExp__0B91BA14">
+          <End Role="Expedientes" Type="Self.Expedientes" Multiplicity="1" />
+          <End Role="Consultas" Type="Self.Consultas" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Expedientes">
+              <PropertyRef Name="IdExpediente" />
+            </Principal>
+            <Dependent Role="Consultas">
+              <PropertyRef Name="IdExpediente" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Empleados__IdPue__619B8048">
+          <End Role="Puestos" Type="Self.Puestos" Multiplicity="1" />
+          <End Role="Empleados" Type="Self.Empleados" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Puestos">
+              <PropertyRef Name="IdPuesto" />
+            </Principal>
+            <Dependent Role="Empleados">
+              <PropertyRef Name="IdPuesto" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__EsteticaR__IdCit__123EB7A3">
+          <End Role="Citas" Type="Self.Citas" Multiplicity="0..1" />
+          <End Role="EsteticaRegistros" Type="Self.EsteticaRegistros" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Citas">
+              <PropertyRef Name="IdCita" />
+            </Principal>
+            <Dependent Role="EsteticaRegistros">
+              <PropertyRef Name="IdCita" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__EsteticaR__IdEmp__1332DBDC">
+          <End Role="Empleados" Type="Self.Empleados" Multiplicity="1" />
+          <End Role="EsteticaRegistros" Type="Self.EsteticaRegistros" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Empleados">
+              <PropertyRef Name="IdEmpleado" />
+            </Principal>
+            <Dependent Role="EsteticaRegistros">
+              <PropertyRef Name="IdEmpleado" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__EsteticaR__IdMas__114A936A">
+          <End Role="Mascotas" Type="Self.Mascotas" Multiplicity="1" />
+          <End Role="EsteticaRegistros" Type="Self.EsteticaRegistros" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Mascotas">
+              <PropertyRef Name="IdMascota" />
+            </Principal>
+            <Dependent Role="EsteticaRegistros">
+              <PropertyRef Name="IdMascota" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Expedient__IdMas__07C12930">
+          <End Role="Mascotas" Type="Self.Mascotas" Multiplicity="1" />
+          <End Role="Expedientes" Type="Self.Expedientes" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Mascotas">
+              <PropertyRef Name="IdMascota" />
+            </Principal>
+            <Dependent Role="Expedientes">
+              <PropertyRef Name="IdMascota" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Hospitali__IdEmp__1BC821DD">
+          <End Role="Empleados" Type="Self.Empleados" Multiplicity="1" />
+          <End Role="Hospitalizaciones" Type="Self.Hospitalizaciones" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Empleados">
+              <PropertyRef Name="IdEmpleado" />
+            </Principal>
+            <Dependent Role="Hospitalizaciones">
+              <PropertyRef Name="IdEmpleado" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Hospitali__IdEmp__41EDCAC5">
+          <End Role="Empleados" Type="Self.Empleados" Multiplicity="1" />
+          <End Role="HospitalizacionNotas" Type="Self.HospitalizacionNotas" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Empleados">
+              <PropertyRef Name="IdEmpleado" />
+            </Principal>
+            <Dependent Role="HospitalizacionNotas">
+              <PropertyRef Name="IdEmpleado" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Hospitali__IdExp__19DFD96B">
+          <End Role="Expedientes" Type="Self.Expedientes" Multiplicity="1" />
+          <End Role="Hospitalizaciones" Type="Self.Hospitalizaciones" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Expedientes">
+              <PropertyRef Name="IdExpediente" />
+            </Principal>
+            <Dependent Role="Hospitalizaciones">
+              <PropertyRef Name="IdExpediente" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Hospitali__IdHos__40F9A68C">
+          <End Role="Hospitalizaciones" Type="Self.Hospitalizaciones" Multiplicity="1" />
+          <End Role="HospitalizacionNotas" Type="Self.HospitalizacionNotas" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Hospitalizaciones">
+              <PropertyRef Name="IdHospitalizacion" />
+            </Principal>
+            <Dependent Role="HospitalizacionNotas">
+              <PropertyRef Name="IdHospitalizacion" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Hospitali__IdJau__1AD3FDA4">
+          <End Role="Jaulas" Type="Self.Jaulas" Multiplicity="1" />
+          <End Role="Hospitalizaciones" Type="Self.Hospitalizaciones" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Jaulas">
+              <PropertyRef Name="IdJaula" />
+            </Principal>
+            <Dependent Role="Hospitalizaciones">
+              <PropertyRef Name="IdJaula" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__KardexInv__IdEmp__2EDAF651">
+          <End Role="Empleados" Type="Self.Empleados" Multiplicity="1" />
+          <End Role="KardexInventario" Type="Self.KardexInventario" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Empleados">
+              <PropertyRef Name="IdEmpleado" />
+            </Principal>
+            <Dependent Role="KardexInventario">
+              <PropertyRef Name="IdEmpleado" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__KardexInv__IdPro__2DE6D218">
+          <End Role="Productos" Type="Self.Productos" Multiplicity="1" />
+          <End Role="KardexInventario" Type="Self.KardexInventario" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Productos">
+              <PropertyRef Name="IdProducto" />
+            </Principal>
+            <Dependent Role="KardexInventario">
+              <PropertyRef Name="IdProducto" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Mascotas__IdProp__73BA3083">
+          <End Role="Propietarios" Type="Self.Propietarios" Multiplicity="1" />
+          <End Role="Mascotas" Type="Self.Mascotas" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Propietarios">
+              <PropertyRef Name="IdPropietario" />
+            </Principal>
+            <Dependent Role="Mascotas">
+              <PropertyRef Name="IdPropietario" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Mascotas__IdRaza__74AE54BC">
+          <End Role="Razas" Type="Self.Razas" Multiplicity="1" />
+          <End Role="Mascotas" Type="Self.Mascotas" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Razas">
+              <PropertyRef Name="IdRaza" />
+            </Principal>
+            <Dependent Role="Mascotas">
+              <PropertyRef Name="IdRaza" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Productos__IdCat__7C4F7684">
+          <End Role="Categorias" Type="Self.Categorias" Multiplicity="1" />
+          <End Role="Productos" Type="Self.Productos" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Categorias">
+              <PropertyRef Name="IdCategoria" />
+            </Principal>
+            <Dependent Role="Productos">
+              <PropertyRef Name="IdCategoria" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Razas__IdEspecie__70DDC3D8">
+          <End Role="Especies" Type="Self.Especies" Multiplicity="1" />
+          <End Role="Razas" Type="Self.Razas" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Especies">
+              <PropertyRef Name="IdEspecie" />
+            </Principal>
+            <Dependent Role="Razas">
+              <PropertyRef Name="IdEspecie" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Usuarios__IdEmpl__6754599E">
+          <End Role="Empleados" Type="Self.Empleados" Multiplicity="1" />
+          <End Role="Usuarios" Type="Self.Usuarios" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Empleados">
+              <PropertyRef Name="IdEmpleado" />
+            </Principal>
+            <Dependent Role="Usuarios">
+              <PropertyRef Name="IdEmpleado" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Usuarios__IdRol__68487DD7">
+          <End Role="Roles" Type="Self.Roles" Multiplicity="1" />
+          <End Role="Usuarios" Type="Self.Usuarios" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Roles">
+              <PropertyRef Name="IdRol" />
+            </Principal>
+            <Dependent Role="Usuarios">
+              <PropertyRef Name="IdRol" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Ventas__IdPropie__2645B050">
+          <End Role="Propietarios" Type="Self.Propietarios" Multiplicity="0..1" />
+          <End Role="Ventas" Type="Self.Ventas" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Propietarios">
+              <PropertyRef Name="IdPropietario" />
+            </Principal>
+            <Dependent Role="Ventas">
+              <PropertyRef Name="IdPropietario" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Ventas__IdSesion__25518C17">
+          <End Role="CajasSesion" Type="Self.CajasSesion" Multiplicity="1" />
+          <End Role="Ventas" Type="Self.Ventas" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="CajasSesion">
+              <PropertyRef Name="IdSesion" />
+            </Principal>
+            <Dependent Role="Ventas">
+              <PropertyRef Name="IdSesion" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__VentasDet__IdPro__2B0A656D">
+          <End Role="Productos" Type="Self.Productos" Multiplicity="1" />
+          <End Role="VentasDetalle" Type="Self.VentasDetalle" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Productos">
+              <PropertyRef Name="IdProducto" />
+            </Principal>
+            <Dependent Role="VentasDetalle">
+              <PropertyRef Name="IdProducto" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__VentasDet__IdVen__2A164134">
+          <End Role="Ventas" Type="Self.Ventas" Multiplicity="1" />
+          <End Role="VentasDetalle" Type="Self.VentasDetalle" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Ventas">
+              <PropertyRef Name="IdVenta" />
+            </Principal>
+            <Dependent Role="VentasDetalle">
+              <PropertyRef Name="IdVenta" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="VetcoreModelStoreContainer">
+          <EntitySet Name="AuditoriaLogs" EntityType="Self.AuditoriaLogs" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="CajasSesion" EntityType="Self.CajasSesion" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="CarnetVacunacion" EntityType="Self.CarnetVacunacion" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Categorias" EntityType="Self.Categorias" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Citas" EntityType="Self.Citas" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Consultas" EntityType="Self.Consultas" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Empleados" EntityType="Self.Empleados" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Especies" EntityType="Self.Especies" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="EsteticaRegistros" EntityType="Self.EsteticaRegistros" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Expedientes" EntityType="Self.Expedientes" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Hospitalizaciones" EntityType="Self.Hospitalizaciones" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="HospitalizacionNotas" EntityType="Self.HospitalizacionNotas" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Jaulas" EntityType="Self.Jaulas" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="KardexInventario" EntityType="Self.KardexInventario" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Mascotas" EntityType="Self.Mascotas" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Productos" EntityType="Self.Productos" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Propietarios" EntityType="Self.Propietarios" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Puestos" EntityType="Self.Puestos" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Razas" EntityType="Self.Razas" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Roles" EntityType="Self.Roles" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Usuarios" EntityType="Self.Usuarios" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Ventas" EntityType="Self.Ventas" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="VentasDetalle" EntityType="Self.VentasDetalle" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK__Auditoria__IdEmp__4F47C5E3" Association="Self.FK__Auditoria__IdEmp__4F47C5E3">
+            <End Role="Empleados" EntitySet="Empleados" />
+            <End Role="AuditoriaLogs" EntitySet="AuditoriaLogs" />
+          </AssociationSet>
+          <AssociationSet Name="FK__CajasSesi__IdEmp__208CD6FA" Association="Self.FK__CajasSesi__IdEmp__208CD6FA">
+            <End Role="Empleados" EntitySet="Empleados" />
+            <End Role="CajasSesion" EntitySet="CajasSesion" />
+          </AssociationSet>
+          <AssociationSet Name="FK__CarnetVac__IdEmp__3D2915A8" Association="Self.FK__CarnetVac__IdEmp__3D2915A8">
+            <End Role="Empleados" EntitySet="Empleados" />
+            <End Role="CarnetVacunacion" EntitySet="CarnetVacunacion" />
+          </AssociationSet>
+          <AssociationSet Name="FK__CarnetVac__IdMas__3C34F16F" Association="Self.FK__CarnetVac__IdMas__3C34F16F">
+            <End Role="Mascotas" EntitySet="Mascotas" />
+            <End Role="CarnetVacunacion" EntitySet="CarnetVacunacion" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Citas__IdEmplead__02FC7413" Association="Self.FK__Citas__IdEmplead__02FC7413">
+            <End Role="Empleados" EntitySet="Empleados" />
+            <End Role="Citas" EntitySet="Citas" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Citas__IdMascota__02084FDA" Association="Self.FK__Citas__IdMascota__02084FDA">
+            <End Role="Mascotas" EntitySet="Mascotas" />
+            <End Role="Citas" EntitySet="Citas" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Consultas__IdCit__0C85DE4D" Association="Self.FK__Consultas__IdCit__0C85DE4D">
+            <End Role="Citas" EntitySet="Citas" />
+            <End Role="Consultas" EntitySet="Consultas" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Consultas__IdEmp__0D7A0286" Association="Self.FK__Consultas__IdEmp__0D7A0286">
+            <End Role="Empleados" EntitySet="Empleados" />
+            <End Role="Consultas" EntitySet="Consultas" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Consultas__IdExp__0B91BA14" Association="Self.FK__Consultas__IdExp__0B91BA14">
+            <End Role="Expedientes" EntitySet="Expedientes" />
+            <End Role="Consultas" EntitySet="Consultas" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Empleados__IdPue__619B8048" Association="Self.FK__Empleados__IdPue__619B8048">
+            <End Role="Puestos" EntitySet="Puestos" />
+            <End Role="Empleados" EntitySet="Empleados" />
+          </AssociationSet>
+          <AssociationSet Name="FK__EsteticaR__IdCit__123EB7A3" Association="Self.FK__EsteticaR__IdCit__123EB7A3">
+            <End Role="Citas" EntitySet="Citas" />
+            <End Role="EsteticaRegistros" EntitySet="EsteticaRegistros" />
+          </AssociationSet>
+          <AssociationSet Name="FK__EsteticaR__IdEmp__1332DBDC" Association="Self.FK__EsteticaR__IdEmp__1332DBDC">
+            <End Role="Empleados" EntitySet="Empleados" />
+            <End Role="EsteticaRegistros" EntitySet="EsteticaRegistros" />
+          </AssociationSet>
+          <AssociationSet Name="FK__EsteticaR__IdMas__114A936A" Association="Self.FK__EsteticaR__IdMas__114A936A">
+            <End Role="Mascotas" EntitySet="Mascotas" />
+            <End Role="EsteticaRegistros" EntitySet="EsteticaRegistros" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Expedient__IdMas__07C12930" Association="Self.FK__Expedient__IdMas__07C12930">
+            <End Role="Mascotas" EntitySet="Mascotas" />
+            <End Role="Expedientes" EntitySet="Expedientes" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Hospitali__IdEmp__1BC821DD" Association="Self.FK__Hospitali__IdEmp__1BC821DD">
+            <End Role="Empleados" EntitySet="Empleados" />
+            <End Role="Hospitalizaciones" EntitySet="Hospitalizaciones" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Hospitali__IdEmp__41EDCAC5" Association="Self.FK__Hospitali__IdEmp__41EDCAC5">
+            <End Role="Empleados" EntitySet="Empleados" />
+            <End Role="HospitalizacionNotas" EntitySet="HospitalizacionNotas" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Hospitali__IdExp__19DFD96B" Association="Self.FK__Hospitali__IdExp__19DFD96B">
+            <End Role="Expedientes" EntitySet="Expedientes" />
+            <End Role="Hospitalizaciones" EntitySet="Hospitalizaciones" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Hospitali__IdHos__40F9A68C" Association="Self.FK__Hospitali__IdHos__40F9A68C">
+            <End Role="Hospitalizaciones" EntitySet="Hospitalizaciones" />
+            <End Role="HospitalizacionNotas" EntitySet="HospitalizacionNotas" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Hospitali__IdJau__1AD3FDA4" Association="Self.FK__Hospitali__IdJau__1AD3FDA4">
+            <End Role="Jaulas" EntitySet="Jaulas" />
+            <End Role="Hospitalizaciones" EntitySet="Hospitalizaciones" />
+          </AssociationSet>
+          <AssociationSet Name="FK__KardexInv__IdEmp__2EDAF651" Association="Self.FK__KardexInv__IdEmp__2EDAF651">
+            <End Role="Empleados" EntitySet="Empleados" />
+            <End Role="KardexInventario" EntitySet="KardexInventario" />
+          </AssociationSet>
+          <AssociationSet Name="FK__KardexInv__IdPro__2DE6D218" Association="Self.FK__KardexInv__IdPro__2DE6D218">
+            <End Role="Productos" EntitySet="Productos" />
+            <End Role="KardexInventario" EntitySet="KardexInventario" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Mascotas__IdProp__73BA3083" Association="Self.FK__Mascotas__IdProp__73BA3083">
+            <End Role="Propietarios" EntitySet="Propietarios" />
+            <End Role="Mascotas" EntitySet="Mascotas" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Mascotas__IdRaza__74AE54BC" Association="Self.FK__Mascotas__IdRaza__74AE54BC">
+            <End Role="Razas" EntitySet="Razas" />
+            <End Role="Mascotas" EntitySet="Mascotas" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Productos__IdCat__7C4F7684" Association="Self.FK__Productos__IdCat__7C4F7684">
+            <End Role="Categorias" EntitySet="Categorias" />
+            <End Role="Productos" EntitySet="Productos" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Razas__IdEspecie__70DDC3D8" Association="Self.FK__Razas__IdEspecie__70DDC3D8">
+            <End Role="Especies" EntitySet="Especies" />
+            <End Role="Razas" EntitySet="Razas" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Usuarios__IdEmpl__6754599E" Association="Self.FK__Usuarios__IdEmpl__6754599E">
+            <End Role="Empleados" EntitySet="Empleados" />
+            <End Role="Usuarios" EntitySet="Usuarios" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Usuarios__IdRol__68487DD7" Association="Self.FK__Usuarios__IdRol__68487DD7">
+            <End Role="Roles" EntitySet="Roles" />
+            <End Role="Usuarios" EntitySet="Usuarios" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Ventas__IdPropie__2645B050" Association="Self.FK__Ventas__IdPropie__2645B050">
+            <End Role="Propietarios" EntitySet="Propietarios" />
+            <End Role="Ventas" EntitySet="Ventas" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Ventas__IdSesion__25518C17" Association="Self.FK__Ventas__IdSesion__25518C17">
+            <End Role="CajasSesion" EntitySet="CajasSesion" />
+            <End Role="Ventas" EntitySet="Ventas" />
+          </AssociationSet>
+          <AssociationSet Name="FK__VentasDet__IdPro__2B0A656D" Association="Self.FK__VentasDet__IdPro__2B0A656D">
+            <End Role="Productos" EntitySet="Productos" />
+            <End Role="VentasDetalle" EntitySet="VentasDetalle" />
+          </AssociationSet>
+          <AssociationSet Name="FK__VentasDet__IdVen__2A164134" Association="Self.FK__VentasDet__IdVen__2A164134">
+            <End Role="Ventas" EntitySet="Ventas" />
+            <End Role="VentasDetalle" EntitySet="VentasDetalle" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="VetcoreModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="CajasSesion">
+          <Key>
+            <PropertyRef Name="IdSesion" />
+          </Key>
+          <Property Name="IdSesion" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="IdEmpleado" Type="Int32" Nullable="false" />
+          <Property Name="FechaApertura" Type="DateTime" Precision="3" />
+          <Property Name="FechaCierre" Type="DateTime" Precision="3" />
+          <Property Name="MontoApertura" Type="Decimal" Precision="10" Scale="2" Nullable="false" />
+          <Property Name="MontoCierre" Type="Decimal" Precision="10" Scale="2" />
+          <Property Name="Estado" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="Empleados" Relationship="Self.FK__CajasSesi__IdEmp__208CD6FA" FromRole="CajasSesion" ToRole="Empleados" />
+          <NavigationProperty Name="Ventas" Relationship="Self.FK__Ventas__IdSesion__25518C17" FromRole="CajasSesion" ToRole="Ventas" />
+        </EntityType>
+        <EntityType Name="Categorias">
+          <Key>
+            <PropertyRef Name="IdCategoria" />
+          </Key>
+          <Property Name="IdCategoria" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Nombre" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="EsServicio" Type="Boolean" />
+          <NavigationProperty Name="Productos" Relationship="Self.FK__Productos__IdCat__7C4F7684" FromRole="Categorias" ToRole="Productos" />
+        </EntityType>
+        <EntityType Name="Citas">
+          <Key>
+            <PropertyRef Name="IdCita" />
+          </Key>
+          <Property Name="IdCita" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="IdMascota" Type="Int32" Nullable="false" />
+          <Property Name="IdEmpleado" Type="Int32" Nullable="false" />
+          <Property Name="FechaHora" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="Tipo" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
+          <Property Name="Motivo" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+          <Property Name="Estado" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="Empleados" Relationship="Self.FK__Citas__IdEmplead__02FC7413" FromRole="Citas" ToRole="Empleados" />
+          <NavigationProperty Name="Mascotas" Relationship="Self.FK__Citas__IdMascota__02084FDA" FromRole="Citas" ToRole="Mascotas" />
+          <NavigationProperty Name="EsteticaRegistros" Relationship="Self.FK__EsteticaR__IdCit__123EB7A3" FromRole="Citas" ToRole="EsteticaRegistros" />
+          <NavigationProperty Name="Consultas" Relationship="VetcoreModel.FK__Consultas__IdCit__0C85DE4D" FromRole="Citas" ToRole="Consultas" />
+        </EntityType>
+        <EntityType Name="Empleados">
+          <Key>
+            <PropertyRef Name="IdEmpleado" />
+          </Key>
+          <Property Name="IdEmpleado" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="IdPuesto" Type="Int32" Nullable="false" />
+          <Property Name="Nombre" Type="String" MaxLength="60" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Apellidos" Type="String" MaxLength="60" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Telefono" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="Especialidad" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Activo" Type="Boolean" />
+          <NavigationProperty Name="CajasSesion" Relationship="Self.FK__CajasSesi__IdEmp__208CD6FA" FromRole="Empleados" ToRole="CajasSesion" />
+          <NavigationProperty Name="Citas" Relationship="Self.FK__Citas__IdEmplead__02FC7413" FromRole="Empleados" ToRole="Citas" />
+          <NavigationProperty Name="Puestos" Relationship="Self.FK__Empleados__IdPue__619B8048" FromRole="Empleados" ToRole="Puestos" />
+          <NavigationProperty Name="EsteticaRegistros" Relationship="Self.FK__EsteticaR__IdEmp__1332DBDC" FromRole="Empleados" ToRole="EsteticaRegistros" />
+          <NavigationProperty Name="KardexInventario" Relationship="Self.FK__KardexInv__IdEmp__2EDAF651" FromRole="Empleados" ToRole="KardexInventario" />
+          <NavigationProperty Name="Usuarios" Relationship="Self.FK__Usuarios__IdEmpl__6754599E" FromRole="Empleados" ToRole="Usuarios" />
+          <NavigationProperty Name="Consultas" Relationship="VetcoreModel.FK__Consultas__IdEmp__0D7A0286" FromRole="Empleados" ToRole="Consultas" />
+          <NavigationProperty Name="CarnetVacunacion" Relationship="VetcoreModel.FK__CarnetVac__IdEmp__3D2915A8" FromRole="Empleados" ToRole="CarnetVacunacion" />
+          <NavigationProperty Name="HospitalizacionNotas" Relationship="VetcoreModel.FK__Hospitali__IdEmp__41EDCAC5" FromRole="Empleados" ToRole="HospitalizacionNotas" />
+          <NavigationProperty Name="Hospitalizaciones" Relationship="VetcoreModel.FK__Hospitali__IdEmp__1BC821DD" FromRole="Empleados" ToRole="Hospitalizaciones" />
+          <NavigationProperty Name="AuditoriaLogs" Relationship="VetcoreModel.FK__Auditoria__IdEmp__4F47C5E3" FromRole="Empleados" ToRole="AuditoriaLogs" />
+        </EntityType>
+        <EntityType Name="Especies">
+          <Key>
+            <PropertyRef Name="IdEspecie" />
+          </Key>
+          <Property Name="IdEspecie" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Nombre" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <NavigationProperty Name="Razas" Relationship="Self.FK__Razas__IdEspecie__70DDC3D8" FromRole="Especies" ToRole="Razas" />
+        </EntityType>
+        <EntityType Name="EsteticaRegistros">
+          <Key>
+            <PropertyRef Name="IdEstetica" />
+          </Key>
+          <Property Name="IdEstetica" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="IdMascota" Type="Int32" Nullable="false" />
+          <Property Name="IdCita" Type="Int32" />
+          <Property Name="IdEmpleado" Type="Int32" Nullable="false" />
+          <Property Name="Fecha" Type="DateTime" Precision="3" />
+          <Property Name="TipoCorte" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="NotasPiel" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="Citas" Relationship="Self.FK__EsteticaR__IdCit__123EB7A3" FromRole="EsteticaRegistros" ToRole="Citas" />
+          <NavigationProperty Name="Empleados" Relationship="Self.FK__EsteticaR__IdEmp__1332DBDC" FromRole="EsteticaRegistros" ToRole="Empleados" />
+          <NavigationProperty Name="Mascotas" Relationship="Self.FK__EsteticaR__IdMas__114A936A" FromRole="EsteticaRegistros" ToRole="Mascotas" />
+        </EntityType>
+        <EntityType Name="Expedientes">
+          <Key>
+            <PropertyRef Name="IdExpediente" />
+          </Key>
+          <Property Name="IdExpediente" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="IdMascota" Type="Int32" Nullable="false" />
+          <Property Name="FechaCreacion" Type="DateTime" Precision="3" />
+          <NavigationProperty Name="Mascotas" Relationship="Self.FK__Expedient__IdMas__07C12930" FromRole="Expedientes" ToRole="Mascotas" />
+          <NavigationProperty Name="Consultas" Relationship="VetcoreModel.FK__Consultas__IdExp__0B91BA14" FromRole="Expedientes" ToRole="Consultas" />
+          <NavigationProperty Name="Hospitalizaciones" Relationship="VetcoreModel.FK__Hospitali__IdExp__19DFD96B" FromRole="Expedientes" ToRole="Hospitalizaciones" />
+        </EntityType>
+        <EntityType Name="Jaulas">
+          <Key>
+            <PropertyRef Name="IdJaula" />
+          </Key>
+          <Property Name="IdJaula" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Codigo" Type="String" MaxLength="20" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Tamano" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
+          <Property Name="Ocupada" Type="Boolean" />
+          <NavigationProperty Name="Hospitalizaciones" Relationship="VetcoreModel.FK__Hospitali__IdJau__1AD3FDA4" FromRole="Jaulas" ToRole="Hospitalizaciones" />
+        </EntityType>
+        <EntityType Name="KardexInventario">
+          <Key>
+            <PropertyRef Name="IdKardex" />
+          </Key>
+          <Property Name="IdKardex" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="IdProducto" Type="Int32" Nullable="false" />
+          <Property Name="IdEmpleado" Type="Int32" Nullable="false" />
+          <Property Name="TipoMovimiento" Type="String" MaxLength="30" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Cantidad" Type="Int32" Nullable="false" />
+          <Property Name="StockResultante" Type="Int32" Nullable="false" />
+          <Property Name="FechaHora" Type="DateTime" Precision="3" />
+          <Property Name="Motivo" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="Empleados" Relationship="Self.FK__KardexInv__IdEmp__2EDAF651" FromRole="KardexInventario" ToRole="Empleados" />
+          <NavigationProperty Name="Productos" Relationship="Self.FK__KardexInv__IdPro__2DE6D218" FromRole="KardexInventario" ToRole="Productos" />
+        </EntityType>
+        <EntityType Name="Mascotas">
+          <Key>
+            <PropertyRef Name="IdMascota" />
+          </Key>
+          <Property Name="IdMascota" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="IdPropietario" Type="Int32" Nullable="false" />
+          <Property Name="IdRaza" Type="Int32" Nullable="false" />
+          <Property Name="Nombre" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="FechaNacimiento" Type="DateTime" Precision="0" />
+          <Property Name="Sexo" Type="String" MaxLength="1" FixedLength="true" Unicode="false" />
+          <Property Name="PesoActual" Type="Decimal" Precision="5" Scale="2" />
+          <Property Name="Alergias" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Name="Fallecido" Type="Boolean" />
+          <NavigationProperty Name="Citas" Relationship="Self.FK__Citas__IdMascota__02084FDA" FromRole="Mascotas" ToRole="Citas" />
+          <NavigationProperty Name="EsteticaRegistros" Relationship="Self.FK__EsteticaR__IdMas__114A936A" FromRole="Mascotas" ToRole="EsteticaRegistros" />
+          <NavigationProperty Name="Expedientes" Relationship="Self.FK__Expedient__IdMas__07C12930" FromRole="Mascotas" ToRole="Expedientes" />
+          <NavigationProperty Name="Propietarios" Relationship="Self.FK__Mascotas__IdProp__73BA3083" FromRole="Mascotas" ToRole="Propietarios" />
+          <NavigationProperty Name="Razas" Relationship="Self.FK__Mascotas__IdRaza__74AE54BC" FromRole="Mascotas" ToRole="Razas" />
+          <NavigationProperty Name="CarnetVacunacion" Relationship="VetcoreModel.FK__CarnetVac__IdMas__3C34F16F" FromRole="Mascotas" ToRole="CarnetVacunacion" />
+          <Property Name="Activo" Type="Boolean" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Productos">
+          <Key>
+            <PropertyRef Name="IdProducto" />
+          </Key>
+          <Property Name="IdProducto" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="IdCategoria" Type="Int32" Nullable="false" />
+          <Property Name="CodigoBarras" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Nombre" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="PrecioCosto" Type="Decimal" Precision="10" Scale="2" Nullable="false" />
+          <Property Name="PrecioVenta" Type="Decimal" Precision="10" Scale="2" Nullable="false" />
+          <Property Name="StockActual" Type="Int32" />
+          <Property Name="StockMinimo" Type="Int32" />
+          <Property Name="Activo" Type="Boolean" />
+          <NavigationProperty Name="Categorias" Relationship="Self.FK__Productos__IdCat__7C4F7684" FromRole="Productos" ToRole="Categorias" />
+          <NavigationProperty Name="KardexInventario" Relationship="Self.FK__KardexInv__IdPro__2DE6D218" FromRole="Productos" ToRole="KardexInventario" />
+          <NavigationProperty Name="VentasDetalle" Relationship="Self.FK__VentasDet__IdPro__2B0A656D" FromRole="Productos" ToRole="VentasDetalle" />
+          <Property Name="Lote" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="FechaCaducidad" Type="DateTime" Precision="0" />
+        </EntityType>
+        <EntityType Name="Propietarios">
+          <Key>
+            <PropertyRef Name="IdPropietario" />
+          </Key>
+          <Property Name="IdPropietario" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Nombre" Type="String" MaxLength="60" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Apellidos" Type="String" MaxLength="60" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Telefono" Type="String" MaxLength="20" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Email" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="Direccion" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+          <Property Name="FechaRegistro" Type="DateTime" Precision="3" />
+          <NavigationProperty Name="Mascotas" Relationship="Self.FK__Mascotas__IdProp__73BA3083" FromRole="Propietarios" ToRole="Mascotas" />
+          <NavigationProperty Name="Ventas" Relationship="Self.FK__Ventas__IdPropie__2645B050" FromRole="Propietarios" ToRole="Ventas" />
+        </EntityType>
+        <EntityType Name="Puestos">
+          <Key>
+            <PropertyRef Name="IdPuesto" />
+          </Key>
+          <Property Name="IdPuesto" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Nombre" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="NivelAcceso" Type="Int32" />
+          <NavigationProperty Name="Empleados" Relationship="Self.FK__Empleados__IdPue__619B8048" FromRole="Puestos" ToRole="Empleados" />
+        </EntityType>
+        <EntityType Name="Razas">
+          <Key>
+            <PropertyRef Name="IdRaza" />
+          </Key>
+          <Property Name="IdRaza" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="IdEspecie" Type="Int32" Nullable="false" />
+          <Property Name="Nombre" Type="String" MaxLength="60" FixedLength="false" Unicode="false" Nullable="false" />
+          <NavigationProperty Name="Especies" Relationship="Self.FK__Razas__IdEspecie__70DDC3D8" FromRole="Razas" ToRole="Especies" />
+          <NavigationProperty Name="Mascotas" Relationship="Self.FK__Mascotas__IdRaza__74AE54BC" FromRole="Razas" ToRole="Mascotas" />
+        </EntityType>
+        <EntityType Name="Roles">
+          <Key>
+            <PropertyRef Name="IdRol" />
+          </Key>
+          <Property Name="IdRol" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Nombre" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Descripcion" Type="String" MaxLength="150" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="Usuarios" Relationship="Self.FK__Usuarios__IdRol__68487DD7" FromRole="Roles" ToRole="Usuarios" />
+        </EntityType>
+        <EntityType Name="Usuarios">
+          <Key>
+            <PropertyRef Name="IdUsuario" />
+          </Key>
+          <Property Name="IdUsuario" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="IdEmpleado" Type="Int32" Nullable="false" />
+          <Property Name="IdRol" Type="Int32" Nullable="false" />
+          <Property Name="Username" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="PasswordHash" Type="String" MaxLength="255" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Activo" Type="Boolean" />
+          <NavigationProperty Name="Empleados" Relationship="Self.FK__Usuarios__IdEmpl__6754599E" FromRole="Usuarios" ToRole="Empleados" />
+          <NavigationProperty Name="Roles" Relationship="Self.FK__Usuarios__IdRol__68487DD7" FromRole="Usuarios" ToRole="Roles" />
+        </EntityType>
+        <EntityType Name="Ventas">
+          <Key>
+            <PropertyRef Name="IdVenta" />
+          </Key>
+          <Property Name="IdVenta" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="IdSesion" Type="Int32" Nullable="false" />
+          <Property Name="IdPropietario" Type="Int32" />
+          <Property Name="FechaHora" Type="DateTime" Precision="3" />
+          <Property Name="Subtotal" Type="Decimal" Precision="10" Scale="2" Nullable="false" />
+          <Property Name="Impuestos" Type="Decimal" Precision="10" Scale="2" Nullable="false" />
+          <Property Name="Total" Type="Decimal" Precision="10" Scale="2" Nullable="false" />
+          <Property Name="MetodoPago" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="CajasSesion" Relationship="Self.FK__Ventas__IdSesion__25518C17" FromRole="Ventas" ToRole="CajasSesion" />
+          <NavigationProperty Name="Propietarios" Relationship="Self.FK__Ventas__IdPropie__2645B050" FromRole="Ventas" ToRole="Propietarios" />
+          <NavigationProperty Name="VentasDetalle" Relationship="Self.FK__VentasDet__IdVen__2A164134" FromRole="Ventas" ToRole="VentasDetalle" />
+        </EntityType>
+        <EntityType Name="VentasDetalle">
+          <Key>
+            <PropertyRef Name="IdDetalle" />
+          </Key>
+          <Property Name="IdDetalle" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="IdVenta" Type="Int32" Nullable="false" />
+          <Property Name="IdProducto" Type="Int32" Nullable="false" />
+          <Property Name="Cantidad" Type="Decimal" Precision="8" Scale="2" Nullable="false" />
+          <Property Name="PrecioUnitario" Type="Decimal" Precision="10" Scale="2" Nullable="false" />
+          <Property Name="Subtotal" Type="Decimal" Precision="10" Scale="2" Nullable="false" />
+          <NavigationProperty Name="Productos" Relationship="Self.FK__VentasDet__IdPro__2B0A656D" FromRole="VentasDetalle" ToRole="Productos" />
+          <NavigationProperty Name="Ventas" Relationship="Self.FK__VentasDet__IdVen__2A164134" FromRole="VentasDetalle" ToRole="Ventas" />
+        </EntityType>
+        <Association Name="FK__CajasSesi__IdEmp__208CD6FA">
+          <End Role="Empleados" Type="Self.Empleados" Multiplicity="1" />
+          <End Role="CajasSesion" Type="Self.CajasSesion" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Empleados">
+              <PropertyRef Name="IdEmpleado" />
+            </Principal>
+            <Dependent Role="CajasSesion">
+              <PropertyRef Name="IdEmpleado" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Ventas__IdSesion__25518C17">
+          <End Role="CajasSesion" Type="Self.CajasSesion" Multiplicity="1" />
+          <End Role="Ventas" Type="Self.Ventas" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="CajasSesion">
+              <PropertyRef Name="IdSesion" />
+            </Principal>
+            <Dependent Role="Ventas">
+              <PropertyRef Name="IdSesion" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Productos__IdCat__7C4F7684">
+          <End Role="Categorias" Type="Self.Categorias" Multiplicity="1" />
+          <End Role="Productos" Type="Self.Productos" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Categorias">
+              <PropertyRef Name="IdCategoria" />
+            </Principal>
+            <Dependent Role="Productos">
+              <PropertyRef Name="IdCategoria" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Citas__IdEmplead__02FC7413">
+          <End Role="Empleados" Type="Self.Empleados" Multiplicity="1" />
+          <End Role="Citas" Type="Self.Citas" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Empleados">
+              <PropertyRef Name="IdEmpleado" />
+            </Principal>
+            <Dependent Role="Citas">
+              <PropertyRef Name="IdEmpleado" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Citas__IdMascota__02084FDA">
+          <End Role="Mascotas" Type="Self.Mascotas" Multiplicity="1" />
+          <End Role="Citas" Type="Self.Citas" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Mascotas">
+              <PropertyRef Name="IdMascota" />
+            </Principal>
+            <Dependent Role="Citas">
+              <PropertyRef Name="IdMascota" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__EsteticaR__IdCit__123EB7A3">
+          <End Role="Citas" Type="Self.Citas" Multiplicity="0..1" />
+          <End Role="EsteticaRegistros" Type="Self.EsteticaRegistros" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Citas">
+              <PropertyRef Name="IdCita" />
+            </Principal>
+            <Dependent Role="EsteticaRegistros">
+              <PropertyRef Name="IdCita" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Empleados__IdPue__619B8048">
+          <End Role="Puestos" Type="Self.Puestos" Multiplicity="1" />
+          <End Role="Empleados" Type="Self.Empleados" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Puestos">
+              <PropertyRef Name="IdPuesto" />
+            </Principal>
+            <Dependent Role="Empleados">
+              <PropertyRef Name="IdPuesto" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__EsteticaR__IdEmp__1332DBDC">
+          <End Role="Empleados" Type="Self.Empleados" Multiplicity="1" />
+          <End Role="EsteticaRegistros" Type="Self.EsteticaRegistros" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Empleados">
+              <PropertyRef Name="IdEmpleado" />
+            </Principal>
+            <Dependent Role="EsteticaRegistros">
+              <PropertyRef Name="IdEmpleado" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__KardexInv__IdEmp__2EDAF651">
+          <End Role="Empleados" Type="Self.Empleados" Multiplicity="1" />
+          <End Role="KardexInventario" Type="Self.KardexInventario" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Empleados">
+              <PropertyRef Name="IdEmpleado" />
+            </Principal>
+            <Dependent Role="KardexInventario">
+              <PropertyRef Name="IdEmpleado" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Usuarios__IdEmpl__6754599E">
+          <End Role="Empleados" Type="Self.Empleados" Multiplicity="1" />
+          <End Role="Usuarios" Type="Self.Usuarios" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Empleados">
+              <PropertyRef Name="IdEmpleado" />
+            </Principal>
+            <Dependent Role="Usuarios">
+              <PropertyRef Name="IdEmpleado" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Razas__IdEspecie__70DDC3D8">
+          <End Role="Especies" Type="Self.Especies" Multiplicity="1" />
+          <End Role="Razas" Type="Self.Razas" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Especies">
+              <PropertyRef Name="IdEspecie" />
+            </Principal>
+            <Dependent Role="Razas">
+              <PropertyRef Name="IdEspecie" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__EsteticaR__IdMas__114A936A">
+          <End Role="Mascotas" Type="Self.Mascotas" Multiplicity="1" />
+          <End Role="EsteticaRegistros" Type="Self.EsteticaRegistros" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Mascotas">
+              <PropertyRef Name="IdMascota" />
+            </Principal>
+            <Dependent Role="EsteticaRegistros">
+              <PropertyRef Name="IdMascota" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Expedient__IdMas__07C12930">
+          <End Role="Mascotas" Type="Self.Mascotas" Multiplicity="1" />
+          <End Role="Expedientes" Type="Self.Expedientes" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Mascotas">
+              <PropertyRef Name="IdMascota" />
+            </Principal>
+            <Dependent Role="Expedientes">
+              <PropertyRef Name="IdMascota" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__KardexInv__IdPro__2DE6D218">
+          <End Role="Productos" Type="Self.Productos" Multiplicity="1" />
+          <End Role="KardexInventario" Type="Self.KardexInventario" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Productos">
+              <PropertyRef Name="IdProducto" />
+            </Principal>
+            <Dependent Role="KardexInventario">
+              <PropertyRef Name="IdProducto" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Mascotas__IdProp__73BA3083">
+          <End Role="Propietarios" Type="Self.Propietarios" Multiplicity="1" />
+          <End Role="Mascotas" Type="Self.Mascotas" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Propietarios">
+              <PropertyRef Name="IdPropietario" />
+            </Principal>
+            <Dependent Role="Mascotas">
+              <PropertyRef Name="IdPropietario" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Mascotas__IdRaza__74AE54BC">
+          <End Role="Razas" Type="Self.Razas" Multiplicity="1" />
+          <End Role="Mascotas" Type="Self.Mascotas" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Razas">
+              <PropertyRef Name="IdRaza" />
+            </Principal>
+            <Dependent Role="Mascotas">
+              <PropertyRef Name="IdRaza" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__VentasDet__IdPro__2B0A656D">
+          <End Role="Productos" Type="Self.Productos" Multiplicity="1" />
+          <End Role="VentasDetalle" Type="Self.VentasDetalle" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Productos">
+              <PropertyRef Name="IdProducto" />
+            </Principal>
+            <Dependent Role="VentasDetalle">
+              <PropertyRef Name="IdProducto" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Ventas__IdPropie__2645B050">
+          <End Role="Propietarios" Type="Self.Propietarios" Multiplicity="0..1" />
+          <End Role="Ventas" Type="Self.Ventas" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Propietarios">
+              <PropertyRef Name="IdPropietario" />
+            </Principal>
+            <Dependent Role="Ventas">
+              <PropertyRef Name="IdPropietario" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Usuarios__IdRol__68487DD7">
+          <End Role="Roles" Type="Self.Roles" Multiplicity="1" />
+          <End Role="Usuarios" Type="Self.Usuarios" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Roles">
+              <PropertyRef Name="IdRol" />
+            </Principal>
+            <Dependent Role="Usuarios">
+              <PropertyRef Name="IdRol" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__VentasDet__IdVen__2A164134">
+          <End Role="Ventas" Type="Self.Ventas" Multiplicity="1" />
+          <End Role="VentasDetalle" Type="Self.VentasDetalle" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Ventas">
+              <PropertyRef Name="IdVenta" />
+            </Principal>
+            <Dependent Role="VentasDetalle">
+              <PropertyRef Name="IdVenta" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="VetcoreEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="CajasSesion" EntityType="Self.CajasSesion" />
+          <EntitySet Name="Categorias" EntityType="Self.Categorias" />
+          <EntitySet Name="Citas" EntityType="Self.Citas" />
+          <EntitySet Name="Empleados" EntityType="Self.Empleados" />
+          <EntitySet Name="Especies" EntityType="Self.Especies" />
+          <EntitySet Name="EsteticaRegistros" EntityType="Self.EsteticaRegistros" />
+          <EntitySet Name="Expedientes" EntityType="Self.Expedientes" />
+          <EntitySet Name="Jaulas" EntityType="Self.Jaulas" />
+          <EntitySet Name="KardexInventario" EntityType="Self.KardexInventario" />
+          <EntitySet Name="Mascotas" EntityType="Self.Mascotas" />
+          <EntitySet Name="Productos" EntityType="Self.Productos" />
+          <EntitySet Name="Propietarios" EntityType="Self.Propietarios" />
+          <EntitySet Name="Puestos" EntityType="Self.Puestos" />
+          <EntitySet Name="Razas" EntityType="Self.Razas" />
+          <EntitySet Name="Roles" EntityType="Self.Roles" />
+          <EntitySet Name="Usuarios" EntityType="Self.Usuarios" />
+          <EntitySet Name="Ventas" EntityType="Self.Ventas" />
+          <EntitySet Name="VentasDetalle" EntityType="Self.VentasDetalle" />
+          <AssociationSet Name="FK__CajasSesi__IdEmp__208CD6FA" Association="Self.FK__CajasSesi__IdEmp__208CD6FA">
+            <End Role="Empleados" EntitySet="Empleados" />
+            <End Role="CajasSesion" EntitySet="CajasSesion" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Ventas__IdSesion__25518C17" Association="Self.FK__Ventas__IdSesion__25518C17">
+            <End Role="CajasSesion" EntitySet="CajasSesion" />
+            <End Role="Ventas" EntitySet="Ventas" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Productos__IdCat__7C4F7684" Association="Self.FK__Productos__IdCat__7C4F7684">
+            <End Role="Categorias" EntitySet="Categorias" />
+            <End Role="Productos" EntitySet="Productos" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Citas__IdEmplead__02FC7413" Association="Self.FK__Citas__IdEmplead__02FC7413">
+            <End Role="Empleados" EntitySet="Empleados" />
+            <End Role="Citas" EntitySet="Citas" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Citas__IdMascota__02084FDA" Association="Self.FK__Citas__IdMascota__02084FDA">
+            <End Role="Mascotas" EntitySet="Mascotas" />
+            <End Role="Citas" EntitySet="Citas" />
+          </AssociationSet>
+          <AssociationSet Name="FK__EsteticaR__IdCit__123EB7A3" Association="Self.FK__EsteticaR__IdCit__123EB7A3">
+            <End Role="Citas" EntitySet="Citas" />
+            <End Role="EsteticaRegistros" EntitySet="EsteticaRegistros" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Empleados__IdPue__619B8048" Association="Self.FK__Empleados__IdPue__619B8048">
+            <End Role="Puestos" EntitySet="Puestos" />
+            <End Role="Empleados" EntitySet="Empleados" />
+          </AssociationSet>
+          <AssociationSet Name="FK__EsteticaR__IdEmp__1332DBDC" Association="Self.FK__EsteticaR__IdEmp__1332DBDC">
+            <End Role="Empleados" EntitySet="Empleados" />
+            <End Role="EsteticaRegistros" EntitySet="EsteticaRegistros" />
+          </AssociationSet>
+          <AssociationSet Name="FK__KardexInv__IdEmp__2EDAF651" Association="Self.FK__KardexInv__IdEmp__2EDAF651">
+            <End Role="Empleados" EntitySet="Empleados" />
+            <End Role="KardexInventario" EntitySet="KardexInventario" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Usuarios__IdEmpl__6754599E" Association="Self.FK__Usuarios__IdEmpl__6754599E">
+            <End Role="Empleados" EntitySet="Empleados" />
+            <End Role="Usuarios" EntitySet="Usuarios" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Razas__IdEspecie__70DDC3D8" Association="Self.FK__Razas__IdEspecie__70DDC3D8">
+            <End Role="Especies" EntitySet="Especies" />
+            <End Role="Razas" EntitySet="Razas" />
+          </AssociationSet>
+          <AssociationSet Name="FK__EsteticaR__IdMas__114A936A" Association="Self.FK__EsteticaR__IdMas__114A936A">
+            <End Role="Mascotas" EntitySet="Mascotas" />
+            <End Role="EsteticaRegistros" EntitySet="EsteticaRegistros" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Expedient__IdMas__07C12930" Association="Self.FK__Expedient__IdMas__07C12930">
+            <End Role="Mascotas" EntitySet="Mascotas" />
+            <End Role="Expedientes" EntitySet="Expedientes" />
+          </AssociationSet>
+          <AssociationSet Name="FK__KardexInv__IdPro__2DE6D218" Association="Self.FK__KardexInv__IdPro__2DE6D218">
+            <End Role="Productos" EntitySet="Productos" />
+            <End Role="KardexInventario" EntitySet="KardexInventario" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Mascotas__IdProp__73BA3083" Association="Self.FK__Mascotas__IdProp__73BA3083">
+            <End Role="Propietarios" EntitySet="Propietarios" />
+            <End Role="Mascotas" EntitySet="Mascotas" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Mascotas__IdRaza__74AE54BC" Association="Self.FK__Mascotas__IdRaza__74AE54BC">
+            <End Role="Razas" EntitySet="Razas" />
+            <End Role="Mascotas" EntitySet="Mascotas" />
+          </AssociationSet>
+          <AssociationSet Name="FK__VentasDet__IdPro__2B0A656D" Association="Self.FK__VentasDet__IdPro__2B0A656D">
+            <End Role="Productos" EntitySet="Productos" />
+            <End Role="VentasDetalle" EntitySet="VentasDetalle" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Ventas__IdPropie__2645B050" Association="Self.FK__Ventas__IdPropie__2645B050">
+            <End Role="Propietarios" EntitySet="Propietarios" />
+            <End Role="Ventas" EntitySet="Ventas" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Usuarios__IdRol__68487DD7" Association="Self.FK__Usuarios__IdRol__68487DD7">
+            <End Role="Roles" EntitySet="Roles" />
+            <End Role="Usuarios" EntitySet="Usuarios" />
+          </AssociationSet>
+          <AssociationSet Name="FK__VentasDet__IdVen__2A164134" Association="Self.FK__VentasDet__IdVen__2A164134">
+            <End Role="Ventas" EntitySet="Ventas" />
+            <End Role="VentasDetalle" EntitySet="VentasDetalle" />
+          </AssociationSet>
+          <EntitySet Name="Consultas" EntityType="VetcoreModel.Consultas" />
+          <AssociationSet Name="FK__Consultas__IdCit__0C85DE4D" Association="VetcoreModel.FK__Consultas__IdCit__0C85DE4D">
+            <End Role="Citas" EntitySet="Citas" />
+            <End Role="Consultas" EntitySet="Consultas" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Consultas__IdEmp__0D7A0286" Association="VetcoreModel.FK__Consultas__IdEmp__0D7A0286">
+            <End Role="Empleados" EntitySet="Empleados" />
+            <End Role="Consultas" EntitySet="Consultas" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Consultas__IdExp__0B91BA14" Association="VetcoreModel.FK__Consultas__IdExp__0B91BA14">
+            <End Role="Expedientes" EntitySet="Expedientes" />
+            <End Role="Consultas" EntitySet="Consultas" />
+          </AssociationSet>
+          <EntitySet Name="CarnetVacunacion" EntityType="VetcoreModel.CarnetVacunacion" />
+          <AssociationSet Name="FK__CarnetVac__IdEmp__3D2915A8" Association="VetcoreModel.FK__CarnetVac__IdEmp__3D2915A8">
+            <End Role="Empleados" EntitySet="Empleados" />
+            <End Role="CarnetVacunacion" EntitySet="CarnetVacunacion" />
+          </AssociationSet>
+          <AssociationSet Name="FK__CarnetVac__IdMas__3C34F16F" Association="VetcoreModel.FK__CarnetVac__IdMas__3C34F16F">
+            <End Role="Mascotas" EntitySet="Mascotas" />
+            <End Role="CarnetVacunacion" EntitySet="CarnetVacunacion" />
+          </AssociationSet>
+          <EntitySet Name="HospitalizacionNotas" EntityType="VetcoreModel.HospitalizacionNotas" />
+          <AssociationSet Name="FK__Hospitali__IdEmp__41EDCAC5" Association="VetcoreModel.FK__Hospitali__IdEmp__41EDCAC5">
+            <End Role="Empleados" EntitySet="Empleados" />
+            <End Role="HospitalizacionNotas" EntitySet="HospitalizacionNotas" />
+          </AssociationSet>
+          <EntitySet Name="Hospitalizaciones" EntityType="VetcoreModel.Hospitalizaciones" />
+          <AssociationSet Name="FK__Hospitali__IdEmp__1BC821DD" Association="VetcoreModel.FK__Hospitali__IdEmp__1BC821DD">
+            <End Role="Empleados" EntitySet="Empleados" />
+            <End Role="Hospitalizaciones" EntitySet="Hospitalizaciones" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Hospitali__IdExp__19DFD96B" Association="VetcoreModel.FK__Hospitali__IdExp__19DFD96B">
+            <End Role="Expedientes" EntitySet="Expedientes" />
+            <End Role="Hospitalizaciones" EntitySet="Hospitalizaciones" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Hospitali__IdHos__40F9A68C" Association="VetcoreModel.FK__Hospitali__IdHos__40F9A68C">
+            <End Role="Hospitalizaciones" EntitySet="Hospitalizaciones" />
+            <End Role="HospitalizacionNotas" EntitySet="HospitalizacionNotas" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Hospitali__IdJau__1AD3FDA4" Association="VetcoreModel.FK__Hospitali__IdJau__1AD3FDA4">
+            <End Role="Jaulas" EntitySet="Jaulas" />
+            <End Role="Hospitalizaciones" EntitySet="Hospitalizaciones" />
+          </AssociationSet>
+          <EntitySet Name="AuditoriaLogs" EntityType="VetcoreModel.AuditoriaLogs" />
+          <AssociationSet Name="FK__Auditoria__IdEmp__4F47C5E3" Association="VetcoreModel.FK__Auditoria__IdEmp__4F47C5E3">
+            <End Role="Empleados" EntitySet="Empleados" />
+            <End Role="AuditoriaLogs" EntitySet="AuditoriaLogs" />
+          </AssociationSet>
+        </EntityContainer>
+        <EntityType Name="Consultas">
+          <Key>
+            <PropertyRef Name="IdConsulta" />
+          </Key>
+          <Property Name="IdConsulta" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="IdExpediente" Type="Int32" Nullable="false" />
+          <Property Name="IdCita" Type="Int32" />
+          <Property Name="IdEmpleado" Type="Int32" Nullable="false" />
+          <Property Name="Fecha" Type="DateTime" Precision="3" />
+          <Property Name="PesoKg" Type="Decimal" Precision="5" Scale="2" />
+          <Property Name="Temperatura" Type="Decimal" Precision="4" Scale="2" />
+          <Property Name="Sintomas" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="Diagnostico" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="RecetaMedica" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="NotasAdicionales" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="Citas" Relationship="VetcoreModel.FK__Consultas__IdCit__0C85DE4D" FromRole="Consultas" ToRole="Citas" />
+          <NavigationProperty Name="Empleados" Relationship="VetcoreModel.FK__Consultas__IdEmp__0D7A0286" FromRole="Consultas" ToRole="Empleados" />
+          <NavigationProperty Name="Expedientes" Relationship="VetcoreModel.FK__Consultas__IdExp__0B91BA14" FromRole="Consultas" ToRole="Expedientes" />
+          <Property Name="ArchivoEstudio" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+        </EntityType>
+        <Association Name="FK__Consultas__IdCit__0C85DE4D">
+          <End Type="VetcoreModel.Citas" Role="Citas" Multiplicity="0..1" />
+          <End Type="VetcoreModel.Consultas" Role="Consultas" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Citas">
+              <PropertyRef Name="IdCita" />
+            </Principal>
+            <Dependent Role="Consultas">
+              <PropertyRef Name="IdCita" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Consultas__IdEmp__0D7A0286">
+          <End Type="VetcoreModel.Empleados" Role="Empleados" Multiplicity="1" />
+          <End Type="VetcoreModel.Consultas" Role="Consultas" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Empleados">
+              <PropertyRef Name="IdEmpleado" />
+            </Principal>
+            <Dependent Role="Consultas">
+              <PropertyRef Name="IdEmpleado" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Consultas__IdExp__0B91BA14">
+          <End Type="VetcoreModel.Expedientes" Role="Expedientes" Multiplicity="1" />
+          <End Type="VetcoreModel.Consultas" Role="Consultas" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Expedientes">
+              <PropertyRef Name="IdExpediente" />
+            </Principal>
+            <Dependent Role="Consultas">
+              <PropertyRef Name="IdExpediente" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="CarnetVacunacion">
+          <Key>
+            <PropertyRef Name="IdRegistro" />
+          </Key>
+          <Property Name="IdRegistro" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="IdMascota" Type="Int32" Nullable="false" />
+          <Property Name="IdEmpleado" Type="Int32" Nullable="false" />
+          <Property Name="Tipo" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="NombreProducto" Type="String" Nullable="false" MaxLength="150" FixedLength="false" Unicode="false" />
+          <Property Name="FechaAplicacion" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="FechaProxima" Type="DateTime" Precision="0" />
+          <NavigationProperty Name="Empleados" Relationship="VetcoreModel.FK__CarnetVac__IdEmp__3D2915A8" FromRole="CarnetVacunacion" ToRole="Empleados" />
+          <NavigationProperty Name="Mascotas" Relationship="VetcoreModel.FK__CarnetVac__IdMas__3C34F16F" FromRole="CarnetVacunacion" ToRole="Mascotas" />
+        </EntityType>
+        <Association Name="FK__CarnetVac__IdEmp__3D2915A8">
+          <End Type="VetcoreModel.Empleados" Role="Empleados" Multiplicity="1" />
+          <End Type="VetcoreModel.CarnetVacunacion" Role="CarnetVacunacion" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Empleados">
+              <PropertyRef Name="IdEmpleado" />
+            </Principal>
+            <Dependent Role="CarnetVacunacion">
+              <PropertyRef Name="IdEmpleado" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__CarnetVac__IdMas__3C34F16F">
+          <End Type="VetcoreModel.Mascotas" Role="Mascotas" Multiplicity="1" />
+          <End Type="VetcoreModel.CarnetVacunacion" Role="CarnetVacunacion" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Mascotas">
+              <PropertyRef Name="IdMascota" />
+            </Principal>
+            <Dependent Role="CarnetVacunacion">
+              <PropertyRef Name="IdMascota" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="HospitalizacionNotas">
+          <Key>
+            <PropertyRef Name="IdNota" />
+          </Key>
+          <Property Name="IdNota" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="IdHospitalizacion" Type="Int32" Nullable="false" />
+          <Property Name="IdEmpleado" Type="Int32" Nullable="false" />
+          <Property Name="FechaHora" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="NotasMedicas" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="CostoConsumo" Type="Decimal" Precision="18" Scale="2" />
+          <Property Name="ConceptoConsumo" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="Empleados" Relationship="VetcoreModel.FK__Hospitali__IdEmp__41EDCAC5" FromRole="HospitalizacionNotas" ToRole="Empleados" />
+          <NavigationProperty Name="Hospitalizaciones" Relationship="VetcoreModel.FK__Hospitali__IdHos__40F9A68C" FromRole="HospitalizacionNotas" ToRole="Hospitalizaciones" />
+        </EntityType>
+        <Association Name="FK__Hospitali__IdEmp__41EDCAC5">
+          <End Type="VetcoreModel.Empleados" Role="Empleados" Multiplicity="1" />
+          <End Type="VetcoreModel.HospitalizacionNotas" Role="HospitalizacionNotas" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Empleados">
+              <PropertyRef Name="IdEmpleado" />
+            </Principal>
+            <Dependent Role="HospitalizacionNotas">
+              <PropertyRef Name="IdEmpleado" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="Hospitalizaciones">
+          <Key>
+            <PropertyRef Name="IdHospitalizacion" />
+          </Key>
+          <Property Name="IdHospitalizacion" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="IdExpediente" Type="Int32" Nullable="false" />
+          <Property Name="IdJaula" Type="Int32" Nullable="false" />
+          <Property Name="IdEmpleado" Type="Int32" Nullable="false" />
+          <Property Name="FechaIngreso" Type="DateTime" Precision="3" />
+          <Property Name="FechaAlta" Type="DateTime" Precision="3" />
+          <Property Name="Motivo" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="Estado" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="Empleados" Relationship="VetcoreModel.FK__Hospitali__IdEmp__1BC821DD" FromRole="Hospitalizaciones" ToRole="Empleados" />
+          <NavigationProperty Name="Expedientes" Relationship="VetcoreModel.FK__Hospitali__IdExp__19DFD96B" FromRole="Hospitalizaciones" ToRole="Expedientes" />
+          <NavigationProperty Name="HospitalizacionNotas" Relationship="VetcoreModel.FK__Hospitali__IdHos__40F9A68C" FromRole="Hospitalizaciones" ToRole="HospitalizacionNotas" />
+          <NavigationProperty Name="Jaulas" Relationship="VetcoreModel.FK__Hospitali__IdJau__1AD3FDA4" FromRole="Hospitalizaciones" ToRole="Jaulas" />
+        </EntityType>
+        <Association Name="FK__Hospitali__IdEmp__1BC821DD">
+          <End Type="VetcoreModel.Empleados" Role="Empleados" Multiplicity="1" />
+          <End Type="VetcoreModel.Hospitalizaciones" Role="Hospitalizaciones" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Empleados">
+              <PropertyRef Name="IdEmpleado" />
+            </Principal>
+            <Dependent Role="Hospitalizaciones">
+              <PropertyRef Name="IdEmpleado" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Hospitali__IdExp__19DFD96B">
+          <End Type="VetcoreModel.Expedientes" Role="Expedientes" Multiplicity="1" />
+          <End Type="VetcoreModel.Hospitalizaciones" Role="Hospitalizaciones" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Expedientes">
+              <PropertyRef Name="IdExpediente" />
+            </Principal>
+            <Dependent Role="Hospitalizaciones">
+              <PropertyRef Name="IdExpediente" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Hospitali__IdHos__40F9A68C">
+          <End Type="VetcoreModel.Hospitalizaciones" Role="Hospitalizaciones" Multiplicity="1" />
+          <End Type="VetcoreModel.HospitalizacionNotas" Role="HospitalizacionNotas" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Hospitalizaciones">
+              <PropertyRef Name="IdHospitalizacion" />
+            </Principal>
+            <Dependent Role="HospitalizacionNotas">
+              <PropertyRef Name="IdHospitalizacion" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Hospitali__IdJau__1AD3FDA4">
+          <End Type="VetcoreModel.Jaulas" Role="Jaulas" Multiplicity="1" />
+          <End Type="VetcoreModel.Hospitalizaciones" Role="Hospitalizaciones" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Jaulas">
+              <PropertyRef Name="IdJaula" />
+            </Principal>
+            <Dependent Role="Hospitalizaciones">
+              <PropertyRef Name="IdJaula" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="AuditoriaLogs">
+          <Key>
+            <PropertyRef Name="IdLog" />
+          </Key>
+          <Property Name="IdLog" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="IdEmpleado" Type="Int32" />
+          <Property Name="Accion" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="Detalle" Type="String" Nullable="false" MaxLength="500" FixedLength="false" Unicode="false" />
+          <Property Name="IpAddress" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="FechaHora" Type="DateTime" Nullable="false" Precision="3" />
+          <NavigationProperty Name="Empleados" Relationship="VetcoreModel.FK__Auditoria__IdEmp__4F47C5E3" FromRole="AuditoriaLogs" ToRole="Empleados" />
+        </EntityType>
+        <Association Name="FK__Auditoria__IdEmp__4F47C5E3">
+          <End Type="VetcoreModel.Empleados" Role="Empleados" Multiplicity="0..1" />
+          <End Type="VetcoreModel.AuditoriaLogs" Role="AuditoriaLogs" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Empleados">
+              <PropertyRef Name="IdEmpleado" />
+            </Principal>
+            <Dependent Role="AuditoriaLogs">
+              <PropertyRef Name="IdEmpleado" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="VetcoreModelStoreContainer" CdmEntityContainer="VetcoreEntities">
+          <EntitySetMapping Name="CajasSesion">
+            <EntityTypeMapping TypeName="VetcoreModel.CajasSesion">
+              <MappingFragment StoreEntitySet="CajasSesion">
+                <ScalarProperty Name="IdSesion" ColumnName="IdSesion" />
+                <ScalarProperty Name="IdEmpleado" ColumnName="IdEmpleado" />
+                <ScalarProperty Name="FechaApertura" ColumnName="FechaApertura" />
+                <ScalarProperty Name="FechaCierre" ColumnName="FechaCierre" />
+                <ScalarProperty Name="MontoApertura" ColumnName="MontoApertura" />
+                <ScalarProperty Name="MontoCierre" ColumnName="MontoCierre" />
+                <ScalarProperty Name="Estado" ColumnName="Estado" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Categorias">
+            <EntityTypeMapping TypeName="VetcoreModel.Categorias">
+              <MappingFragment StoreEntitySet="Categorias">
+                <ScalarProperty Name="IdCategoria" ColumnName="IdCategoria" />
+                <ScalarProperty Name="Nombre" ColumnName="Nombre" />
+                <ScalarProperty Name="EsServicio" ColumnName="EsServicio" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Citas">
+            <EntityTypeMapping TypeName="VetcoreModel.Citas">
+              <MappingFragment StoreEntitySet="Citas">
+                <ScalarProperty Name="IdCita" ColumnName="IdCita" />
+                <ScalarProperty Name="IdMascota" ColumnName="IdMascota" />
+                <ScalarProperty Name="IdEmpleado" ColumnName="IdEmpleado" />
+                <ScalarProperty Name="FechaHora" ColumnName="FechaHora" />
+                <ScalarProperty Name="Tipo" ColumnName="Tipo" />
+                <ScalarProperty Name="Motivo" ColumnName="Motivo" />
+                <ScalarProperty Name="Estado" ColumnName="Estado" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Empleados">
+            <EntityTypeMapping TypeName="VetcoreModel.Empleados">
+              <MappingFragment StoreEntitySet="Empleados">
+                <ScalarProperty Name="IdEmpleado" ColumnName="IdEmpleado" />
+                <ScalarProperty Name="IdPuesto" ColumnName="IdPuesto" />
+                <ScalarProperty Name="Nombre" ColumnName="Nombre" />
+                <ScalarProperty Name="Apellidos" ColumnName="Apellidos" />
+                <ScalarProperty Name="Telefono" ColumnName="Telefono" />
+                <ScalarProperty Name="Especialidad" ColumnName="Especialidad" />
+                <ScalarProperty Name="Activo" ColumnName="Activo" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Especies">
+            <EntityTypeMapping TypeName="VetcoreModel.Especies">
+              <MappingFragment StoreEntitySet="Especies">
+                <ScalarProperty Name="IdEspecie" ColumnName="IdEspecie" />
+                <ScalarProperty Name="Nombre" ColumnName="Nombre" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="EsteticaRegistros">
+            <EntityTypeMapping TypeName="VetcoreModel.EsteticaRegistros">
+              <MappingFragment StoreEntitySet="EsteticaRegistros">
+                <ScalarProperty Name="IdEstetica" ColumnName="IdEstetica" />
+                <ScalarProperty Name="IdMascota" ColumnName="IdMascota" />
+                <ScalarProperty Name="IdCita" ColumnName="IdCita" />
+                <ScalarProperty Name="IdEmpleado" ColumnName="IdEmpleado" />
+                <ScalarProperty Name="Fecha" ColumnName="Fecha" />
+                <ScalarProperty Name="TipoCorte" ColumnName="TipoCorte" />
+                <ScalarProperty Name="NotasPiel" ColumnName="NotasPiel" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Expedientes">
+            <EntityTypeMapping TypeName="VetcoreModel.Expedientes">
+              <MappingFragment StoreEntitySet="Expedientes">
+                <ScalarProperty Name="IdExpediente" ColumnName="IdExpediente" />
+                <ScalarProperty Name="IdMascota" ColumnName="IdMascota" />
+                <ScalarProperty Name="FechaCreacion" ColumnName="FechaCreacion" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Jaulas">
+            <EntityTypeMapping TypeName="VetcoreModel.Jaulas">
+              <MappingFragment StoreEntitySet="Jaulas">
+                <ScalarProperty Name="IdJaula" ColumnName="IdJaula" />
+                <ScalarProperty Name="Codigo" ColumnName="Codigo" />
+                <ScalarProperty Name="Tamano" ColumnName="Tamano" />
+                <ScalarProperty Name="Ocupada" ColumnName="Ocupada" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="KardexInventario">
+            <EntityTypeMapping TypeName="VetcoreModel.KardexInventario">
+              <MappingFragment StoreEntitySet="KardexInventario">
+                <ScalarProperty Name="IdKardex" ColumnName="IdKardex" />
+                <ScalarProperty Name="IdProducto" ColumnName="IdProducto" />
+                <ScalarProperty Name="IdEmpleado" ColumnName="IdEmpleado" />
+                <ScalarProperty Name="TipoMovimiento" ColumnName="TipoMovimiento" />
+                <ScalarProperty Name="Cantidad" ColumnName="Cantidad" />
+                <ScalarProperty Name="StockResultante" ColumnName="StockResultante" />
+                <ScalarProperty Name="FechaHora" ColumnName="FechaHora" />
+                <ScalarProperty Name="Motivo" ColumnName="Motivo" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Mascotas">
+            <EntityTypeMapping TypeName="VetcoreModel.Mascotas">
+              <MappingFragment StoreEntitySet="Mascotas">
+                <ScalarProperty Name="Activo" ColumnName="Activo" />
+                <ScalarProperty Name="IdMascota" ColumnName="IdMascota" />
+                <ScalarProperty Name="IdPropietario" ColumnName="IdPropietario" />
+                <ScalarProperty Name="IdRaza" ColumnName="IdRaza" />
+                <ScalarProperty Name="Nombre" ColumnName="Nombre" />
+                <ScalarProperty Name="FechaNacimiento" ColumnName="FechaNacimiento" />
+                <ScalarProperty Name="Sexo" ColumnName="Sexo" />
+                <ScalarProperty Name="PesoActual" ColumnName="PesoActual" />
+                <ScalarProperty Name="Alergias" ColumnName="Alergias" />
+                <ScalarProperty Name="Fallecido" ColumnName="Fallecido" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Productos">
+            <EntityTypeMapping TypeName="VetcoreModel.Productos">
+              <MappingFragment StoreEntitySet="Productos">
+                <ScalarProperty Name="FechaCaducidad" ColumnName="FechaCaducidad" />
+                <ScalarProperty Name="Lote" ColumnName="Lote" />
+                <ScalarProperty Name="IdProducto" ColumnName="IdProducto" />
+                <ScalarProperty Name="IdCategoria" ColumnName="IdCategoria" />
+                <ScalarProperty Name="CodigoBarras" ColumnName="CodigoBarras" />
+                <ScalarProperty Name="Nombre" ColumnName="Nombre" />
+                <ScalarProperty Name="PrecioCosto" ColumnName="PrecioCosto" />
+                <ScalarProperty Name="PrecioVenta" ColumnName="PrecioVenta" />
+                <ScalarProperty Name="StockActual" ColumnName="StockActual" />
+                <ScalarProperty Name="StockMinimo" ColumnName="StockMinimo" />
+                <ScalarProperty Name="Activo" ColumnName="Activo" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Propietarios">
+            <EntityTypeMapping TypeName="VetcoreModel.Propietarios">
+              <MappingFragment StoreEntitySet="Propietarios">
+                <ScalarProperty Name="IdPropietario" ColumnName="IdPropietario" />
+                <ScalarProperty Name="Nombre" ColumnName="Nombre" />
+                <ScalarProperty Name="Apellidos" ColumnName="Apellidos" />
+                <ScalarProperty Name="Telefono" ColumnName="Telefono" />
+                <ScalarProperty Name="Email" ColumnName="Email" />
+                <ScalarProperty Name="Direccion" ColumnName="Direccion" />
+                <ScalarProperty Name="FechaRegistro" ColumnName="FechaRegistro" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Puestos">
+            <EntityTypeMapping TypeName="VetcoreModel.Puestos">
+              <MappingFragment StoreEntitySet="Puestos">
+                <ScalarProperty Name="IdPuesto" ColumnName="IdPuesto" />
+                <ScalarProperty Name="Nombre" ColumnName="Nombre" />
+                <ScalarProperty Name="NivelAcceso" ColumnName="NivelAcceso" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Razas">
+            <EntityTypeMapping TypeName="VetcoreModel.Razas">
+              <MappingFragment StoreEntitySet="Razas">
+                <ScalarProperty Name="IdRaza" ColumnName="IdRaza" />
+                <ScalarProperty Name="IdEspecie" ColumnName="IdEspecie" />
+                <ScalarProperty Name="Nombre" ColumnName="Nombre" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Roles">
+            <EntityTypeMapping TypeName="VetcoreModel.Roles">
+              <MappingFragment StoreEntitySet="Roles">
+                <ScalarProperty Name="IdRol" ColumnName="IdRol" />
+                <ScalarProperty Name="Nombre" ColumnName="Nombre" />
+                <ScalarProperty Name="Descripcion" ColumnName="Descripcion" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Usuarios">
+            <EntityTypeMapping TypeName="VetcoreModel.Usuarios">
+              <MappingFragment StoreEntitySet="Usuarios">
+                <ScalarProperty Name="IdUsuario" ColumnName="IdUsuario" />
+                <ScalarProperty Name="IdEmpleado" ColumnName="IdEmpleado" />
+                <ScalarProperty Name="IdRol" ColumnName="IdRol" />
+                <ScalarProperty Name="Username" ColumnName="Username" />
+                <ScalarProperty Name="PasswordHash" ColumnName="PasswordHash" />
+                <ScalarProperty Name="Activo" ColumnName="Activo" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Ventas">
+            <EntityTypeMapping TypeName="VetcoreModel.Ventas">
+              <MappingFragment StoreEntitySet="Ventas">
+                <ScalarProperty Name="IdVenta" ColumnName="IdVenta" />
+                <ScalarProperty Name="IdSesion" ColumnName="IdSesion" />
+                <ScalarProperty Name="IdPropietario" ColumnName="IdPropietario" />
+                <ScalarProperty Name="FechaHora" ColumnName="FechaHora" />
+                <ScalarProperty Name="Subtotal" ColumnName="Subtotal" />
+                <ScalarProperty Name="Impuestos" ColumnName="Impuestos" />
+                <ScalarProperty Name="Total" ColumnName="Total" />
+                <ScalarProperty Name="MetodoPago" ColumnName="MetodoPago" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="VentasDetalle">
+            <EntityTypeMapping TypeName="VetcoreModel.VentasDetalle">
+              <MappingFragment StoreEntitySet="VentasDetalle">
+                <ScalarProperty Name="IdDetalle" ColumnName="IdDetalle" />
+                <ScalarProperty Name="IdVenta" ColumnName="IdVenta" />
+                <ScalarProperty Name="IdProducto" ColumnName="IdProducto" />
+                <ScalarProperty Name="Cantidad" ColumnName="Cantidad" />
+                <ScalarProperty Name="PrecioUnitario" ColumnName="PrecioUnitario" />
+                <ScalarProperty Name="Subtotal" ColumnName="Subtotal" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Consultas">
+            <EntityTypeMapping TypeName="VetcoreModel.Consultas">
+              <MappingFragment StoreEntitySet="Consultas">
+                <ScalarProperty Name="ArchivoEstudio" ColumnName="ArchivoEstudio" />
+                <ScalarProperty Name="NotasAdicionales" ColumnName="NotasAdicionales" />
+                <ScalarProperty Name="RecetaMedica" ColumnName="RecetaMedica" />
+                <ScalarProperty Name="Diagnostico" ColumnName="Diagnostico" />
+                <ScalarProperty Name="Sintomas" ColumnName="Sintomas" />
+                <ScalarProperty Name="Temperatura" ColumnName="Temperatura" />
+                <ScalarProperty Name="PesoKg" ColumnName="PesoKg" />
+                <ScalarProperty Name="Fecha" ColumnName="Fecha" />
+                <ScalarProperty Name="IdEmpleado" ColumnName="IdEmpleado" />
+                <ScalarProperty Name="IdCita" ColumnName="IdCita" />
+                <ScalarProperty Name="IdExpediente" ColumnName="IdExpediente" />
+                <ScalarProperty Name="IdConsulta" ColumnName="IdConsulta" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="CarnetVacunacion">
+            <EntityTypeMapping TypeName="VetcoreModel.CarnetVacunacion">
+              <MappingFragment StoreEntitySet="CarnetVacunacion">
+                <ScalarProperty Name="FechaProxima" ColumnName="FechaProxima" />
+                <ScalarProperty Name="FechaAplicacion" ColumnName="FechaAplicacion" />
+                <ScalarProperty Name="NombreProducto" ColumnName="NombreProducto" />
+                <ScalarProperty Name="Tipo" ColumnName="Tipo" />
+                <ScalarProperty Name="IdEmpleado" ColumnName="IdEmpleado" />
+                <ScalarProperty Name="IdMascota" ColumnName="IdMascota" />
+                <ScalarProperty Name="IdRegistro" ColumnName="IdRegistro" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="HospitalizacionNotas">
+            <EntityTypeMapping TypeName="VetcoreModel.HospitalizacionNotas">
+              <MappingFragment StoreEntitySet="HospitalizacionNotas">
+                <ScalarProperty Name="ConceptoConsumo" ColumnName="ConceptoConsumo" />
+                <ScalarProperty Name="CostoConsumo" ColumnName="CostoConsumo" />
+                <ScalarProperty Name="NotasMedicas" ColumnName="NotasMedicas" />
+                <ScalarProperty Name="FechaHora" ColumnName="FechaHora" />
+                <ScalarProperty Name="IdEmpleado" ColumnName="IdEmpleado" />
+                <ScalarProperty Name="IdHospitalizacion" ColumnName="IdHospitalizacion" />
+                <ScalarProperty Name="IdNota" ColumnName="IdNota" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Hospitalizaciones">
+            <EntityTypeMapping TypeName="VetcoreModel.Hospitalizaciones">
+              <MappingFragment StoreEntitySet="Hospitalizaciones">
+                <ScalarProperty Name="Estado" ColumnName="Estado" />
+                <ScalarProperty Name="Motivo" ColumnName="Motivo" />
+                <ScalarProperty Name="FechaAlta" ColumnName="FechaAlta" />
+                <ScalarProperty Name="FechaIngreso" ColumnName="FechaIngreso" />
+                <ScalarProperty Name="IdEmpleado" ColumnName="IdEmpleado" />
+                <ScalarProperty Name="IdJaula" ColumnName="IdJaula" />
+                <ScalarProperty Name="IdExpediente" ColumnName="IdExpediente" />
+                <ScalarProperty Name="IdHospitalizacion" ColumnName="IdHospitalizacion" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="AuditoriaLogs">
+            <EntityTypeMapping TypeName="VetcoreModel.AuditoriaLogs">
+              <MappingFragment StoreEntitySet="AuditoriaLogs">
+                <ScalarProperty Name="FechaHora" ColumnName="FechaHora" />
+                <ScalarProperty Name="IpAddress" ColumnName="IpAddress" />
+                <ScalarProperty Name="Detalle" ColumnName="Detalle" />
+                <ScalarProperty Name="Accion" ColumnName="Accion" />
+                <ScalarProperty Name="IdEmpleado" ColumnName="IdEmpleado" />
+                <ScalarProperty Name="IdLog" ColumnName="IdLog" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="false" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="Ninguno" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

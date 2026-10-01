@@ -1,0 +1,83 @@
+﻿@model Vetcore.Models.Consultas
+
+<div class="modal fade" id="modalEditarConsulta" tabindex="-1">
+    <div class="modal-dialog modal-dialog-centered modal-lg">
+        <div class="modal-content card-modern" style="border: none; padding: 0; overflow: hidden;">
+
+            <!-- Cabecera estilo EDICIÓN (Amarilla/Naranja) -->
+            <div class="modal-header border-0 px-4 pt-4 pb-3" style="background-color: #f8fafc;">
+                <div>
+                    <h3 class="headline mb-1" style="color: #0f172a;"><i class="fa-solid fa-pen text-warning me-2"></i> Editar Consulta</h3>
+                    <p class="body-text mb-0 small text-warning"><i class="fa-solid fa-triangle-exclamation"></i> Solo puedes editar registros del día de hoy.</p>
+                </div>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
+            </div>
+
+            <div class="modal-body px-4 pb-4 pt-3">
+                <!-- AQUI ESTABA EL ERROR: El ID debe ser frmEditConsulta -->
+                <form id="frmEditConsulta">
+                    @Html.AntiForgeryToken()
+
+                    <!-- AQUI ESTABA EL ERROR FATAL: Falta enviar el IdConsulta -->
+                    @Html.HiddenFor(m => m.IdConsulta)
+
+                    @Html.HiddenFor(m => m.IdExpediente)
+                    @Html.HiddenFor(m => m.Fecha)
+                    @Html.HiddenFor(m => m.IdCita)
+
+                    <!-- SECCIÓN 1: Signos Vitales y Médico -->
+                    <div class="p-3 mb-4 rounded-3" style="background-color: #f1f5f9; border: 1px solid #e2e8f0;">
+                        <div class="row g-3">
+                            <div class="col-md-6">
+                                <label class="label mb-1" style="color: #475569;"><i class="fa-solid fa-user-doctor me-1"></i> Médico Tratante</label>
+                                @Html.DropDownList("IdEmpleado", null, "Seleccione...", new { @class = "form-control border-0 shadow-sm", style = "max-width: 100% !important;" })
+                            </div>
+                            <div class="col-md-3">
+                                <label class="label mb-1" style="color: #475569;"><i class="fa-solid fa-weight-scale me-1"></i> Peso (Kg)</label>
+                                @Html.EditorFor(m => m.PesoKg, new { htmlAttributes = new { @class = "form-control border-0 shadow-sm", type = "number", step = "0.01", style = "max-width: 100% !important;" } })
+                            </div>
+                            <div class="col-md-3">
+                                <label class="label mb-1" style="color: #475569;"><i class="fa-solid fa-temperature-half me-1"></i> Temp. (°C)</label>
+                                @Html.EditorFor(m => m.Temperatura, new { htmlAttributes = new { @class = "form-control border-0 shadow-sm", type = "number", step = "0.1", style = "max-width: 100% !important;" } })
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- SECCIÓN 2: Detalles Clínicos -->
+                    <div class="row g-4">
+                        <div class="col-12">
+                            <label class="label mb-1 fw-bold" style="color: #334155;"><i class="fa-solid fa-clipboard-list text-secondary me-1"></i> Síntomas y Observaciones</label>
+                            @Html.TextAreaFor(m => m.Sintomas, new { @class = "form-control bg-light", style = "border-color: #cbd5e1; max-width: 100% !important;", rows = "2" })
+                        </div>
+
+                        <div class="col-12">
+                            <label class="label mb-1 fw-bold" style="color: #d97706;"><i class="fa-solid fa-microscope me-1"></i> Diagnóstico Médico</label>
+                            @Html.TextAreaFor(m => m.Diagnostico, new { @class = "form-control", style = "border-color: #fde68a; background-color: #fffbeb; max-width: 100% !important;", rows = "2" })
+                        </div>
+
+                        <div class="col-12">
+                            <label class="label mb-1 fw-bold" style="color: #059669;"><i class="fa-solid fa-prescription-bottle-medical me-1"></i> Receta / Tratamiento</label>
+                            @Html.TextAreaFor(m => m.RecetaMedica, new { @class = "form-control", style = "border-color: #a7f3d0; background-color: #ecfdf5; max-width: 100% !important;", rows = "3" })
+                        </div>
+
+                        <div class="col-12">
+                            <label class="label mb-1 fw-bold" style="color: #6366f1;"><i class="fa-solid fa-paperclip me-1"></i> Notas Internas Adicionales</label>
+                            @Html.TextAreaFor(m => m.NotasAdicionales, new { @class = "form-control", style = "border-color: #c7d2fe; background-color: #eef2ff; max-width: 100% !important;", rows = "2" })
+                        </div>
+                    </div>
+
+                    <div class="col-12 mt-4 d-flex justify-content-end gap-3 pt-3 border-top">
+                        <button type="button" class="btn btn-light border" data-bs-dismiss="modal">Cancelar</button>
+
+                        <!-- AQUI ESTABA EL ERROR: El botón debe apuntar al ID btnActualizarConsulta -->
+                        <button type="button" id="btnActualizarConsulta" class="btn btn-warning px-4" style="color: white;">
+                            <i class="fa-solid fa-pen-to-square me-1"></i> Actualizar
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+@Scripts.Render("~/bundles/jqueryval")

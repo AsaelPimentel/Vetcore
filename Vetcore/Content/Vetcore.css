@@ -1,0 +1,275 @@
+﻿/* ==========================================================================
+   VetCore UI Theme - Basado en Sistema de Diseño Dribbble
+   Tipografías: Plus Jakarta Sans (Headlines) e Inter (Body/Labels)
+   ========================================================================== */
+
+/* Importar tipografías de Google Fonts */
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Plus+Jakarta+Sans:wght@600;700;800&display=swap');
+
+:root {
+    /* Paleta de Colores (Extraída del UI Kit) */
+    --vc-primary: #0D9488; /* Teal - Acción principal */
+    --vc-primary-hover: #0F766E;
+    --vc-secondary: #0EA5E9; /* Light Blue - Acentos y botones secundarios */
+    --vc-secondary-light: #E0F2FE;
+    --vc-tertiary: #0F172A; /* Dark Slate - Texto principal, botones invertidos */
+
+    --vc-neutral: #64748B; /* Slate Gray - Textos secundarios, iconos, bordes */
+    --vc-neutral-light: #F1F5F9;
+    --vc-bg-canvas: #EFF6FF; /* Fondo azul muy suave de la app */
+    --vc-surface: #FFFFFF; /* Fondo de tarjetas y paneles */
+    --vc-border: #E2E8F0;
+    /* Tipografía */
+    --vc-font-headline: 'Plus Jakarta Sans', sans-serif;
+    --vc-font-body: 'Inter', sans-serif;
+    /* Utilidades de Diseño */
+    --vc-radius-sm: 8px;
+    --vc-radius-md: 12px;
+    --vc-radius-lg: 20px;
+    --vc-shadow-sm: 0 1px 3px rgba(15, 23, 42, 0.05);
+    --vc-shadow-md: 0 4px 12px rgba(15, 23, 42, 0.06);
+}
+
+/* ==========================================================================
+   Configuración Base y Tipografía
+   ========================================================================== */
+body {
+    font-family: var(--vc-font-body);
+    background-color: var(--vc-bg-canvas);
+    color: var(--vc-tertiary);
+    line-height: 1.5;
+    margin: 0;
+}
+
+h1, h2, h3, h4, h5, h6, .headline {
+    font-family: var(--vc-font-headline);
+    color: var(--vc-tertiary);
+    font-weight: 700;
+    margin-bottom: 0.5rem;
+}
+
+p, .body-text {
+    font-family: var(--vc-font-body);
+    color: var(--vc-neutral);
+}
+
+.label {
+    font-family: var(--vc-font-body);
+    font-weight: 500;
+    font-size: 0.875rem;
+    color: var(--vc-neutral);
+}
+
+/* ==========================================================================
+   Contenedores y Tarjetas (Cards)
+   ========================================================================== */
+.card-modern {
+    background-color: var(--vc-surface);
+    border-radius: var(--vc-radius-lg);
+    padding: 1.5rem;
+    box-shadow: var(--vc-shadow-md);
+    border: none;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+    .card-modern:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 10px 25px -5px rgba(15, 23, 42, 0.08);
+    }
+
+/* ==========================================================================
+   Botones (Reflejando los 4 estilos del UI Kit)
+   ========================================================================== */
+.btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    font-family: var(--vc-font-body);
+    font-weight: 600;
+    padding: 0.625rem 1.25rem;
+    border-radius: var(--vc-radius-sm);
+    transition: all 0.2s ease;
+    cursor: pointer;
+    border: 1px solid transparent;
+    text-decoration: none;
+}
+
+/* Botón Primario (Teal #0D9488) */
+.btn-primary {
+    background-color: var(--vc-primary);
+    color: #FFFFFF;
+}
+
+    .btn-primary:hover {
+        background-color: var(--vc-primary-hover);
+        color: #FFFFFF;
+    }
+
+/* Botón Secundario (Fondo azul claro, texto Secondary) */
+.btn-secondary {
+    background-color: var(--vc-secondary-light);
+    color: var(--vc-secondary);
+}
+
+    .btn-secondary:hover {
+        background-color: #bae6fd;
+        color: #0284c7;
+    }
+
+/* Botón Invertido (Dark Slate #0F172A) */
+.btn-inverted {
+    background-color: var(--vc-tertiary);
+    color: #FFFFFF;
+}
+
+    .btn-inverted:hover {
+        background-color: #1e293b;
+        color: #FFFFFF;
+    }
+
+/* Botón Delineado (Outlined) */
+.btn-outlined {
+    background-color: transparent;
+    border-color: var(--vc-border);
+    color: var(--vc-tertiary);
+}
+
+    .btn-outlined:hover {
+        border-color: var(--vc-neutral);
+        background-color: var(--vc-neutral-light);
+    }
+
+/* Botones Icono (Cuadrados de acción rápida) */
+.btn-icon {
+    width: 36px;
+    height: 36px;
+    padding: 0;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: var(--vc-radius-sm);
+}
+
+/* ==========================================================================
+   Campos de Entrada (Inputs y Búsqueda)
+   ========================================================================== */
+.form-control, .search-input {
+    font-family: var(--vc-font-body);
+    color: var(--vc-tertiary);
+    background-color: var(--vc-neutral-light);
+    border: 1px solid var(--vc-border);
+    border-radius: var(--vc-radius-sm);
+    padding: 0.625rem 1rem;
+    width: 100%;
+    transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+    .form-control:focus, .search-input:focus {
+        outline: none;
+        border-color: var(--vc-primary);
+        background-color: var(--vc-surface);
+        box-shadow: 0 0 0 3px rgba(13, 148, 136, 0.15);
+    }
+
+/* Contenedor de búsqueda con icono alineado */
+.search-container {
+    position: relative;
+    display: flex;
+    align-items: center;
+}
+
+    .search-container i {
+        position: absolute;
+        left: 1rem;
+        color: var(--vc-neutral);
+    }
+
+    .search-container input {
+        padding-left: 2.5rem;
+    }
+
+/* ==========================================================================
+   Tablas Modernas
+   ========================================================================== */
+.table-modern {
+    width: 100%;
+    border-collapse: separate;
+    border-spacing: 0;
+}
+
+    .table-modern th {
+        font-family: var(--vc-font-body);
+        font-weight: 600;
+        font-size: 0.85rem;
+        text-transform: uppercase;
+        letter-spacing: 0.05em;
+        color: var(--vc-neutral);
+        padding: 1rem;
+        border-bottom: 2px solid var(--vc-neutral-light);
+        text-align: left;
+    }
+
+    .table-modern td {
+        padding: 1rem;
+        vertical-align: middle;
+        border-bottom: 1px solid var(--vc-border);
+        color: var(--vc-tertiary);
+        background-color: var(--vc-surface);
+        font-size: 0.95rem;
+    }
+
+    .table-modern tr:hover td {
+        background-color: var(--vc-neutral-light);
+    }
+
+/* ==========================================================================
+   Barra de Progreso / Separadores
+   ========================================================================== */
+.progress-bar-modern {
+    height: 8px;
+    background-color: var(--vc-neutral-light);
+    border-radius: 999px;
+    overflow: hidden;
+}
+
+    .progress-bar-modern .fill-primary {
+        height: 100%;
+        background-color: var(--vc-primary);
+        border-radius: 999px;
+    }
+
+    .progress-bar-modern .fill-secondary {
+        height: 100%;
+        background-color: var(--vc-secondary);
+        border-radius: 999px;
+    }
+
+/* ==========================================================================
+   Navegación / Menú Lateral (Sidebar Píldoras)
+   ========================================================================== */
+.nav-pills-modern {
+    background-color: var(--vc-neutral-light);
+    padding: 0.5rem;
+    border-radius: var(--vc-radius-md);
+    display: inline-flex;
+    gap: 0.5rem;
+}
+
+.nav-pill-item {
+    padding: 0.5rem 1rem;
+    border-radius: var(--vc-radius-sm);
+    color: var(--vc-tertiary);
+    text-decoration: none;
+    font-weight: 500;
+    transition: background-color 0.2s ease;
+}
+
+    .nav-pill-item:hover {
+        background-color: rgba(100, 116, 139, 0.1);
+    }
+
+    .nav-pill-item.active {
+        background-color: var(--vc-primary);
+        color: #FFFFFF;
+    }

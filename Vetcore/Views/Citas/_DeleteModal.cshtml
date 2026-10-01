@@ -1,0 +1,23 @@
+﻿@model Vetcore.Models.Citas
+
+<div class="modal fade" id="modalDeleteCita" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content card-modern" style="border: none; padding: 0;">
+            <div class="modal-body p-4 text-center">
+                <div class="mb-3">
+                    <i class="fa-solid fa-calendar-xmark" style="font-size: 3rem; color: #ef4444;"></i>
+                </div>
+                <h3 class="headline mb-2">¿Eliminar Cita?</h3>
+                <p class="body-text mb-4">Estás a punto de borrar la cita de <strong>@Model.Mascotas.Nombre</strong> del calendario.</p>
+                <form id="frmDeleteCita">
+                    @Html.AntiForgeryToken()
+                    @Html.HiddenFor(m => m.IdCita)
+                    <div class="d-flex justify-content-center gap-3">
+                        <button type="button" class="btn btn-outlined" data-bs-dismiss="modal">Volver</button>
+                        <button type="button" id="btnConfirmarEliminar" class="btn" style="background-color: #ef4444; color: white;">Sí, borrar cita</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>

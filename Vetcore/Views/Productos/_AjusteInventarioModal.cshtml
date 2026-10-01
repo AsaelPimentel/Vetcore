@@ -1,0 +1,54 @@
+﻿@model Vetcore.Models.KardexInventario
+
+<div class="modal fade" id="modalAjusteInventario" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-lg">
+        <div class="modal-content card-modern" style="border: none; padding: 0; overflow: hidden; border-radius: 16px;">
+
+            <!-- Cabecera -->
+            <div class="modal-header border-0 px-4 pt-4 pb-3" style="background-color: #f8fafc;">
+                <div>
+                    <h3 class="headline mb-1" style="color: #0f172a; font-size: 1.25rem;">
+                        <i class="fa-solid fa-arrows-split-up-and-left text-primary me-2"></i> Movimiento de Inventario / Kardex
+                    </h3>
+                    <p class="body-text mb-0 small text-muted">Producto: <strong>@ViewBag.NombreProducto</strong> (Stock actual: @ViewBag.StockActual)</p>
+                </div>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
+            </div>
+
+            <!-- Cuerpo del Modal -->
+            <div class="modal-body px-4 pb-4 pt-3">
+                <form id="frmAjusteInventario">
+                    @Html.AntiForgeryToken()
+                    @Html.HiddenFor(m => m.IdProducto)
+
+                    <div class="p-3 rounded-3 mb-4" style="background-color: #f1f5f9; border: 1px solid #e2e8f0;">
+                        <div class="row g-3">
+                            <div class="col-md-7">
+                                <label class="label mb-1 fw-semibold text-secondary">Tipo de Movimiento</label>
+                                @Html.DropDownListFor(m => m.TipoMovimiento, (SelectList)ViewBag.TiposMovimiento, "Seleccione...", new { @class = "form-control" })
+                            </div>
+
+                            <div class="col-md-5">
+                                <label class="label mb-1 fw-semibold text-secondary">Cantidad de Piezas</label>
+                                @Html.EditorFor(m => m.Cantidad, new { htmlAttributes = new { @class = "form-control", type = "number", min = "1", placeholder = "1" } })
+                            </div>
+
+                            <div class="col-12">
+                                <label class="label mb-1 fw-semibold text-secondary">Motivo u Observación</label>
+                                @Html.TextAreaFor(m => m.Motivo, new { @class = "form-control", rows = "3", placeholder = "Ej. Compra factura #1234, Caducidad vencida, Uso en cirugía de canino, etc.", required = "required" })
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Botones -->
+                    <div class="d-flex justify-content-end gap-3 pt-3 border-top">
+                        <button type="button" class="btn btn-light border px-4" data-bs-dismiss="modal">Cancelar</button>
+                        <button type="button" id="btnGuardarAjuste" class="btn btn-primary px-4 shadow-sm d-flex align-items-center gap-2">
+                            <i class="fa-solid fa-save"></i> <span>Registrar Movimiento</span>
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>

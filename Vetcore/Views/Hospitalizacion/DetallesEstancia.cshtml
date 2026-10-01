@@ -1,0 +1,271 @@
+<<<<<<< HEAD
+﻿@using Vetcore.Helpers <!-- Importamos Helpers para seguridad de Vistas -->
+@model Vetcore.Models.Hospitalizaciones
+=======
+﻿@model Vetcore.Models.Hospitalizaciones
+>>>>>>> 7af84dbc4060a8bbaa8bab50c489e93f45a0ceba
+@{
+    ViewBag.Title = "Estancia Hospitalaria";
+    var notas = ViewBag.NotasMedicas as List<Vetcore.Models.HospitalizacionNotas> ?? new List<Vetcore.Models.HospitalizacionNotas>();
+}
+
+<div class="d-flex justify-content-between align-items-center mb-4 pb-3 border-bottom">
+    <div class="d-flex align-items-center gap-3">
+        <a href="@Url.Action("Index", "Hospitalizacion")" class="btn btn-icon btn-outlined" title="Volver al tablero">
+            <i class="fa-solid fa-arrow-left"></i>
+        </a>
+        <div>
+            <h3 class="headline mb-1 fw-bold text-dark">Estancia Hospitalaria - Jaula @Model.Jaulas.Codigo</h3>
+            <p class="body-text text-muted mb-0 small">Paciente: <strong class="text-primary">@Model.Expedientes.Mascotas.Nombre</strong></p>
+        </div>
+    </div>
+<<<<<<< HEAD
+
+    <!-- PROTECCIÓN: Solo Médicos y Administradores pueden dar de alta -->
+    @if (Context.IsMedicoOrAdmin())
+    {
+        <div>
+            <button class="btn btn-danger px-4 shadow-sm fw-bold" onclick="abrirModalAlta()">
+                <i class="fa-solid fa-right-from-bracket me-1"></i> Dar de Alta
+            </button>
+        </div>
+    }
+=======
+    <div>
+        <button class="btn btn-danger px-4 shadow-sm fw-bold" onclick="abrirModalAlta()">
+            <i class="fa-solid fa-right-from-bracket me-1"></i> Dar de Alta
+        </button>
+    </div>
+>>>>>>> 7af84dbc4060a8bbaa8bab50c489e93f45a0ceba
+</div>
+
+<div class="row g-4">
+    <!-- COLUMNA IZQUIERDA: INFO DEL PACIENTE E INTERNAMIENTO -->
+    <div class="col-md-4">
+        <div class="card-modern p-4 shadow-sm border-0 mb-4" style="border-radius: 16px; background: #ffffff;">
+            <h5 class="fw-bold text-dark mb-3"><i class="fa-solid fa-circle-info text-primary me-2"></i> Datos del Paciente</h5>
+            <div class="mb-3">
+                <span class="text-muted small d-block">Propietario</span>
+                <span class="fw-bold text-dark">@Model.Expedientes.Mascotas.Propietarios.Nombre @Model.Expedientes.Mascotas.Propietarios.Apellidos</span>
+            </div>
+            <div class="mb-3">
+                <span class="text-muted small d-block">Especie / Raza</span>
+                <span class="fw-medium text-dark">@Model.Expedientes.Mascotas.Razas.Nombre</span>
+            </div>
+            <div class="mb-3">
+                <span class="text-muted small d-block">Fecha y Hora de Ingreso</span>
+                <span class="fw-medium text-dark">@(Model.FechaIngreso.HasValue ? Model.FechaIngreso.Value.ToString("dd/MM/yyyy HH:mm") : "N/D")</span>
+            </div>
+            <div class="mb-3">
+                <span class="text-muted small d-block">Motivo Inicial</span>
+                <p class="text-dark bg-light p-2 rounded border small mb-0">@Model.Motivo</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- COLUMNA DERECHA: REGISTRO DE NOTAS Y CONSUMOS -->
+    <div class="col-md-8">
+<<<<<<< HEAD
+
+        <!-- PROTECCIÓN: Solo Médicos y Administradores pueden agregar notas o consumos -->
+        @if (Context.IsMedicoOrAdmin())
+        {
+            <div class="card-modern p-4 shadow-sm border-0 mb-4" style="border-radius: 16px; background: #ffffff;">
+                <h5 class="fw-bold text-dark mb-3"><i class="fa-solid fa-pen-nib text-primary me-2"></i> Nueva Nota o Tratamiento Diario</h5>
+                <form id="formNota">
+                    @Html.AntiForgeryToken()
+                    <input type="hidden" name="IdHospitalizacion" value="@Model.IdHospitalizacion" />
+
+                    <div class="mb-3">
+                        <label class="form-label small fw-semibold text-secondary">Notas Clínicas / Evolución</label>
+                        <textarea name="NotasMedicas" class="form-control" rows="2" placeholder="Escriba la evolución del paciente, temperatura, actitud, etc..." required></textarea>
+                    </div>
+
+                    <div class="row g-3 mb-3">
+                        <div class="col-md-7">
+                            <label class="form-label small fw-semibold text-secondary">Suministrar Medicamento / Insumo (Opcional)</label>
+                            @Html.DropDownList("IdProductoConsumo", (SelectList)ViewBag.ListaProductos, "-- Seleccionar producto de farmacia --", new { @class = "form-control" })
+                        </div>
+                        <div class="col-md-5">
+                            <label class="form-label small fw-semibold text-secondary">Cantidad</label>
+                            <input type="number" name="CantidadConsumo" class="form-control" min="1" value="1" />
+                        </div>
+                    </div>
+
+                    <button type="button" id="btnGuardarNota" class="btn btn-primary fw-bold shadow-sm px-4">
+                        <i class="fa-solid fa-plus me-1"></i> Registrar Nota / Cargo
+                    </button>
+                </form>
+            </div>
+        }
+
+        <!-- Historial de Notas (Visible para TODOS) -->
+        <div class="card-modern p-4 shadow-sm border-0" style="border-radius: 16px; background: #ffffff;">
+            <h5 class="fw-bold text-dark mb-3"><i class="fa-solid fa-clock-rotate-left text-secondary me-2"></i> Bitácora de Evolución</h5>
+
+=======
+        <!-- Formulario para agregar nota o medicamento -->
+        <div class="card-modern p-4 shadow-sm border-0 mb-4" style="border-radius: 16px; background: #ffffff;">
+            <h5 class="fw-bold text-dark mb-3"><i class="fa-solid fa-pen-nib text-primary me-2"></i> Nueva Nota o Tratamiento Diario</h5>
+            <form id="formNota">
+                @Html.AntiForgeryToken()
+                <input type="hidden" name="IdHospitalizacion" value="@Model.IdHospitalizacion" />
+
+                <div class="mb-3">
+                    <label class="form-label small fw-semibold text-secondary">Notas Clínicas / Evolución</label>
+                    <textarea name="NotasMedicas" class="form-control" rows="2" placeholder="Escriba la evolución del paciente, temperatura, actitud, etc..." required></textarea>
+                </div>
+
+                <div class="row g-3 mb-3">
+                    <div class="col-md-7">
+                        <label class="form-label small fw-semibold text-secondary">Suministrar Medicamento / Insumo (Opcional)</label>
+                        @Html.DropDownList("IdProductoConsumo", (SelectList)ViewBag.ListaProductos, "-- Seleccionar producto de farmacia --", new { @class = "form-control" })
+                    </div>
+                    <div class="col-md-5">
+                        <label class="form-label small fw-semibold text-secondary">Cantidad</label>
+                        <input type="number" name="CantidadConsumo" class="form-control" min="1" value="1" />
+                    </div>
+                </div>
+
+                <button type="button" id="btnGuardarNota" class="btn btn-primary fw-bold shadow-sm px-4">
+                    <i class="fa-solid fa-plus me-1"></i> Registrar Nota / Cargo
+                </button>
+            </form>
+        </div>
+
+        <!-- Historial de Notas -->
+        <div class="card-modern p-4 shadow-sm border-0" style="border-radius: 16px; background: #ffffff;">
+            <h5 class="fw-bold text-dark mb-3"><i class="fa-solid fa-clock-rotate-left text-secondary me-2"></i> Bitácora de Evolución</h5>
+>>>>>>> 7af84dbc4060a8bbaa8bab50c489e93f45a0ceba
+            @if (!notas.Any())
+            {
+                <div class="text-center py-4 text-muted small">Aún no hay notas clínicas registradas en esta estancia.</div>
+            }
+            else
+            {
+                foreach (var n in notas)
+                {
+                    <div class="p-3 mb-3 rounded-3" style="background-color: #f8fafc; border: 1px solid #e2e8f0;">
+                        <div class="d-flex justify-content-between align-items-center mb-2">
+                            <span class="small text-muted"><i class="fa-regular fa-calendar me-1"></i> @n.FechaHora.ToString("dd/MM/yyyy HH:mm") por <strong>@n.Empleados.Nombre</strong></span>
+                            @if (n.CostoConsumo.HasValue && n.CostoConsumo.Value > 0)
+                            {
+                                <span class="badge bg-success-subtle text-success border border-success-subtle">Cargo: $@n.CostoConsumo.Value.ToString("N2") (@n.ConceptoConsumo)</span>
+                            }
+                        </div>
+                        <p class="mb-0 text-dark" style="white-space: pre-wrap;">@n.NotasMedicas</p>
+                    </div>
+                }
+            }
+        </div>
+    </div>
+</div>
+
+<!-- Modal para Dar de Alta -->
+<<<<<<< HEAD
+@if (Context.IsMedicoOrAdmin())
+{
+    <div class="modal fade" id="modalAlta" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content border-0 shadow-lg" style="border-radius: 16px;">
+                <div class="modal-header border-bottom-0 pb-0 px-4 pt-4">
+                    <h5 class="modal-title fw-bold text-danger"><i class="fa-solid fa-triangle-exclamation me-2"></i> Dar de Alta a Paciente</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
+                </div>
+                <form id="formAlta">
+                    @Html.AntiForgeryToken()
+                    <input type="hidden" name="IdHospitalizacion" value="@Model.IdHospitalizacion" />
+
+                    <div class="modal-body px-4 py-3">
+                        <p class="text-muted small mb-3">Se liberará la jaula <strong>@Model.Jaulas.Codigo</strong> y se concluirá el internamiento.</p>
+
+                        <div class="mb-3">
+                            <label class="form-label fw-semibold text-secondary">Diagnóstico / Recomendaciones de Salida</label>
+                            <textarea name="DiagnosticoSalida" class="form-control" rows="3" placeholder="Instrucciones para el propietario en casa..." required></textarea>
+                        </div>
+                    </div>
+
+                    <div class="modal-footer border-top-0 pt-0 px-4 pb-4">
+                        <button type="button" class="btn btn-light border px-4" data-bs-dismiss="modal">Cancelar</button>
+                        <button type="button" id="btnConfirmarAlta" class="btn btn-danger px-4 fw-bold shadow-sm">Confirmar Alta y Liberar Jaula</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+}
+=======
+<div class="modal fade" id="modalAlta" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content border-0 shadow-lg" style="border-radius: 16px;">
+            <div class="modal-header border-bottom-0 pb-0 px-4 pt-4">
+                <h5 class="modal-title fw-bold text-danger"><i class="fa-solid fa-triangle-exclamation me-2"></i> Dar de Alta a Paciente</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
+            </div>
+            <form id="formAlta">
+                @Html.AntiForgeryToken()
+                <input type="hidden" name="IdHospitalizacion" value="@Model.IdHospitalizacion" />
+                <div class="modal-body px-4 py-3">
+                    <p class="text-muted small mb-3">Se liberará la jaula <strong>@Model.Jaulas.Codigo</strong> y se concluirá el internamiento.</p>
+                    <div class="mb-3">
+                        <label class="form-label fw-semibold text-secondary">Diagnóstico / Recomendaciones de Salida</label>
+                        <textarea name="DiagnosticoSalida" class="form-control" rows="3" placeholder="Instrucciones para el propietario en casa..." required></textarea>
+                    </div>
+                </div>
+                <div class="modal-footer border-top-0 pt-0 px-4 pb-4">
+                    <button type="button" class="btn btn-light border px-4" data-bs-dismiss="modal">Cancelar</button>
+                    <button type="button" id="btnConfirmarAlta" class="btn btn-danger px-4 fw-bold shadow-sm">Confirmar Alta y Liberar Jaula</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+>>>>>>> 7af84dbc4060a8bbaa8bab50c489e93f45a0ceba
+
+@section Scripts {
+    <script>
+        // Guardar nota o consumo
+        $(document).on('click', '#btnGuardarNota', function () {
+            var form = $('#formNota');
+            var btn = $(this);
+<<<<<<< HEAD
+
+=======
+>>>>>>> 7af84dbc4060a8bbaa8bab50c489e93f45a0ceba
+            btn.html('<i class="fa-solid fa-spinner fa-spin"></i> Guardando...').prop('disabled', true);
+
+            $.post('@Url.Action("AgregarNotaOConsumo", "Hospitalizacion")', form.serialize(), function (response) {
+                if (response.success) {
+                    location.reload();
+                } else {
+                    alert("Error: " + response.message);
+                    btn.html('<i class="fa-solid fa-plus me-1"></i> Registrar Nota / Cargo').prop('disabled', false);
+                }
+            });
+        });
+
+        function abrirModalAlta() {
+            $('#modalAlta').modal('show');
+        }
+
+        // Confirmar Alta
+        $(document).on('click', '#btnConfirmarAlta', function () {
+            var form = $('#formAlta');
+            var btn = $(this);
+<<<<<<< HEAD
+
+=======
+>>>>>>> 7af84dbc4060a8bbaa8bab50c489e93f45a0ceba
+            btn.html('<i class="fa-solid fa-spinner fa-spin"></i> Procesando...').prop('disabled', true);
+
+            $.post('@Url.Action("DarAlta", "Hospitalizacion")', form.serialize(), function (response) {
+                if (response.success) {
+                    window.location.href = '@Url.Action("Index", "Hospitalizacion")';
+                } else {
+                    alert("Error al dar de alta.");
+                    btn.html('Confirmar Alta y Liberar Jaula').prop('disabled', false);
+                }
+            });
+        });
+    </script>
+}

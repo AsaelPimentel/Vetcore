@@ -1,0 +1,98 @@
+﻿@using Vetcore.Helpers
+@model IEnumerable<Vetcore.Models.Empleados>
+
+<div class="table-responsive">
+    <table class="table-modern">
+        <thead>
+            <tr>
+                <th>Personal</th>
+                <th>Puesto / Cargo</th>
+                <th>Contacto</th>
+                <th>Estado</th>
+                <th class="text-end">Acciones</th>
+            </tr>
+        </thead>
+        <tbody>
+            @if (!Model.Any())
+            {
+                <tr>
+                    <td colspan="5" class="text-center body-text py-4">No se encontró personal registrado.</td>
+                </tr>
+            }
+
+            @foreach (var item in Model)
+            {
+<<<<<<< HEAD
+                // MIGRACIÓN A CLAIMS: Obtenemos de forma segura el ID del empleado logueado actual
+                int idUsuarioEnSesion = Context.ObtenerIdEmpleado();
+=======
+                // Obtenemos el ID del empleado que está usando el sistema actualmente
+                int idUsuarioEnSesion = Session["IdEmpleado"] != null ? (int)Session["IdEmpleado"] : 0;
+>>>>>>> 7af84dbc4060a8bbaa8bab50c489e93f45a0ceba
+
+                <tr>
+                    <td>
+                        <div class="d-flex align-items-center gap-3">
+                            <div class="btn-icon" style="background-color: var(--vc-tertiary); color: white; border-radius: 50%;">
+                                <i class="fa-solid fa-user-doctor"></i>
+                            </div>
+                            <div>
+                                <div class="headline" style="font-size: 0.95rem; margin-bottom: 0;">@item.Nombre @item.Apellidos</div>
+                                <small class="body-text" style="font-size: 0.8rem;">
+                                    @(string.IsNullOrEmpty(item.Especialidad) ? "General" : item.Especialidad)
+                                </small>
+                            </div>
+                        </div>
+                    </td>
+                    <td>
+                        <span class="label" style="background-color: var(--vc-secondary-light); color: var(--vc-secondary); padding: 4px 10px; border-radius: var(--vc-radius-sm);">
+                            <!-- NULL SAFETY: Evita el colapso si un empleado no tiene puesto asignado -->
+                            @(item.Puestos?.Nombre ?? "Sin puesto asignado")
+                        </span>
+                    </td>
+                    <td class="body-text fw-medium text-dark">
+                        <!-- NULL SAFETY: Protegemos la visualización del teléfono -->
+                        <i class="fa-solid fa-phone me-1 text-muted"></i> @(string.IsNullOrEmpty(item.Telefono) ? "Sin teléfono" : item.Telefono)
+                    </td>
+                    <td>
+                        @if (item.Activo == true)
+                        {
+                            <span class="label" style="background-color: #d1fae5; color: #047857; padding: 4px 8px; border-radius: var(--vc-radius-sm);">
+                                Activo
+                            </span>
+                        }
+                        else
+                        {
+                            <span class="label" style="background-color: #fee2e2; color: #b91c1c; padding: 4px 8px; border-radius: var(--vc-radius-sm);">
+                                Inactivo
+                            </span>
+                        }
+                    </td>
+                    <td class="text-end">
+                        <!-- El botón Editar siempre está disponible para el Admin -->
+                        <button onclick="abrirModalEdit(@item.IdEmpleado)" class="btn btn-icon btn-outlined" title="Editar">
+                            <i class="fa-solid fa-pen text-primary"></i>
+                        </button>
+
+<<<<<<< HEAD
+                        <!-- SEGURIDAD MANTENIDA: El usuario en sesión no puede eliminarse a sí mismo y no se muestra si está inactivo -->
+=======
+                        <!-- MEJORA DE SEGURIDAD MANTENIDA: -->
+                        <!-- 1. El usuario en sesión NO puede eliminarse a sí mismo -->
+                        <!-- 2. No mostramos el botón eliminar si el empleado ya está Inactivo (borrado lógico) -->
+>>>>>>> 7af84dbc4060a8bbaa8bab50c489e93f45a0ceba
+                        @if (item.IdEmpleado != idUsuarioEnSesion && item.Activo == true)
+                        {
+                            <button onclick="abrirModalDelete(@item.IdEmpleado)" class="btn btn-icon btn-outlined" title="Eliminar / Desactivar">
+                                <i class="fa-solid fa-trash" style="color: #ef4444;"></i>
+                            </button>
+                        }
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>
+
+<!-- Componente Global de Paginación -->
+@Html.Partial("_Paginacion")

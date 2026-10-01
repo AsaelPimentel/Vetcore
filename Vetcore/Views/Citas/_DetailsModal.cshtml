@@ -1,0 +1,52 @@
+﻿@model Vetcore.Models.Citas
+
+<div class="modal fade" id="modalDetailsCita" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content card-modern" style="border: none; padding: 0;">
+            <div class="modal-header border-0 pb-0 px-4 pt-4">
+                <div>
+                    <h3 class="headline mb-0">Detalles de la Cita</h3>
+                    <p class="body-text mb-0 small">@Model.Tipo programada.</p>
+                </div>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
+            </div>
+            <div class="modal-body px-4 pb-4 mt-3">
+                <div class="row mb-3">
+                    <div class="col-6">
+                        <span class="label d-block mb-1">Paciente</span>
+                        <div class="fw-bold text-dark"><i class="fa-solid fa-paw text-primary me-1"></i> @Model.Mascotas.Nombre</div>
+                    </div>
+                    <div class="col-6">
+                        <span class="label d-block mb-1">Especialista</span>
+                        <div class="body-text"><i class="fa-solid fa-user-doctor text-secondary me-1"></i> @Model.Empleados.Nombre</div>
+                    </div>
+                </div>
+                <div class="row mb-3">
+                    <div class="col-6">
+                        <span class="label d-block mb-1">Fecha y Hora</span>
+                        <div class="body-text text-dark fw-medium">@Model.FechaHora.ToString("dd/MMM/yyyy HH:mm") hrs</div>
+                    </div>
+                    <div class="col-6">
+                        <span class="label d-block mb-1">Estado actual</span>
+                        <span class="badge @(Model.Estado == "Pendiente" ? "bg-warning text-dark" : Model.Estado == "Completada" ? "bg-success" : "bg-danger")">@Model.Estado</span>
+                    </div>
+                </div>
+                <div class="mb-3">
+                    <span class="label d-block mb-1">Motivo / Notas</span>
+                    <div class="body-text">@(string.IsNullOrEmpty(Model.Motivo) ? "Sin observaciones." : Model.Motivo)</div>
+                </div>
+                <div class="mt-4 d-flex justify-content-between border-top pt-3">
+                    <button type="button" class="btn btn-icon btn-outlined text-danger" onclick="abrirModalDelete(@Model.IdCita)" title="Cancelar/Eliminar Cita">
+                        <i class="fa-solid fa-trash"></i>
+                    </button>
+                    <div class="d-flex gap-2">
+                        <button type="button" class="btn btn-outlined" data-bs-dismiss="modal">Cerrar</button>
+                        <button type="button" class="btn btn-primary" onclick="abrirModalEdit(@Model.IdCita)">
+                            <i class="fa-solid fa-pen"></i> Editar Cita
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

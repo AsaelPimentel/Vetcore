@@ -1,0 +1,353 @@
+﻿@{
+    ViewBag.Title = "Agenda Clínica";
+}
+<<<<<<< HEAD
+=======
+
+>>>>>>> 7af84dbc4060a8bbaa8bab50c489e93f45a0ceba
+<link href="https://cdn.jsdelivr.net/npm/fullcalendar@5.11.3/main.min.css" rel="stylesheet" />
+
+<!-- Encabezado Mejorado con Icono y Leyendas de Estado/Tipo -->
+<div class="d-flex flex-column flex-md-row justify-content-between align-items-md-center gap-3 mb-4 pb-3 border-bottom">
+    <div class="d-flex align-items-center gap-3">
+        <div style="width: 50px; height: 50px; background-color: var(--vc-primary-light, #e0f2fe); color: var(--vc-primary, #0284c7); border-radius: 12px; display: flex; align-items: center; justify-content: center; font-size: 1.5rem; flex-shrink: 0;">
+            <i class="fa-solid fa-calendar-days"></i>
+        </div>
+        <div>
+            <h3 class="headline mb-1 fs-4" style="color: #1e293b; font-weight: 700;">Agenda y Recepción</h3>
+            <p class="body-text text-muted mb-0 small">Control centralizado de citas médicas, estéticas y procedimientos.</p>
+        </div>
+    </div>
+<<<<<<< HEAD
+    <div class="d-flex flex-wrap align-items-center gap-2">
+        <!-- Leyendas rápidas de referencia visual -->
+=======
+
+    <div class="d-flex flex-wrap align-items-center gap-2">
+        <!-- Leyendas rápidas de referencia visual (Ocultas en móviles para ganar espacio) -->
+>>>>>>> 7af84dbc4060a8bbaa8bab50c489e93f45a0ceba
+        <div class="d-none d-xl-flex align-items-center gap-2 me-2">
+            <span class="badge bg-light text-dark border px-2 py-1 small"><i class="fa-solid fa-circle text-primary me-1" style="font-size: 8px;"></i> Médica</span>
+            <span class="badge bg-light text-dark border px-2 py-1 small"><i class="fa-solid fa-circle text-success me-1" style="font-size: 8px;"></i> Estética</span>
+            <span class="badge bg-light text-dark border px-2 py-1 small"><i class="fa-solid fa-circle text-warning me-1" style="font-size: 8px;"></i> Vacunación</span>
+        </div>
+<<<<<<< HEAD
+=======
+
+>>>>>>> 7af84dbc4060a8bbaa8bab50c489e93f45a0ceba
+        <button onclick="abrirModalCreate(null)" class="btn btn-primary px-3 px-md-4 shadow-sm d-flex align-items-center gap-2 w-100 w-md-auto justify-content-center">
+            <i class="fa-solid fa-plus"></i> <span>Agendar Cita</span>
+        </button>
+    </div>
+</div>
+
+<!-- Contenedor Moderno del Calendario -->
+<div class="card-modern p-2 p-md-4 shadow-sm border-0" style="background: #ffffff; border-radius: 16px;">
+    <div id="calendario-vetcore"></div>
+</div>
+
+<div id="modal-container"></div>
+
+@section Scripts {
+    <script src="https://cdn.jsdelivr.net/npm/fullcalendar@5.11.3/main.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/fullcalendar@5.11.3/locales/es.js"></script>
+<<<<<<< HEAD
+    <script>
+        var calendar;
+        document.addEventListener('DOMContentLoaded', function () {
+            var calendarEl = document.getElementById('calendario-vetcore');
+            var isMobile = window.innerWidth < 768;
+=======
+
+    <script>
+        var calendar;
+
+        document.addEventListener('DOMContentLoaded', function () {
+            var calendarEl = document.getElementById('calendario-vetcore');
+
+            // Detectar si estamos en pantalla móvil para ajustar la vista inicial
+            var isMobile = window.innerWidth < 768;
+
+>>>>>>> 7af84dbc4060a8bbaa8bab50c489e93f45a0ceba
+            calendar = new FullCalendar.Calendar(calendarEl, {
+                initialView: isMobile ? 'listWeek' : 'dayGridMonth',
+                locale: 'es',
+                headerToolbar: {
+                    left: 'prev,next today',
+                    center: 'title',
+                    right: 'dayGridMonth,timeGridWeek,timeGridDay,listWeek'
+                },
+<<<<<<< HEAD
+=======
+                // Adaptar los textos de la barra de herramientas para ahorrar espacio en móviles
+>>>>>>> 7af84dbc4060a8bbaa8bab50c489e93f45a0ceba
+                windowResize: function(arg) {
+                    if (window.innerWidth < 768) {
+                        calendar.changeView('listWeek');
+                    } else {
+                        calendar.changeView('dayGridMonth');
+                    }
+                },
+                buttonText: { today: 'Hoy', month: 'Mes', week: 'Semana', day: 'Día', list: 'Agenda' },
+                themeSystem: 'standard',
+                events: '@Url.Action("GetCitas", "Citas")',
+                height: 'auto',
+                contentHeight: isMobile ? 450 : 650,
+                aspectRatio: 1.35,
+<<<<<<< HEAD
+                dateClick: function (info) {
+                    var hoy = new Date();
+                    hoy.setHours(0, 0, 0, 0);
+                    var fechaClic = info.date;
+                    var soloFechaClic = new Date(fechaClic);
+                    soloFechaClic.setHours(0, 0, 0, 0);
+=======
+
+                dateClick: function (info) {
+                    var hoy = new Date();
+                    hoy.setHours(0, 0, 0, 0);
+
+                    var fechaClic = info.date;
+                    var soloFechaClic = new Date(fechaClic);
+                    soloFechaClic.setHours(0, 0, 0, 0);
+
+>>>>>>> 7af84dbc4060a8bbaa8bab50c489e93f45a0ceba
+                    if (soloFechaClic < hoy) {
+                        mostrarModalAlerta(
+                            "Fecha no válida",
+                            "No es posible agendar citas médicas o estéticas en fechas pasadas. Por favor seleccione el día de hoy en adelante."
+                        );
+                        return;
+                    }
+<<<<<<< HEAD
+                    var anio = fechaClic.getFullYear();
+                    var mes = String(fechaClic.getMonth() + 1).padStart(2, '0');
+                    var dia = String(fechaClic.getDate()).padStart(2, '0');
+                    var hora = (info.view.type === 'dayGridMonth') ? '09:00' :
+                        String(fechaClic.getHours()).padStart(2, '0') + ':' + String(fechaClic.getMinutes()).padStart(2, '0');
+                    var fechaFormateada = anio + '-' + mes + '-' + dia + 'T' + hora;
+                    abrirModalCreate(fechaFormateada);
+                },
+=======
+
+                    var anio = fechaClic.getFullYear();
+                    var mes = String(fechaClic.getMonth() + 1).padStart(2, '0');
+                    var dia = String(fechaClic.getDate()).padStart(2, '0');
+
+                    var hora = (info.view.type === 'dayGridMonth') ? '09:00' :
+                        String(fechaClic.getHours()).padStart(2, '0') + ':' + String(fechaClic.getMinutes()).padStart(2, '0');
+
+                    var fechaFormateada = anio + '-' + mes + '-' + dia + 'T' + hora;
+                    abrirModalCreate(fechaFormateada);
+                },
+
+>>>>>>> 7af84dbc4060a8bbaa8bab50c489e93f45a0ceba
+                eventClick: function(info) {
+                    abrirModalDetails(info.event.id);
+                }
+            });
+<<<<<<< HEAD
+            calendar.render();
+        });
+
+=======
+
+            calendar.render();
+        });
+
+        // ==========================================
+        // FUNCIONES MODALES Y ALERTAS
+        // ==========================================
+>>>>>>> 7af84dbc4060a8bbaa8bab50c489e93f45a0ceba
+        function mostrarModalAlerta(titulo, mensaje) {
+            var htmlModal = `
+                <div class="modal fade" id="modalAlerta" tabindex="-1" aria-hidden="true">
+                    <div class="modal-dialog modal-dialog-centered" style="max-width: 400px;">
+                        <div class="modal-content card-modern text-center p-4" style="border: none;">
+                            <div class="mb-3 mt-2">
+                                <div style="width: 60px; height: 60px; background-color: #fee2e2; color: #ef4444; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 1.8rem; margin: 0 auto;">
+                                    <i class="fa-solid fa-triangle-exclamation"></i>
+                                </div>
+                            </div>
+                            <h4 class="headline mb-2" style="color: #1e293b;">${titulo}</h4>
+                            <p class="body-text text-muted mb-4 small">${mensaje}</p>
+                            <button type="button" class="btn btn-primary w-100" data-bs-dismiss="modal">Entendido</button>
+                        </div>
+                    </div>
+                </div>`;
+<<<<<<< HEAD
+=======
+
+>>>>>>> 7af84dbc4060a8bbaa8bab50c489e93f45a0ceba
+            $('#modal-container').html(htmlModal);
+            var modalEl = new bootstrap.Modal(document.getElementById('modalAlerta'));
+            modalEl.show();
+        }
+
+        function abrirModalCreate(fecha) {
+            var url = '@Url.Action("Create", "Citas")';
+            if (fecha) url += '?fecha=' + fecha;
+<<<<<<< HEAD
+=======
+
+>>>>>>> 7af84dbc4060a8bbaa8bab50c489e93f45a0ceba
+            $.get(url, function (data) {
+                $('#modal-container').html(data);
+                $('#modalCita').modal('show');
+            });
+        }
+
+        function abrirModalDetails(id) {
+            $.get('@Url.Action("Details", "Citas")/' + id, function (data) {
+                $('#modal-container').html(data);
+                $('#modalDetailsCita').modal('show');
+            });
+        }
+
+        function abrirModalEdit(id) {
+            $('#modalDetailsCita').modal('hide');
+            $.get('@Url.Action("Edit", "Citas")/' + id, function (data) {
+                $('#modal-container').html(data);
+                $('#modalEditCita').modal('show');
+            });
+        }
+
+        function abrirModalDelete(id) {
+            $('#modalDetailsCita').modal('hide');
+            $.get('@Url.Action("Delete", "Citas")/' + id, function (data) {
+                $('#modal-container').html(data);
+                $('#modalDeleteCita').modal('show');
+            });
+        }
+
+<<<<<<< HEAD
+=======
+        // ==========================================
+        // PROCESAMIENTO AJAX
+        // ==========================================
+>>>>>>> 7af84dbc4060a8bbaa8bab50c489e93f45a0ceba
+        $(document).ready(function () {$(document).on('click', '#btnGuardarCita', function () {
+                var form = $('#frmCreateCita');
+                if (form.valid()) {
+                    $.post('@Url.Action("Create", "Citas")', form.serialize(), function (response) {
+                        if (response.success) {
+                            $('#modalCita').modal('hide');
+                            calendar.refetchEvents();
+                        } else {
+                            $('#modal-container').html(response);
+                            $('#modalCita').modal('show');
+                        }
+                    });
+                }
+            });
+
+            $(document).on('click', '#btnActualizarCita', function () {
+                var form = $('#frmEditCita');
+                if (form.valid()) {
+                    $.post('@Url.Action("Edit", "Citas")', form.serialize(), function (response) {
+                        if (response.success) {
+                            $('#modalEditCita').modal('hide');
+                            calendar.refetchEvents();
+                        } else {
+                            $('#modal-container').html(response);
+                            $('#modalEditCita').modal('show');
+                        }
+                    });
+                }
+            });
+
+            $(document).on('click', '#btnConfirmarEliminar', function () {
+                var form = $('#frmDeleteCita');
+                $.post('@Url.Action("Delete", "Citas")', form.serialize(), function (response) {
+                    if (response.success) {
+                        $('#modalDeleteCita').modal('hide');
+                        calendar.refetchEvents();
+                    }
+                });
+            });
+        });
+    </script>
+<<<<<<< HEAD
+    <style>
+=======
+
+    <style>
+        /* Estilos personalizados y adaptativos para FullCalendar */
+>>>>>>> 7af84dbc4060a8bbaa8bab50c489e93f45a0ceba
+        .fc-theme-standard th {
+            font-family: var(--vc-font-body, inherit);
+            background-color: #f8fafc;
+            color: #475569;
+            font-weight: 600;
+            padding: 8px 0;
+            border-color: #e2e8f0;
+            font-size: 0.85rem;
+        }
+
+        .fc-theme-standard td, .fc-theme-standard .fc-scrollgrid {
+            border-color: #e2e8f0;
+        }
+
+        .fc-button-primary {
+            background-color: #ffffff !important;
+            color: #334155 !important;
+            border-color: #cbd5e1 !important;
+            box-shadow: 0 1px 2px rgba(0,0,0,0.05) !important;
+            font-weight: 500;
+            border-radius: 8px !important;
+            padding: 5px 10px !important;
+            font-size: 0.85rem;
+        }
+
+            .fc-button-primary:hover, .fc-button-active {
+                background-color: #f1f5f9 !important;
+                color: #0284c7 !important;
+                border-color: #94a3b8 !important;
+            }
+
+        .fc-daygrid-day-number {
+            color: #334155;
+            font-weight: 500;
+            padding: 4px;
+        }
+
+        .fc-event {
+            border: none;
+            border-radius: 6px;
+            padding: 2px 6px;
+            font-size: 0.75rem;
+            cursor: pointer;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+        }
+
+<<<<<<< HEAD
+=======
+        /* Ajustes responsivos adicionales para pantallas muy pequeñas */
+>>>>>>> 7af84dbc4060a8bbaa8bab50c489e93f45a0ceba
+        @@media (max-width: 768px) {
+            .fc-header-toolbar {
+                display: flex;
+                flex-direction: column;
+                gap: 10px;
+                align-items: center;
+            }
+<<<<<<< HEAD
+
+=======
+>>>>>>> 7af84dbc4060a8bbaa8bab50c489e93f45a0ceba
+            .fc-toolbar-chunk {
+                display: flex;
+                justify-content: center;
+                flex-wrap: wrap;
+                gap: 4px;
+            }
+<<<<<<< HEAD
+
+=======
+>>>>>>> 7af84dbc4060a8bbaa8bab50c489e93f45a0ceba
+            .fc-toolbar-title {
+                font-size: 1.1rem !important;
+            }
+        }
+    </style>
+}

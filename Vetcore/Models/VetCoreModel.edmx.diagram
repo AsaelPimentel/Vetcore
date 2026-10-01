@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="a0c218d11c9b4d7a88d6e8e8cdc2151f" Name="Diagram1">
+        <EntityTypeShape EntityType="VetcoreModel.CajasSesion" Width="1.5" PointX="5.25" PointY="12" IsExpanded="true" />
+        <EntityTypeShape EntityType="VetcoreModel.Categorias" Width="1.5" PointX="3.75" PointY="1.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="VetcoreModel.Citas" Width="1.5" PointX="5.25" PointY="7.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="VetcoreModel.Empleados" Width="1.5" PointX="3" PointY="11.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="VetcoreModel.Especies" Width="1.5" PointX="1.5" PointY="1.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="VetcoreModel.EsteticaRegistros" Width="1.5" PointX="10.5" PointY="6.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="VetcoreModel.Expedientes" Width="1.5" PointX="8.25" PointY="4.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="VetcoreModel.Jaulas" Width="1.5" PointX="3" PointY="16.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="VetcoreModel.KardexInventario" Width="1.5" PointX="8.25" PointY="8" IsExpanded="true" />
+        <EntityTypeShape EntityType="VetcoreModel.Mascotas" Width="1.5" PointX="3" PointY="5.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="VetcoreModel.Productos" Width="1.5" PointX="6" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="VetcoreModel.Propietarios" Width="1.5" PointX="0.75" PointY="4.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="VetcoreModel.Puestos" Width="1.5" PointX="0.75" PointY="12.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="VetcoreModel.Razas" Width="1.5" PointX="0.75" PointY="8.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="VetcoreModel.Roles" Width="1.5" PointX="6" PointY="20.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="VetcoreModel.Usuarios" Width="1.5" PointX="8.25" PointY="16.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="VetcoreModel.Ventas" Width="1.5" PointX="7.5" PointY="11.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="VetcoreModel.VentasDetalle" Width="1.5" PointX="10.75" PointY="14.125" IsExpanded="true" />
+        <AssociationConnector Association="VetcoreModel.FK__CajasSesi__IdEmp__208CD6FA" ManuallyRouted="false" />
+        <AssociationConnector Association="VetcoreModel.FK__Ventas__IdSesion__25518C17" ManuallyRouted="false" />
+        <AssociationConnector Association="VetcoreModel.FK__Productos__IdCat__7C4F7684" ManuallyRouted="false" />
+        <AssociationConnector Association="VetcoreModel.FK__Citas__IdEmplead__02FC7413" ManuallyRouted="false" />
+        <AssociationConnector Association="VetcoreModel.FK__Citas__IdMascota__02084FDA" ManuallyRouted="false" />
+        <AssociationConnector Association="VetcoreModel.FK__EsteticaR__IdCit__123EB7A3" ManuallyRouted="false" />
+        <AssociationConnector Association="VetcoreModel.FK__Empleados__IdPue__619B8048" ManuallyRouted="false" />
+        <AssociationConnector Association="VetcoreModel.FK__EsteticaR__IdEmp__1332DBDC" ManuallyRouted="false" />
+        <AssociationConnector Association="VetcoreModel.FK__KardexInv__IdEmp__2EDAF651" ManuallyRouted="false" />
+        <AssociationConnector Association="VetcoreModel.FK__Usuarios__IdEmpl__6754599E" ManuallyRouted="false" />
+        <AssociationConnector Association="VetcoreModel.FK__Razas__IdEspecie__70DDC3D8" ManuallyRouted="false" />
+        <AssociationConnector Association="VetcoreModel.FK__EsteticaR__IdMas__114A936A" ManuallyRouted="false" />
+        <AssociationConnector Association="VetcoreModel.FK__Expedient__IdMas__07C12930" ManuallyRouted="false" />
+        <AssociationConnector Association="VetcoreModel.FK__KardexInv__IdPro__2DE6D218" ManuallyRouted="false" />
+        <AssociationConnector Association="VetcoreModel.FK__Mascotas__IdProp__73BA3083" ManuallyRouted="false" />
+        <AssociationConnector Association="VetcoreModel.FK__Mascotas__IdRaza__74AE54BC" ManuallyRouted="false" />
+        <AssociationConnector Association="VetcoreModel.FK__VentasDet__IdPro__2B0A656D" ManuallyRouted="false" />
+        <AssociationConnector Association="VetcoreModel.FK__Ventas__IdPropie__2645B050" ManuallyRouted="false" />
+        <AssociationConnector Association="VetcoreModel.FK__Usuarios__IdRol__68487DD7" ManuallyRouted="false" />
+        <AssociationConnector Association="VetcoreModel.FK__VentasDet__IdVen__2A164134" ManuallyRouted="false" />
+        <EntityTypeShape EntityType="VetcoreModel.Consultas" Width="1.5" PointX="13.5" PointY="8.125" />
+        <AssociationConnector Association="VetcoreModel.FK__Consultas__IdCit__0C85DE4D" />
+        <AssociationConnector Association="VetcoreModel.FK__Consultas__IdEmp__0D7A0286" />
+        <AssociationConnector Association="VetcoreModel.FK__Consultas__IdExp__0B91BA14" />
+        <EntityTypeShape EntityType="VetcoreModel.CarnetVacunacion" Width="1.5" PointX="11.25" PointY="10.125" />
+        <AssociationConnector Association="VetcoreModel.FK__CarnetVac__IdEmp__3D2915A8" />
+        <AssociationConnector Association="VetcoreModel.FK__CarnetVac__IdMas__3C34F16F" />
+        <EntityTypeShape EntityType="VetcoreModel.HospitalizacionNotas" Width="1.5" PointX="5.625" PointY="16.125" />
+        <AssociationConnector Association="VetcoreModel.FK__Hospitali__IdEmp__41EDCAC5" />
+        <EntityTypeShape EntityType="VetcoreModel.Hospitalizaciones" Width="1.5" PointX="13.5" PointY="12.75" />
+        <AssociationConnector Association="VetcoreModel.FK__Hospitali__IdEmp__1BC821DD" />
+        <AssociationConnector Association="VetcoreModel.FK__Hospitali__IdExp__19DFD96B" />
+        <AssociationConnector Association="VetcoreModel.FK__Hospitali__IdHos__40F9A68C" />
+        <AssociationConnector Association="VetcoreModel.FK__Hospitali__IdJau__1AD3FDA4" />
+        <EntityTypeShape EntityType="VetcoreModel.AuditoriaLogs" Width="1.5" PointX="5.25" PointY="23.5" />
+        <AssociationConnector Association="VetcoreModel.FK__Auditoria__IdEmp__4F47C5E3" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>

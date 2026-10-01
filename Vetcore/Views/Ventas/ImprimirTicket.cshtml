@@ -1,0 +1,125 @@
+﻿@model Vetcore.Models.Ventas
+@{
+    Layout = null;
+
+    // Calculamos si hubo descuento restando el Subtotal original menos el Total cobrado
+    decimal descuento = Model.Subtotal - Model.Total;
+    decimal porcentajeDesc = (Model.Subtotal > 0 && descuento > 0) ? Math.Round((descuento / Model.Subtotal) * 100) : 0;
+}
+
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="utf-8" />
+    <title>Ticket #@Model.IdVenta</title>
+    <style>
+        body {
+            font-family: 'Courier New', Courier, monospace;
+            font-size: 12px;
+            color: #000;
+            width: 80mm;
+            margin: 0 auto;
+            padding: 10px;
+        }
+        .text-center { text-align: center; }
+        .text-right { text-align: right; }
+        .text-left { text-align: left; }
+        .fw-bold { font-weight: bold; }
+        .mb-1 { margin-bottom: 5px; }
+        .mt-2 { margin-top: 10px; }
+        .border-bottom { border-bottom: 1px dashed #000; padding-bottom: 5px; }
+        .border-top { border-top: 1px dashed #000; padding-top: 5px; }
+        table { width: 100%; border-collapse: collapse; }
+        th, td { padding: 3px 0; }
+        .producto-nombre { font-size: 11px; }
+
+        @@media print {
+            .no-print { display: none; }
+            body { margin: 0; padding: 0; }
+        }
+    </style>
+</head>
+<body onload="window.print();">
+    <div class="text-center no-print mb-1 mt-2">
+        <button onclick="window.print()" style="padding: 5px 10px; font-weight: bold;">Imprimir Ticket</button>
+        <button onclick="window.close()" style="padding: 5px 10px;">Cerrar</button>
+    </div>
+
+    <div class="text-center border-bottom mb-1">
+        <h2 style="margin: 0;">VETCORE</h2>
+        <p style="margin: 2px 0;">Clínica Veterinaria</p>
+        <p style="margin: 2px 0;">Av. Principal #123, Centro</p>
+        <p style="margin: 2px 0;">Tel: (555) 123-4567</p>
+    </div>
+
+    <div class="border-bottom mb-1 mt-2">
+        <p style="margin: 2px 0;"><strong>Ticket:</strong> #@Model.IdVenta.ToString("D5")</p>
+        <p style="margin: 2px 0;"><strong>Fecha:</strong> @(Model.FechaHora.HasValue ? Model.FechaHora.Value.ToString("dd/MM/yyyy HH:mm") : DateTime.Now.ToString("dd/MM/yyyy HH:mm"))</p>
+        <p style="margin: 2px 0;"><strong>Cajero:</strong> @Model.CajasSesion.Empleados.Nombre</p>
+
+        <!-- Mostrar cliente si existe, si no, es venta de paso -->
+        @if (Model.Propietarios != null)
+        {
+            <p style="margin: 2px 0;"><strong>Cliente:</strong> @Model.Propietarios.Nombre @Model.Propietarios.Apellidos</p>
+        }
+        else
+        {
+            <p style="margin: 2px 0;"><strong>Cliente:</strong> Público en General</p>
+        }
+    </div>
+
+    <table class="mt-2 border-bottom">
+        <thead>
+            <tr style="border-bottom: 1px solid #000;">
+                <th class="text-left">Cant</th>
+                <th class="text-left">Descripción</th>
+                <th class="text-right">Importe</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var detalle in Model.VentasDetalle)
+            {
+                <tr>
+                    <td class="text-left" style="vertical-align: top;">@detalle.Cantidad</td>
+                    <td class="text-left producto-nombre">
+                        @detalle.Productos.Nombre
+                        <br /><small>$@detalle.PrecioUnitario.ToString("N2") c/u</small>
+                    </td>
+                    <td class="text-right" style="vertical-align: top;">$@detalle.Subtotal.ToString("N2")</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+
+    <table class="mt-2 border-bottom">
+        <tr>
+            <td class="text-left fw-bold">SUBTOTAL:</td>
+            <td class="text-right">$@Model.Subtotal.ToString("N2")</td>
+        </tr>
+
+        <!-- Solo dibuja esta fila si realmente hubo un descuento -->
+        @if (descuento > 0)
+        {
+            <tr>
+                <td class="text-left fw-bold">DESC (@porcentajeDesc%):</td>
+                <td class="text-right">-$@descuento.ToString("N2")</td>
+            </tr>
+        }
+
+        <tr>
+            <td class="text-left fw-bold" style="font-size: 14px;">TOTAL:</td>
+            <td class="text-right fw-bold" style="font-size: 14px;">$@Model.Total.ToString("N2")</td>
+        </tr>
+    </table>
+
+    <div class="text-center mt-2">
+        <p style="margin: 2px 0;">Pago en: @Model.MetodoPago</p>
+        <p class="fw-bold mt-2" style="font-size: 13px;">¡GRACIAS POR SU PREFERENCIA!</p>
+        <p style="margin: 2px 0; font-size: 10px;">Ticket no válido como comprobante fiscal.</p>
+    </div>
+
+    <div style="text-align: center; margin-top: 15px;">
+        <p style="font-family: 'Courier New'; letter-spacing: 2px; margin: 0;">*** @Model.IdVenta.ToString("D8") ***</p>
+    </div>
+</body>
+</html>

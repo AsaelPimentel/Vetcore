@@ -1,0 +1,275 @@
+<<<<<<< HEAD
+﻿@using Vetcore.Helpers
+@model IEnumerable<Vetcore.Models.Citas>
+=======
+﻿@model IEnumerable<Vetcore.Models.Citas>
+>>>>>>> 7af84dbc4060a8bbaa8bab50c489e93f45a0ceba
+@{
+    ViewBag.Title = "Dashboard";
+}
+
+<!-- Encabezado de Bienvenida -->
+<div class="d-flex justify-content-between align-items-center mb-4">
+    <div>
+        <h2 class="headline mb-1"><i class="fa-solid fa-chart-line text-primary me-2"></i> Resumen Operativo</h2>
+        <p class="body-text text-muted mb-0">Panel de control de la clínica hoy: <strong>@DateTime.Now.ToString("dd 'de' MMMM, yyyy")</strong></p>
+    </div>
+</div>
+
+<!-- 1. TARJETAS DE INDICADORES (KPIs) -->
+<div class="row g-4 mb-4">
+    <!-- Tarjeta: Citas de Hoy -->
+    <div class="col-md-4">
+        <div class="card-modern p-4 d-flex align-items-center gap-3 shadow-sm hover-elevate" style="border-left: 4px solid var(--vc-primary); transition: transform 0.2s;">
+            <div style="background-color: var(--vc-primary-light); color: var(--vc-primary); width: 60px; height: 60px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 1.5rem;">
+                <i class="fa-solid fa-calendar-day"></i>
+            </div>
+            <div>
+                <h3 class="mb-0 fw-bold" style="font-size: 1.8rem; color: #1e293b;">@ViewBag.CitasHoy</h3>
+                <span class="body-text small text-muted fw-medium">Citas agendadas para hoy</span>
+            </div>
+        </div>
+    </div>
+<<<<<<< HEAD
+
+=======
+>>>>>>> 7af84dbc4060a8bbaa8bab50c489e93f45a0ceba
+    <!-- Tarjeta: Pacientes Totales -->
+    <div class="col-md-4">
+        <div class="card-modern p-4 d-flex align-items-center gap-3 shadow-sm" style="border-left: 4px solid #10b981;">
+            <div style="background-color: #d1fae5; color: #10b981; width: 60px; height: 60px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 1.5rem;">
+                <i class="fa-solid fa-paw"></i>
+            </div>
+            <div>
+                <h3 class="mb-0 fw-bold" style="font-size: 1.8rem; color: #1e293b;">@ViewBag.TotalPacientes</h3>
+                <span class="body-text small text-muted fw-medium">Pacientes activos</span>
+            </div>
+        </div>
+    </div>
+<<<<<<< HEAD
+
+=======
+>>>>>>> 7af84dbc4060a8bbaa8bab50c489e93f45a0ceba
+    <!-- Tarjeta: Clientes Totales -->
+    <div class="col-md-4">
+        <div class="card-modern p-4 d-flex align-items-center gap-3 shadow-sm" style="border-left: 4px solid #8b5cf6;">
+            <div style="background-color: #ede9fe; color: #8b5cf6; width: 60px; height: 60px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 1.5rem;">
+                <i class="fa-solid fa-users"></i>
+            </div>
+            <div>
+                <h3 class="mb-0 fw-bold" style="font-size: 1.8rem; color: #1e293b;">@ViewBag.TotalClientes</h3>
+                <span class="body-text small text-muted fw-medium">Clientes registrados</span>
+            </div>
+        </div>
+    </div>
+</div>
+
+<<<<<<< HEAD
+<!-- 2. WIDGET DE ALERTAS DE STOCK BAJO (MIGRACIÓN A CLAIMS) -->
+@if (Context.IsMedicoOrAdmin())
+{
+    <div class="card-modern shadow-sm mb-4">
+        <div class="p-4 border-bottom d-flex justify-content-between align-items-center bg-white" style="border-radius: 12px 12px 0 0;">
+            <div>
+                <h4 class="headline mb-1" style="font-size: 1.15rem; color: #b91c1c;"><i class="fa-solid fa-triangle-exclamation me-2"></i> Alertas de Stock en Farmacia</h4>
+                <p class="body-text small text-muted mb-0">Productos que han alcanzado o caído por debajo de su stock mínimo permitido.</p>
+            </div>
+            <a href="@Url.Action("Index", "Productos")" class="btn btn-outlined btn-sm">Ir a Inventario <i class="fa-solid fa-arrow-right ms-1"></i></a>
+        </div>
+        <div class="table-responsive">
+            <table class="table-modern align-middle mb-0">
+                <thead>
+                    <tr>
+                        <th class="ps-4">Producto</th>
+                        <th>Categoría</th>
+                        <th class="text-center">Stock Actual</th>
+                        <th class="text-center">Stock Mínimo</th>
+                        <th class="text-end pe-4">Acción</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @{
+                        var stockBajoList = ViewBag.ProductosStockBajoLista as List<Vetcore.Models.Productos>;
+                    }
+                    @if (stockBajoList == null || !stockBajoList.Any())
+                    {
+                        <tr>
+                            <td colspan="5" class="text-center py-4 text-muted">
+                                <i class="fa-solid fa-circle-check text-success fs-3 mb-2 d-block"></i>
+                                Excelente. No hay productos con stock bajo en este momento.
+                            </td>
+                        </tr>
+                    }
+                    else
+                    {
+                        foreach (var prod in stockBajoList)
+                        {
+                            <tr>
+                                <td class="ps-4 fw-bold text-dark">@prod.Nombre</td>
+                                <td><span class="badge bg-light text-dark border">@(prod.Categorias != null ? prod.Categorias.Nombre : "General")</span></td>
+                                <td class="text-center fw-bold text-danger">@prod.StockActual</td>
+                                <td class="text-center text-muted">@prod.StockMinimo</td>
+                                <td class="text-end pe-4">
+                                    <a href="@Url.Action("Index", "Productos", new { search = prod.Nombre })" class="btn btn-sm btn-outline-primary">
+                                        <i class="fa-solid fa-box-open me-1"></i> Surtir
+                                    </a>
+                                </td>
+                            </tr>
+                        }
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+}
+
+<!-- 3. TABLA DE PRÓXIMAS CITAS (Visible para todos) -->
+=======
+<!-- 2. WIDGET DE ALERTAS DE STOCK BAJO (NUEVO) -->
+<div class="card-modern shadow-sm mb-4">
+    <div class="p-4 border-bottom d-flex justify-content-between align-items-center bg-white" style="border-radius: 12px 12px 0 0;">
+        <div>
+            <h4 class="headline mb-1" style="font-size: 1.15rem; color: #b91c1c;"><i class="fa-solid fa-triangle-exclamation me-2"></i> Alertas de Stock en Farmacia</h4>
+            <p class="body-text small text-muted mb-0">Productos que han alcanzado o caído por debajo de su stock mínimo permitido.</p>
+        </div>
+        <a href="@Url.Action("Index", "Productos")" class="btn btn-outlined btn-sm">Ir a Inventario <i class="fa-solid fa-arrow-right ms-1"></i></a>
+    </div>
+    <div class="table-responsive">
+        <table class="table-modern align-middle mb-0">
+            <thead>
+                <tr>
+                    <th class="ps-4">Producto</th>
+                    <th>Categoría</th>
+                    <th class="text-center">Stock Actual</th>
+                    <th class="text-center">Stock Mínimo</th>
+                    <th class="text-end pe-4">Acción</th>
+                </tr>
+            </thead>
+            <tbody>
+                @{
+                    var stockBajoList = ViewBag.ProductosStockBajoLista as List<Vetcore.Models.Productos>;
+                }
+                @if (stockBajoList == null || !stockBajoList.Any())
+                {
+                    <tr>
+                        <td colspan="5" class="text-center py-4 text-muted">
+                            <i class="fa-solid fa-circle-check text-success fs-3 mb-2 d-block"></i>
+                            Excelente. No hay productos con stock bajo en este momento.
+                        </td>
+                    </tr>
+                }
+                else
+                {
+                    foreach (var prod in stockBajoList)
+                    {
+                        <tr>
+                            <td class="ps-4 fw-bold text-dark">@prod.Nombre</td>
+                            <td><span class="badge bg-light text-dark border">@(prod.Categorias != null ? prod.Categorias.Nombre : "General")</span></td>
+                            <td class="text-center fw-bold text-danger">@prod.StockActual</td>
+                            <td class="text-center text-muted">@prod.StockMinimo</td>
+                            <td class="text-end pe-4">
+                                <a href="@Url.Action("Index", "Productos", new { search = prod.Nombre })" class="btn btn-sm btn-outline-primary">
+                                    <i class="fa-solid fa-box-open me-1"></i> Surtir
+                                </a>
+                            </td>
+                        </tr>
+                    }
+                }
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<!-- 3. TABLA DE PRÓXIMAS CITAS -->
+>>>>>>> 7af84dbc4060a8bbaa8bab50c489e93f45a0ceba
+<div class="card-modern shadow-sm">
+    <div class="p-4 border-bottom d-flex justify-content-between align-items-center bg-white" style="border-radius: 12px 12px 0 0;">
+        <div>
+            <h4 class="headline mb-1" style="font-size: 1.15rem;"><i class="fa-regular fa-clock text-primary me-2"></i> Próximos en ser atendidos</h4>
+            <p class="body-text small text-muted mb-0">Citas programadas para las próximas horas del día de hoy.</p>
+        </div>
+        <a href="@Url.Action("Index", "Citas")" class="btn btn-outlined btn-sm">Ver Calendario Completo <i class="fa-solid fa-arrow-right ms-1"></i></a>
+    </div>
+    <div class="table-responsive">
+        <table class="table-modern align-middle mb-0">
+            <thead>
+                <tr>
+                    <th class="ps-4" style="width: 110px;">Hora</th>
+                    <th>Paciente & Propietario</th>
+                    <th>Servicio / Motivo</th>
+                    <th>Especialista</th>
+                    <th class="text-center">Estado</th>
+                    <th class="text-end pe-4">Acción</th>
+                </tr>
+            </thead>
+            <tbody>
+                @if (!Model.Any())
+                {
+                    <tr>
+                        <td colspan="6" class="text-center py-5">
+                            <div style="color: #cbd5e1; font-size: 2.5rem; margin-bottom: 10px;">
+                                <i class="fa-solid fa-mug-hot"></i>
+                            </div>
+                            <p class="body-text fw-medium text-dark mb-0">No hay pacientes pendientes en agenda para las próximas horas.</p>
+                            <small class="text-muted">Las citas programadas aparecerán aquí.</small>
+                        </td>
+                    </tr>
+                }
+                else
+                {
+                    foreach (var cita in Model)
+                    {
+                        <tr>
+                            <td class="ps-4">
+                                <span class="badge bg-light text-dark border px-2 py-2 fw-semibold" style="font-size: 0.85rem;">
+                                    <i class="fa-regular fa-clock text-muted me-1"></i> @cita.FechaHora.ToString("hh:mm tt")
+                                </span>
+                            </td>
+                            <td>
+                                <div class="fw-bold text-dark" style="font-size: 0.95rem;">@cita.Mascotas.Nombre</div>
+                                <small class="text-muted"><i class="fa-solid fa-user me-1 text-secondary"></i> @cita.Mascotas.Propietarios.Nombre @cita.Mascotas.Propietarios.Apellidos</small>
+                            </td>
+                            <td>
+                                <div class="fw-medium text-secondary">@cita.Tipo</div>
+                                <div class="text-muted small text-truncate" style="max-width: 220px;" title="@cita.Motivo">
+                                    @(string.IsNullOrEmpty(cita.Motivo) ? "Sin observaciones previas" : cita.Motivo)
+                                </div>
+                            </td>
+                            <td>
+                                <div class="body-text fw-medium text-dark">
+                                    <i class="fa-solid fa-user-doctor text-primary me-1"></i> @cita.Empleados.Nombre @cita.Empleados.Apellidos
+                                </div>
+                            </td>
+                            <td class="text-center">
+                                @if (cita.Estado == "Pendiente")
+                                {
+                                    <span class="badge px-3 py-2" style="background-color: #fef08a; color: #854d0e; font-weight: 550;">Pendiente</span>
+                                }
+                                else if (cita.Estado == "Atendida")
+                                {
+                                    <span class="badge px-3 py-2" style="background-color: #d1fae5; color: #047857; font-weight: 550;">Atendida</span>
+                                }
+                                else
+                                {
+                                    <span class="badge px-3 py-2" style="background-color: #fee2e2; color: #b91c1c; font-weight: 550;">@cita.Estado</span>
+                                }
+                            </td>
+                            <td class="text-end pe-4">
+                                <a href="@Url.Action("Index", "Mascotas", new { search = cita.Mascotas.Nombre })" class="btn btn-icon btn-outlined btn-sm" title="Buscar Paciente en Directorio">
+                                    <i class="fa-solid fa-paw text-primary"></i>
+                                </a>
+                            </td>
+                        </tr>
+                    }
+                }
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<style>
+    .hover-elevate:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.05), 0 4px 6px -4px rgba(0, 0, 0, 0.05) !important;
+    }
+</style>

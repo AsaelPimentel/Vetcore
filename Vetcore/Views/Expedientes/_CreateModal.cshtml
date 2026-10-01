@@ -1,0 +1,62 @@
+﻿@model Vetcore.Models.Consultas
+
+<div class="modal fade" id="modalConsulta" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-lg">
+        <div class="modal-content card-modern" style="border: none; padding: 0;">
+            <div class="modal-header border-0 pb-0 px-4 pt-4">
+                <div>
+                    <h3 class="headline mb-0">Registrar Notas Médicas</h3>
+                    <p class="body-text mb-0 small">Añadir nueva consulta al expediente.</p>
+                </div>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
+            </div>
+            <div class="modal-body px-4 pb-4">
+                <form id="frmCreateConsulta">
+                    @Html.AntiForgeryToken()
+                    <!-- Pasamos el Expediente y la Fecha ocultos -->
+                    @Html.HiddenFor(m => m.IdExpediente)
+                    @Html.HiddenFor(m => m.Fecha)
+
+                    <div class="row g-3 mt-1">
+                        <div class="col-md-6">
+                            <label class="label mb-1">Médico / Especialista</label>
+                            @Html.DropDownList("IdEmpleado", null, "Seleccione el médico...", new { @class = "form-control" })
+                            @Html.ValidationMessageFor(m => m.IdEmpleado, "", new { @class = "text-danger small" })
+                        </div>
+                        <div class="col-md-3">
+                            <label class="label mb-1">Peso (Kg)</label>
+                            @Html.EditorFor(m => m.PesoKg, new { htmlAttributes = new { @class = "form-control", type = "number", step = "0.01", placeholder = "Ej. 12.5" } })
+                        </div>
+                        <div class="col-md-3">
+                            <label class="label mb-1">Temp. (°C)</label>
+                            @Html.EditorFor(m => m.Temperatura, new { htmlAttributes = new { @class = "form-control", type = "number", step = "0.1", placeholder = "Ej. 38.5" } })
+                        </div>
+
+                        <div class="col-12 mt-3">
+                            <label class="label mb-1">Síntomas y Observaciones</label>
+                            @Html.TextAreaFor(m => m.Sintomas, new { @class = "form-control", rows = "2", placeholder = "Describa el estado y síntomas del paciente." })
+                        </div>
+
+                        <div class="col-12">
+                            <label class="label mb-1 text-warning fw-bold">Diagnóstico Presuntivo / Definitivo</label>
+                            @Html.TextAreaFor(m => m.Diagnostico, new { @class = "form-control border-warning", rows = "2", placeholder = "Diagnóstico de la enfermedad o condición." })
+                        </div>
+
+                        <div class="col-12">
+                            <label class="label mb-1 text-success fw-bold">Receta Médica / Tratamiento</label>
+                            @Html.TextAreaFor(m => m.RecetaMedica, new { @class = "form-control border-success", rows = "3", placeholder = "Medicamentos, dosis (ml, mg) y recomendaciones para el dueño." })
+                        </div>
+
+                        <div class="col-12 mt-4 d-flex justify-content-end gap-3 pt-3 border-top">
+                            <button type="button" class="btn btn-outlined" data-bs-dismiss="modal">Cancelar</button>
+                            <button type="button" id="btnGuardarConsulta" class="btn btn-primary">
+                                <i class="fa-solid fa-save"></i> Guardar Consulta
+                            </button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+@Scripts.Render("~/bundles/jqueryval")

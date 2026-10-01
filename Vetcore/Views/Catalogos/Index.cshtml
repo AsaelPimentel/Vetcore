@@ -1,0 +1,461 @@
+<<<<<<< HEAD
+﻿@using Vetcore.Helpers
+@{
+=======
+﻿@{
+>>>>>>> 7af84dbc4060a8bbaa8bab50c489e93f45a0ceba
+    ViewBag.Title = "Ajustes del Sistema";
+
+    // Protegemos cada variable por si alguna tabla no está mapeada o llega nula
+    var puestos = ViewBag.Puestos as IEnumerable<Vetcore.Models.Puestos> ?? new List<Vetcore.Models.Puestos>();
+    var roles = ViewBag.Roles as IEnumerable<Vetcore.Models.Roles> ?? new List<Vetcore.Models.Roles>();
+    var especies = ViewBag.Especies as IEnumerable<Vetcore.Models.Especies> ?? new List<Vetcore.Models.Especies>();
+    var razas = ViewBag.Razas as IEnumerable<Vetcore.Models.Razas> ?? new List<Vetcore.Models.Razas>();
+    var categorias = ViewBag.Categorias as IEnumerable<Vetcore.Models.Categorias> ?? new List<Vetcore.Models.Categorias>();
+    var jaulas = ViewBag.Jaulas as IEnumerable<Vetcore.Models.Jaulas> ?? new List<Vetcore.Models.Jaulas>();
+}
+
+<div class="d-flex justify-content-between align-items-center mb-4">
+    <div>
+        <h2 class="headline mb-0"><i class="fa-solid fa-sliders text-primary me-2"></i> Ajustes y Catálogos</h2>
+        <p class="body-text text-muted mb-0">Administra las opciones base y la configuración global del sistema.</p>
+    </div>
+</div>
+
+<div class="row g-4">
+    <!-- COLUMNA IZQUIERDA: Menú de Pestañas -->
+    <div class="col-md-3">
+        <div class="card-modern p-3">
+            <ul class="nav nav-pills flex-column gap-1 custom-nav-pills" id="ajustesTab" role="tablist">
+<<<<<<< HEAD
+=======
+
+>>>>>>> 7af84dbc4060a8bbaa8bab50c489e93f45a0ceba
+                <!-- GRUPO: Personal y Seguridad -->
+                <li class="nav-item mt-2 mb-1 px-2"><span class="small fw-bold text-muted text-uppercase" style="letter-spacing: 1px;">Personal</span></li>
+                <li class="nav-item" role="presentation">
+                    <button class="nav-link active text-start fw-bold" id="puestos-tab" data-bs-toggle="tab" data-bs-target="#puestos" type="button" role="tab">
+                        <i class="fa-solid fa-user-tag me-2 width-20 text-center" style="width: 22px;"></i> Puestos
+                    </button>
+                </li>
+                <li class="nav-item" role="presentation">
+                    <button class="nav-link text-start fw-bold" id="roles-tab" data-bs-toggle="tab" data-bs-target="#roles" type="button" role="tab">
+                        <i class="fa-solid fa-shield-halved me-2 width-20 text-center" style="width: 22px;"></i> Roles y Accesos
+                    </button>
+                </li>
+
+                <!-- GRUPO: Mascotas -->
+                <li class="nav-item mt-3 mb-1 px-2"><span class="small fw-bold text-muted text-uppercase" style="letter-spacing: 1px;">Mascotas</span></li>
+                <li class="nav-item" role="presentation">
+                    <button class="nav-link text-start fw-bold" id="especies-tab" data-bs-toggle="tab" data-bs-target="#especies" type="button" role="tab">
+                        <i class="fa-solid fa-paw me-2 width-20 text-center" style="width: 22px;"></i> Especies
+                    </button>
+                </li>
+                <li class="nav-item" role="presentation">
+                    <button class="nav-link text-start fw-bold" id="razas-tab" data-bs-toggle="tab" data-bs-target="#razas" type="button" role="tab">
+                        <i class="fa-solid fa-bone me-2 width-20 text-center" style="width: 22px;"></i> Razas
+                    </button>
+                </li>
+
+                <!-- GRUPO: Operaciones -->
+                <li class="nav-item mt-3 mb-1 px-2"><span class="small fw-bold text-muted text-uppercase" style="letter-spacing: 1px;">Operaciones</span></li>
+                <li class="nav-item" role="presentation">
+                    <button class="nav-link text-start fw-bold" id="categorias-tab" data-bs-toggle="tab" data-bs-target="#categorias" type="button" role="tab">
+                        <i class="fa-solid fa-tags me-2 width-20 text-center" style="width: 22px;"></i> Categorías (POS)
+                    </button>
+                </li>
+                <li class="nav-item" role="presentation">
+                    <button class="nav-link text-start fw-bold" id="jaulas-tab" data-bs-toggle="tab" data-bs-target="#jaulas" type="button" role="tab">
+                        <i class="fa-solid fa-bed me-2 width-20 text-center" style="width: 22px;"></i> Jaulas (Hospital)
+                    </button>
+                </li>
+            </ul>
+        </div>
+    </div>
+
+    <!-- COLUMNA DERECHA: Tablas de Contenido -->
+    <div class="col-md-9">
+        <div class="tab-content card-modern p-4" id="ajustesTabContent">
+
+            <!-- PESTAÑA 1: PUESTOS -->
+            <div class="tab-pane fade show active" id="puestos" role="tabpanel">
+                <div class="d-flex justify-content-between align-items-center mb-3 border-bottom pb-2">
+                    <h4 class="headline mb-0" style="color: #334155;">Puestos de Trabajo</h4>
+<<<<<<< HEAD
+                    @if (Context.IsAdmin())
+                    {
+                        <button onclick="abrirModalCrear('Puestos')" class="btn btn-primary btn-sm"><i class="fa-solid fa-plus me-1"></i> Nuevo Puesto</button>
+                    }
+=======
+                    <button onclick="abrirModalCrear('Puestos')" class="btn btn-primary btn-sm"><i class="fa-solid fa-plus me-1"></i> Nuevo Puesto</button>
+>>>>>>> 7af84dbc4060a8bbaa8bab50c489e93f45a0ceba
+                </div>
+                <div class="mb-3">
+                    <input type="text" id="buscarPuesto" class="form-control form-control-sm" placeholder="🔍 Buscar puesto..." onkeyup="filtrarTabla('buscarPuesto', 'tablaPuestos')">
+                </div>
+                <div class="table-responsive" style="max-height: 420px; overflow-y: auto;">
+                    <table class="table-modern" id="tablaPuestos">
+                        <thead style="position: sticky; top: 0; background: white; z-index: 1;">
+                            <tr>
+                                <th># ID</th>
+                                <th>Nombre del Puesto</th>
+                                <th>Nivel de Acceso</th>
+<<<<<<< HEAD
+                                @if (Context.IsAdmin())
+                                {
+                                    <th class="text-end">Acciones</th>
+}
+=======
+                                <th class="text-end">Acciones</th>
+>>>>>>> 7af84dbc4060a8bbaa8bab50c489e93f45a0ceba
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var p in puestos)
+                            {
+                                <tr>
+                                    <td class="text-muted">@p.IdPuesto</td>
+                                    <td class="fw-bold">@p.Nombre</td>
+                                    <td><span class="badge bg-light border text-dark">Nivel @p.NivelAcceso</span></td>
+<<<<<<< HEAD
+                                    @if (Context.IsAdmin())
+                                    {
+                                        <td class="text-end">
+                                            <button onclick="abrirModalEditar('Puestos', @p.IdPuesto)" class="btn btn-icon btn-outlined btn-sm" title="Editar"><i class="fa-solid fa-pen text-primary"></i></button>
+                                        </td>
+                                    }
+=======
+                                    <td class="text-end">
+                                        <button onclick="abrirModalEditar('Puestos', @p.IdPuesto)" class="btn btn-icon btn-outlined btn-sm" title="Editar"><i class="fa-solid fa-pen text-primary"></i></button>
+                                    </td>
+>>>>>>> 7af84dbc4060a8bbaa8bab50c489e93f45a0ceba
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <!-- PESTAÑA 2: ROLES -->
+            <div class="tab-pane fade" id="roles" role="tabpanel">
+                <div class="d-flex justify-content-between align-items-center mb-3 border-bottom pb-2">
+                    <h4 class="headline mb-0" style="color: #334155;">Roles de Sistema</h4>
+<<<<<<< HEAD
+                    @if (Context.IsAdmin())
+                    {
+                        <button onclick="abrirModalCrear('Roles')" class="btn btn-primary btn-sm"><i class="fa-solid fa-plus me-1"></i> Nuevo Rol</button>
+                    }
+=======
+                    <button onclick="abrirModalCrear('Roles')" class="btn btn-primary btn-sm"><i class="fa-solid fa-plus me-1"></i> Nuevo Rol</button>
+>>>>>>> 7af84dbc4060a8bbaa8bab50c489e93f45a0ceba
+                </div>
+                <div class="mb-3">
+                    <input type="text" id="buscarRol" class="form-control form-control-sm" placeholder="🔍 Buscar rol..." onkeyup="filtrarTabla('buscarRol', 'tablaRoles')">
+                </div>
+                <div class="table-responsive" style="max-height: 420px; overflow-y: auto;">
+                    <table class="table-modern" id="tablaRoles">
+                        <thead style="position: sticky; top: 0; background: white; z-index: 1;">
+                            <tr>
+                                <th># ID</th>
+                                <th>Nombre de Rol</th>
+                                <th>Descripción</th>
+<<<<<<< HEAD
+                                @if (Context.IsAdmin())
+                                {
+                                    <th class="text-end">Acciones</th>
+}
+=======
+                                <th class="text-end">Acciones</th>
+>>>>>>> 7af84dbc4060a8bbaa8bab50c489e93f45a0ceba
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var r in roles)
+                            {
+                                <tr>
+                                    <td class="text-muted">@r.IdRol</td>
+                                    <td class="fw-bold" style="color: #6366f1;">@r.Nombre</td>
+                                    <td class="text-muted small">@r.Descripcion</td>
+<<<<<<< HEAD
+                                    @if (Context.IsAdmin())
+                                    {
+                                        <td class="text-end">
+                                            <button onclick="abrirModalEditar('Roles', @r.IdRol)" class="btn btn-icon btn-outlined btn-sm" title="Editar"><i class="fa-solid fa-pen text-primary"></i></button>
+                                        </td>
+                                    }
+=======
+                                    <td class="text-end">
+                                        <button onclick="abrirModalEditar('Roles', @r.IdRol)" class="btn btn-icon btn-outlined btn-sm" title="Editar"><i class="fa-solid fa-pen text-primary"></i></button>
+                                    </td>
+>>>>>>> 7af84dbc4060a8bbaa8bab50c489e93f45a0ceba
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <!-- PESTAÑA 3: ESPECIES -->
+            <div class="tab-pane fade" id="especies" role="tabpanel">
+                <div class="d-flex justify-content-between align-items-center mb-3 border-bottom pb-2">
+                    <h4 class="headline mb-0" style="color: #334155;">Especies</h4>
+<<<<<<< HEAD
+                    @if (Context.IsAdmin())
+                    {
+                        <button onclick="abrirModalCrear('Especies')" class="btn btn-primary btn-sm"><i class="fa-solid fa-plus me-1"></i> Nueva Especie</button>
+                    }
+=======
+                    <button onclick="abrirModalCrear('Especies')" class="btn btn-primary btn-sm"><i class="fa-solid fa-plus me-1"></i> Nueva Especie</button>
+>>>>>>> 7af84dbc4060a8bbaa8bab50c489e93f45a0ceba
+                </div>
+                <div class="mb-3">
+                    <input type="text" id="buscarEspecie" class="form-control form-control-sm" placeholder="🔍 Buscar especie..." onkeyup="filtrarTabla('buscarEspecie', 'tablaEspecies')">
+                </div>
+                <div class="table-responsive" style="max-height: 420px; overflow-y: auto;">
+                    <table class="table-modern" id="tablaEspecies">
+                        <thead style="position: sticky; top: 0; background: white; z-index: 1;">
+                            <tr>
+                                <th># ID</th>
+                                <th>Especie</th>
+<<<<<<< HEAD
+                                @if (Context.IsAdmin())
+                                {
+                                    <th class="text-end">Acciones</th>
+}
+=======
+                                <th class="text-end">Acciones</th>
+>>>>>>> 7af84dbc4060a8bbaa8bab50c489e93f45a0ceba
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var e in especies)
+                            {
+                                <tr>
+                                    <td class="text-muted">@e.IdEspecie</td>
+                                    <td class="fw-bold">@e.Nombre</td>
+<<<<<<< HEAD
+                                    @if (Context.IsAdmin())
+                                    {
+                                        <td class="text-end">
+                                            <button onclick="abrirModalEditar('Especies', @e.IdEspecie)" class="btn btn-icon btn-outlined btn-sm" title="Editar"><i class="fa-solid fa-pen text-primary"></i></button>
+                                        </td>
+                                    }
+=======
+                                    <td class="text-end">
+                                        <button onclick="abrirModalEditar('Especies', @e.IdEspecie)" class="btn btn-icon btn-outlined btn-sm" title="Editar"><i class="fa-solid fa-pen text-primary"></i></button>
+                                    </td>
+>>>>>>> 7af84dbc4060a8bbaa8bab50c489e93f45a0ceba
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <!-- PESTAÑA 4: RAZAS -->
+            <div class="tab-pane fade" id="razas" role="tabpanel">
+                <div class="d-flex justify-content-between align-items-center mb-3 border-bottom pb-2">
+                    <h4 class="headline mb-0" style="color: #334155;">Razas Registradas</h4>
+<<<<<<< HEAD
+                    @if (Context.IsAdmin())
+                    {
+                        <button onclick="abrirModalCrear('Razas')" class="btn btn-primary btn-sm"><i class="fa-solid fa-plus me-1"></i> Nueva Raza</button>
+                    }
+=======
+                    <button onclick="abrirModalCrear('Razas')" class="btn btn-primary btn-sm"><i class="fa-solid fa-plus me-1"></i> Nueva Raza</button>
+>>>>>>> 7af84dbc4060a8bbaa8bab50c489e93f45a0ceba
+                </div>
+                <div class="mb-3">
+                    <input type="text" id="buscarRaza" class="form-control form-control-sm" placeholder="🔍 Buscar raza por nombre o especie..." onkeyup="filtrarTabla('buscarRaza', 'tablaRazas')">
+                </div>
+                <div class="table-responsive" style="max-height: 420px; overflow-y: auto;">
+                    <table class="table-modern" id="tablaRazas">
+                        <thead style="position: sticky; top: 0; background: white; z-index: 1;">
+                            <tr>
+                                <th># ID</th>
+                                <th>Raza</th>
+                                <th>Pertenece a</th>
+<<<<<<< HEAD
+                                @if (Context.IsAdmin())
+                                {
+                                    <th class="text-end">Acciones</th>
+}
+=======
+                                <th class="text-end">Acciones</th>
+>>>>>>> 7af84dbc4060a8bbaa8bab50c489e93f45a0ceba
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var r in razas)
+                            {
+                                <tr>
+                                    <td class="text-muted">@r.IdRaza</td>
+                                    <td class="fw-bold">@r.Nombre</td>
+<<<<<<< HEAD
+                                    <td><span class="badge bg-light border text-dark">@(r.Especies?.Nombre ?? "Sin Especie Asignada")</span></td>
+                                    @if (Context.IsAdmin())
+                                    {
+                                        <td class="text-end">
+                                            <button onclick="abrirModalEditar('Razas', @r.IdRaza)" class="btn btn-icon btn-outlined btn-sm" title="Editar"><i class="fa-solid fa-pen text-primary"></i></button>
+                                        </td>
+                                    }
+=======
+                                    <!-- NULL SAFETY IMPLEMENTADO AQUÍ -->
+                                    <td><span class="badge bg-light border text-dark">@(r.Especies?.Nombre ?? "Sin Especie Asignada")</span></td>
+                                    <td class="text-end">
+                                        <button onclick="abrirModalEditar('Razas', @r.IdRaza)" class="btn btn-icon btn-outlined btn-sm" title="Editar"><i class="fa-solid fa-pen text-primary"></i></button>
+                                    </td>
+>>>>>>> 7af84dbc4060a8bbaa8bab50c489e93f45a0ceba
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <!-- PESTAÑA 5: CATEGORÍAS COMERCIALES -->
+            <div class="tab-pane fade" id="categorias" role="tabpanel">
+                <div class="d-flex justify-content-between align-items-center mb-3 border-bottom pb-2">
+                    <h4 class="headline mb-0" style="color: #334155;">Categorías de Inventario</h4>
+<<<<<<< HEAD
+                    @if (Context.IsAdmin())
+                    {
+                        <button onclick="abrirModalCrear('Categorias')" class="btn btn-primary btn-sm"><i class="fa-solid fa-plus me-1"></i> Nueva Categoría</button>
+                    }
+=======
+                    <button onclick="abrirModalCrear('Categorias')" class="btn btn-primary btn-sm"><i class="fa-solid fa-plus me-1"></i> Nueva Categoría</button>
+>>>>>>> 7af84dbc4060a8bbaa8bab50c489e93f45a0ceba
+                </div>
+                <div class="mb-3">
+                    <input type="text" id="buscarCategoria" class="form-control form-control-sm" placeholder="🔍 Buscar categoría..." onkeyup="filtrarTabla('buscarCategoria', 'tablaCategorias')">
+                </div>
+                <div class="table-responsive" style="max-height: 420px; overflow-y: auto;">
+                    <table class="table-modern" id="tablaCategorias">
+                        <thead style="position: sticky; top: 0; background: white; z-index: 1;">
+                            <tr>
+                                <th># ID</th>
+                                <th>Categoría</th>
+                                <th>Tipo</th>
+<<<<<<< HEAD
+                                @if (Context.IsAdmin())
+                                {
+                                    <th class="text-end">Acciones</th>
+}
+=======
+                                <th class="text-end">Acciones</th>
+>>>>>>> 7af84dbc4060a8bbaa8bab50c489e93f45a0ceba
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var c in categorias)
+                            {
+                                <tr>
+                                    <td class="text-muted">@c.IdCategoria</td>
+                                    <td class="fw-bold">@c.Nombre</td>
+                                    <td>
+                                        @if (c.EsServicio == true)
+                                        {
+                                            <span class="badge" style="background-color: #e0e7ff; color: #4338ca;">Servicio Intangible</span>
+                                        }
+                                        else
+                                        {
+                                            <span class="badge" style="background-color: #d1fae5; color: #059669;">Producto Físico (Stock)</span>
+                                        }
+                                    </td>
+<<<<<<< HEAD
+                                    @if (Context.IsAdmin())
+                                    {
+                                        <td class="text-end">
+                                            <button onclick="abrirModalEditar('Categorias', @c.IdCategoria)" class="btn btn-icon btn-outlined btn-sm" title="Editar"><i class="fa-solid fa-pen text-primary"></i></button>
+                                        </td>
+                                    }
+=======
+                                    <td class="text-end">
+                                        <button onclick="abrirModalEditar('Categorias', @c.IdCategoria)" class="btn btn-icon btn-outlined btn-sm" title="Editar"><i class="fa-solid fa-pen text-primary"></i></button>
+                                    </td>
+>>>>>>> 7af84dbc4060a8bbaa8bab50c489e93f45a0ceba
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <!-- PESTAÑA 6: JAULAS -->
+            <div class="tab-pane fade" id="jaulas" role="tabpanel">
+                <div class="d-flex justify-content-between align-items-center mb-3 border-bottom pb-2">
+                    <h4 class="headline mb-0" style="color: #334155;">Catálogo de Jaulas</h4>
+<<<<<<< HEAD
+                    @if (Context.IsAdmin())
+                    {
+                        <button onclick="abrirModalCrear('Jaulas')" class="btn btn-primary btn-sm"><i class="fa-solid fa-plus me-1"></i> Nueva Jaula</button>
+                    }
+=======
+                    <button onclick="abrirModalCrear('Jaulas')" class="btn btn-primary btn-sm"><i class="fa-solid fa-plus me-1"></i> Nueva Jaula</button>
+>>>>>>> 7af84dbc4060a8bbaa8bab50c489e93f45a0ceba
+                </div>
+                <div class="mb-3">
+                    <input type="text" id="buscarJaula" class="form-control form-control-sm" placeholder="🔍 Buscar jaula por código o tamaño..." onkeyup="filtrarTabla('buscarJaula', 'tablaJaulas')">
+                </div>
+                <div class="table-responsive" style="max-height: 420px; overflow-y: auto;">
+                    <table class="table-modern" id="tablaJaulas">
+                        <thead style="position: sticky; top: 0; background: white; z-index: 1;">
+                            <tr>
+                                <th>Código</th>
+                                <th>Tamaño</th>
+                                <th>Estado Actual</th>
+<<<<<<< HEAD
+                                @if (Context.IsAdmin())
+                                {
+                                    <th class="text-end">Acciones</th>
+}
+=======
+                                <th class="text-end">Acciones</th>
+>>>>>>> 7af84dbc4060a8bbaa8bab50c489e93f45a0ceba
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var j in jaulas)
+                            {
+                                <tr>
+                                    <td class="fw-bold text-dark">@j.Codigo</td>
+                                    <td>@j.Tamano</td>
+                                    <td>
+                                        @if (j.Ocupada == true)
+                                        {
+                                            <span class="badge" style="background-color: #fee2e2; color: #b91c1c;">Ocupada</span>
+                                        }
+                                        else
+                                        {
+                                            <span class="badge" style="background-color: #ecfdf5; color: #047857;">Libre</span>
+                                        }
+                                    </td>
+<<<<<<< HEAD
+                                    @if (Context.IsAdmin())
+                                    {
+                                        <td class="text-end">
+                                            <button onclick="abrirModalEditar('Jaulas', @j.IdJaula)" class="btn btn-icon btn-outlined btn-sm" title="Editar"><i class="fa-solid fa-pen text-primary"></i></button>
+                                        </td>
+                                    }
+=======
+                                    <td class="text-end">
+                                        <button onclick="abrirModalEditar('Jaulas', @j.IdJaula)" class="btn btn-icon btn-outlined btn-sm" title="Editar"><i class="fa-solid fa-pen text-primary"></i></button>
+                                    </td>
+>>>>>>> 7af84dbc4060a8bbaa8bab50c489e93f45a0ceba
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+<!-- Contenedor dinámico donde se inyectarán los modales -->
+<div id="modal-container"></div>
+
+@section Scripts {
+    <script src="~/Scripts/vetcore-catalogos.js"></script>
+}

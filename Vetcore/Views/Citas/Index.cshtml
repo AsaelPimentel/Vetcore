@@ -1,10 +1,6 @@
 ﻿@{
     ViewBag.Title = "Agenda Clínica";
 }
-<<<<<<< HEAD
-=======
-
->>>>>>> 7af84dbc4060a8bbaa8bab50c489e93f45a0ceba
 <link href="https://cdn.jsdelivr.net/npm/fullcalendar@5.11.3/main.min.css" rel="stylesheet" />
 
 <!-- Encabezado Mejorado con Icono y Leyendas de Estado/Tipo -->
@@ -18,23 +14,13 @@
             <p class="body-text text-muted mb-0 small">Control centralizado de citas médicas, estéticas y procedimientos.</p>
         </div>
     </div>
-<<<<<<< HEAD
     <div class="d-flex flex-wrap align-items-center gap-2">
         <!-- Leyendas rápidas de referencia visual -->
-=======
-
-    <div class="d-flex flex-wrap align-items-center gap-2">
-        <!-- Leyendas rápidas de referencia visual (Ocultas en móviles para ganar espacio) -->
->>>>>>> 7af84dbc4060a8bbaa8bab50c489e93f45a0ceba
         <div class="d-none d-xl-flex align-items-center gap-2 me-2">
             <span class="badge bg-light text-dark border px-2 py-1 small"><i class="fa-solid fa-circle text-primary me-1" style="font-size: 8px;"></i> Médica</span>
             <span class="badge bg-light text-dark border px-2 py-1 small"><i class="fa-solid fa-circle text-success me-1" style="font-size: 8px;"></i> Estética</span>
             <span class="badge bg-light text-dark border px-2 py-1 small"><i class="fa-solid fa-circle text-warning me-1" style="font-size: 8px;"></i> Vacunación</span>
         </div>
-<<<<<<< HEAD
-=======
-
->>>>>>> 7af84dbc4060a8bbaa8bab50c489e93f45a0ceba
         <button onclick="abrirModalCreate(null)" class="btn btn-primary px-3 px-md-4 shadow-sm d-flex align-items-center gap-2 w-100 w-md-auto justify-content-center">
             <i class="fa-solid fa-plus"></i> <span>Agendar Cita</span>
         </button>
@@ -51,24 +37,11 @@
 @section Scripts {
     <script src="https://cdn.jsdelivr.net/npm/fullcalendar@5.11.3/main.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/fullcalendar@5.11.3/locales/es.js"></script>
-<<<<<<< HEAD
     <script>
         var calendar;
         document.addEventListener('DOMContentLoaded', function () {
             var calendarEl = document.getElementById('calendario-vetcore');
             var isMobile = window.innerWidth < 768;
-=======
-
-    <script>
-        var calendar;
-
-        document.addEventListener('DOMContentLoaded', function () {
-            var calendarEl = document.getElementById('calendario-vetcore');
-
-            // Detectar si estamos en pantalla móvil para ajustar la vista inicial
-            var isMobile = window.innerWidth < 768;
-
->>>>>>> 7af84dbc4060a8bbaa8bab50c489e93f45a0ceba
             calendar = new FullCalendar.Calendar(calendarEl, {
                 initialView: isMobile ? 'listWeek' : 'dayGridMonth',
                 locale: 'es',
@@ -77,10 +50,6 @@
                     center: 'title',
                     right: 'dayGridMonth,timeGridWeek,timeGridDay,listWeek'
                 },
-<<<<<<< HEAD
-=======
-                // Adaptar los textos de la barra de herramientas para ahorrar espacio en móviles
->>>>>>> 7af84dbc4060a8bbaa8bab50c489e93f45a0ceba
                 windowResize: function(arg) {
                     if (window.innerWidth < 768) {
                         calendar.changeView('listWeek');
@@ -94,24 +63,12 @@
                 height: 'auto',
                 contentHeight: isMobile ? 450 : 650,
                 aspectRatio: 1.35,
-<<<<<<< HEAD
                 dateClick: function (info) {
                     var hoy = new Date();
                     hoy.setHours(0, 0, 0, 0);
                     var fechaClic = info.date;
                     var soloFechaClic = new Date(fechaClic);
                     soloFechaClic.setHours(0, 0, 0, 0);
-=======
-
-                dateClick: function (info) {
-                    var hoy = new Date();
-                    hoy.setHours(0, 0, 0, 0);
-
-                    var fechaClic = info.date;
-                    var soloFechaClic = new Date(fechaClic);
-                    soloFechaClic.setHours(0, 0, 0, 0);
-
->>>>>>> 7af84dbc4060a8bbaa8bab50c489e93f45a0ceba
                     if (soloFechaClic < hoy) {
                         mostrarModalAlerta(
                             "Fecha no válida",
@@ -119,7 +76,6 @@
                         );
                         return;
                     }
-<<<<<<< HEAD
                     var anio = fechaClic.getFullYear();
                     var mes = String(fechaClic.getMonth() + 1).padStart(2, '0');
                     var dia = String(fechaClic.getDate()).padStart(2, '0');
@@ -128,37 +84,13 @@
                     var fechaFormateada = anio + '-' + mes + '-' + dia + 'T' + hora;
                     abrirModalCreate(fechaFormateada);
                 },
-=======
-
-                    var anio = fechaClic.getFullYear();
-                    var mes = String(fechaClic.getMonth() + 1).padStart(2, '0');
-                    var dia = String(fechaClic.getDate()).padStart(2, '0');
-
-                    var hora = (info.view.type === 'dayGridMonth') ? '09:00' :
-                        String(fechaClic.getHours()).padStart(2, '0') + ':' + String(fechaClic.getMinutes()).padStart(2, '0');
-
-                    var fechaFormateada = anio + '-' + mes + '-' + dia + 'T' + hora;
-                    abrirModalCreate(fechaFormateada);
-                },
-
->>>>>>> 7af84dbc4060a8bbaa8bab50c489e93f45a0ceba
                 eventClick: function(info) {
                     abrirModalDetails(info.event.id);
                 }
             });
-<<<<<<< HEAD
             calendar.render();
         });
 
-=======
-
-            calendar.render();
-        });
-
-        // ==========================================
-        // FUNCIONES MODALES Y ALERTAS
-        // ==========================================
->>>>>>> 7af84dbc4060a8bbaa8bab50c489e93f45a0ceba
         function mostrarModalAlerta(titulo, mensaje) {
             var htmlModal = `
                 <div class="modal fade" id="modalAlerta" tabindex="-1" aria-hidden="true">
@@ -175,10 +107,6 @@
                         </div>
                     </div>
                 </div>`;
-<<<<<<< HEAD
-=======
-
->>>>>>> 7af84dbc4060a8bbaa8bab50c489e93f45a0ceba
             $('#modal-container').html(htmlModal);
             var modalEl = new bootstrap.Modal(document.getElementById('modalAlerta'));
             modalEl.show();
@@ -187,10 +115,6 @@
         function abrirModalCreate(fecha) {
             var url = '@Url.Action("Create", "Citas")';
             if (fecha) url += '?fecha=' + fecha;
-<<<<<<< HEAD
-=======
-
->>>>>>> 7af84dbc4060a8bbaa8bab50c489e93f45a0ceba
             $.get(url, function (data) {
                 $('#modal-container').html(data);
                 $('#modalCita').modal('show');
@@ -220,12 +144,6 @@
             });
         }
 
-<<<<<<< HEAD
-=======
-        // ==========================================
-        // PROCESAMIENTO AJAX
-        // ==========================================
->>>>>>> 7af84dbc4060a8bbaa8bab50c489e93f45a0ceba
         $(document).ready(function () {$(document).on('click', '#btnGuardarCita', function () {
                 var form = $('#frmCreateCita');
                 if (form.valid()) {
@@ -267,13 +185,7 @@
             });
         });
     </script>
-<<<<<<< HEAD
     <style>
-=======
-
-    <style>
-        /* Estilos personalizados y adaptativos para FullCalendar */
->>>>>>> 7af84dbc4060a8bbaa8bab50c489e93f45a0ceba
         .fc-theme-standard th {
             font-family: var(--vc-font-body, inherit);
             background-color: #f8fafc;
@@ -320,10 +232,6 @@
             box-shadow: 0 1px 3px rgba(0,0,0,0.1);
         }
 
-<<<<<<< HEAD
-=======
-        /* Ajustes responsivos adicionales para pantallas muy pequeñas */
->>>>>>> 7af84dbc4060a8bbaa8bab50c489e93f45a0ceba
         @@media (max-width: 768px) {
             .fc-header-toolbar {
                 display: flex;
@@ -331,20 +239,14 @@
                 gap: 10px;
                 align-items: center;
             }
-<<<<<<< HEAD
 
-=======
->>>>>>> 7af84dbc4060a8bbaa8bab50c489e93f45a0ceba
             .fc-toolbar-chunk {
                 display: flex;
                 justify-content: center;
                 flex-wrap: wrap;
                 gap: 4px;
             }
-<<<<<<< HEAD
 
-=======
->>>>>>> 7af84dbc4060a8bbaa8bab50c489e93f45a0ceba
             .fc-toolbar-title {
                 font-size: 1.1rem !important;
             }

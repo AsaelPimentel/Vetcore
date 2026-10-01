@@ -6,10 +6,7 @@ using System.Web.Mvc;
 using Vetcore.Models;
 using Vetcore.Filters;
 using Vetcore.Services;
-<<<<<<< HEAD
 using Vetcore.Helpers; // Importante para acceder a RolesSistema
-=======
->>>>>>> 7af84dbc4060a8bbaa8bab50c489e93f45a0ceba
 
 namespace Vetcore.Controllers
 {
@@ -29,13 +26,8 @@ namespace Vetcore.Controllers
 
             var eventos = citas.Select(c => new {
                 id = c.IdCita,
-<<<<<<< HEAD
                 // CORRECCIÓN: Salto de línea seguro usando \n para evitar errores de compilación en C#
                 title = c.Mascotas != null ? $"{c.Mascotas.Nombre}\n{c.Tipo}" : c.Tipo,
-=======
-                // Corregido el salto de línea para evitar errores
-                title = c.Mascotas != null ? $"{c.Mascotas.Nombre} - {c.Tipo}" : c.Tipo,
->>>>>>> 7af84dbc4060a8bbaa8bab50c489e93f45a0ceba
                 start = c.FechaHora.ToString("yyyy-MM-ddTHH:mm:ss"),
                 description = c.Motivo,
                 veterinario = c.Empleados != null ? c.Empleados.Nombre : "Sin asignar",
@@ -150,12 +142,8 @@ namespace Vetcore.Controllers
             return PartialView("_EditModal", cita);
         }
 
-<<<<<<< HEAD
         // CORRECCIÓN: Uso de la constante fuertemente tipada en lugar de string "Administrador"
         [AuthorizeRol(RolesSistema.Admin)]
-=======
-        [AuthorizeRol("Administrador")]
->>>>>>> 7af84dbc4060a8bbaa8bab50c489e93f45a0ceba
         public async Task<ActionResult> Delete(int? id)
         {
             if (id == null) return new HttpStatusCodeResult(System.Net.HttpStatusCode.BadRequest);
@@ -169,11 +157,7 @@ namespace Vetcore.Controllers
 
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
-<<<<<<< HEAD
         [AuthorizeRol(RolesSistema.Admin)] // CORRECCIÓN
-=======
-        [AuthorizeRol("Administrador")]
->>>>>>> 7af84dbc4060a8bbaa8bab50c489e93f45a0ceba
         public async Task<ActionResult> DeleteConfirmed(int id)
         {
             await _citaService.EliminarCitaAsync(id);

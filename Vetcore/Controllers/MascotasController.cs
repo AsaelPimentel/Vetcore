@@ -25,11 +25,7 @@ namespace Vetcore.Controllers
             int totalPages = (int)Math.Ceiling((double)totalRecords / pageSize);
 
             var mascotasPaginated = mascotasList
-<<<<<<< HEAD
                 .Skip((page - 1) * pageSize) // CORRECCIÓN: Se arregló el error de sintaxis de (page1)
-=======
-                .Skip((page - 1) * pageSize) // Sintaxis corregida
->>>>>>> 7af84dbc4060a8bbaa8bab50c489e93f45a0ceba
                 .Take(pageSize)
                 .ToList();
 
@@ -140,20 +136,12 @@ namespace Vetcore.Controllers
 
             if (mascota != null)
             {
-<<<<<<< HEAD
                 // MIGRACIÓN A CLAIMS: Leemos la identidad cifrada de la sesión activa
                 int idEmpleadoActual = HttpContext.ObtenerIdEmpleado();
                 await AuditoriaService.RegistrarAccionAsync(
                     idEmpleadoActual,
                     "DESACTIVAR_PACIENTE",
                     $"Se desactivó (borrado lógico) al paciente: {mascota.Nombre} (ID de mascota: {id})"
-=======
-                int idEmpleadoActual = Session["IdEmpleado"] != null ? (int)Session["IdEmpleado"] : 1;
-                await AuditoriaService.RegistrarAccionAsync(
-                    idEmpleadoActual,
-                    "DESACTIVAR_PACIENTE",
-                    "Se desactivó (borrado lógico) al paciente: " + mascota.Nombre + " (ID de mascota: " + id + ")"
->>>>>>> 7af84dbc4060a8bbaa8bab50c489e93f45a0ceba
                 );
             }
 

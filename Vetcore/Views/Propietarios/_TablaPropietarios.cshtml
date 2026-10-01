@@ -19,10 +19,7 @@
                     <td colspan="5" class="text-center body-text py-4">No se encontraron clientes con esos parámetros.</td>
                 </tr>
             }
-<<<<<<< HEAD
 
-=======
->>>>>>> 7af84dbc4060a8bbaa8bab50c489e93f45a0ceba
             @foreach (var item in Model)
             {
                 <tr>
@@ -57,18 +54,10 @@
                         <button onclick="abrirModalEdit(@item.IdPropietario)" class="btn btn-icon btn-outlined" title="Editar">
                             <i class="fa-solid fa-pen text-primary"></i>
                         </button>
-<<<<<<< HEAD
-=======
-
->>>>>>> 7af84dbc4060a8bbaa8bab50c489e93f45a0ceba
                         <!-- Botón Expediente / Detalles -->
                         <button onclick="abrirModalDetails(@item.IdPropietario)" class="btn btn-icon btn-outlined" title="Expediente de Cliente">
                             <i class="fa-solid fa-folder-open text-secondary"></i>
                         </button>
-<<<<<<< HEAD
-=======
-
->>>>>>> 7af84dbc4060a8bbaa8bab50c489e93f45a0ceba
                         <!-- MIGRACIÓN A CLAIMS: Cambiamos Session.IsAdmin() por Context.IsAdmin() -->
                         @if (Context.IsAdmin())
                         {

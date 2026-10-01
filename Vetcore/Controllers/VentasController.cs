@@ -5,20 +5,13 @@ using System.Net;
 using System.Threading.Tasks;
 using System.Web.Mvc;
 using Vetcore.Filters;
-<<<<<<< HEAD
 using Vetcore.Helpers;
-=======
->>>>>>> 7af84dbc4060a8bbaa8bab50c489e93f45a0ceba
 using Vetcore.Models;
 using Vetcore.Services;
 
 namespace Vetcore.Controllers
 {
-<<<<<<< HEAD
     [Authorize] // Asegura que solo personal autenticado (con cookie válida) pueda operar el POS
-=======
-    [Authorize]
->>>>>>> 7af84dbc4060a8bbaa8bab50c489e93f45a0ceba
     public class VentasController : Controller
     {
         // Inyectamos todos los servicios que necesitamos
@@ -26,23 +19,12 @@ namespace Vetcore.Controllers
         private readonly ProductoService _productoService = new ProductoService();
         private readonly PropietarioService _propietarioService = new PropietarioService();
 
-<<<<<<< HEAD
         // ELIMINADO: Método ObtenerIdEmpleadoActual() que dependía de Session
 
         public async Task<ActionResult> Index()
         {
             // MIGRACIÓN A CLAIMS: Lectura segura de la cookie
             int idEmpleado = HttpContext.ObtenerIdEmpleado();
-=======
-        private int ObtenerIdEmpleadoActual()
-        {
-            return Session["IdEmpleado"] != null ? (int)Session["IdEmpleado"] : 1;
-        }
-
-        public async Task<ActionResult> Index()
-        {
-            int idEmpleado = ObtenerIdEmpleadoActual();
->>>>>>> 7af84dbc4060a8bbaa8bab50c489e93f45a0ceba
 
             var cajaAbierta = await _ventaService.ObtenerCajaAbiertaAsync(idEmpleado);
 
@@ -75,20 +57,12 @@ namespace Vetcore.Controllers
         }
 
         [HttpPost]
-<<<<<<< HEAD
         [ValidateAntiForgeryToken] // CORRECTO: Es un formulario tradicional HTML de 1 campo
-=======
-        [ValidateAntiForgeryToken]
->>>>>>> 7af84dbc4060a8bbaa8bab50c489e93f45a0ceba
         public async Task<ActionResult> AbrirCaja(decimal? MontoApertura)
         {
             try
             {
-<<<<<<< HEAD
                 int idEmpleado = HttpContext.ObtenerIdEmpleado();
-=======
-                int idEmpleado = ObtenerIdEmpleadoActual();
->>>>>>> 7af84dbc4060a8bbaa8bab50c489e93f45a0ceba
 
                 var cajaExistente = await _ventaService.ObtenerCajaAbiertaAsync(idEmpleado);
                 if (cajaExistente != null)
@@ -107,19 +81,12 @@ namespace Vetcore.Controllers
         }
 
         [HttpPost]
-<<<<<<< HEAD
         // ATENCIÓN: SIN ValidateAntiForgeryToken porque recibe JSON (application/json) desde JavaScript
-=======
->>>>>>> 7af84dbc4060a8bbaa8bab50c489e93f45a0ceba
         public async Task<ActionResult> ProcesarVenta(decimal subtotal, decimal total, string metodoPago, int? idPropietario, List<VentasDetalle> carrito)
         {
             try
             {
-<<<<<<< HEAD
                 int idEmpleado = HttpContext.ObtenerIdEmpleado();
-=======
-                int idEmpleado = ObtenerIdEmpleadoActual();
->>>>>>> 7af84dbc4060a8bbaa8bab50c489e93f45a0ceba
 
                 int idVentaGenerada = await _ventaService.ProcesarVentaCompletaAsync(idEmpleado, subtotal, total, metodoPago, idPropietario, carrito);
 
@@ -148,11 +115,7 @@ namespace Vetcore.Controllers
 
         public async Task<ActionResult> CorteCaja()
         {
-<<<<<<< HEAD
             int idEmpleado = HttpContext.ObtenerIdEmpleado();
-=======
-            int idEmpleado = ObtenerIdEmpleadoActual();
->>>>>>> 7af84dbc4060a8bbaa8bab50c489e93f45a0ceba
 
             var cajaAbierta = await _ventaService.ObtenerCajaAbiertaAsync(idEmpleado);
             if (cajaAbierta == null) return HttpNotFound();
@@ -176,11 +139,7 @@ namespace Vetcore.Controllers
         }
 
         [HttpPost]
-<<<<<<< HEAD
         [ValidateAntiForgeryToken] // CORRECTO: Es un formulario HTML con form.serialize()
-=======
-        [ValidateAntiForgeryToken]
->>>>>>> 7af84dbc4060a8bbaa8bab50c489e93f45a0ceba
         public async Task<ActionResult> CerrarCaja(int IdSesion, decimal MontoCierre)
         {
             try

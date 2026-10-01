@@ -1,11 +1,5 @@
-<<<<<<< HEAD
-﻿@using Vetcore.Helpers <!-- Importamos la clase de Roles y Extensiones seguras -->
+@using Vetcore.Helpers <!-- Importamos la clase de Roles y Extensiones seguras -->
 @model IEnumerable<Vetcore.Models.Jaulas>
-=======
-﻿@using Vetcore.Helpers <!-- Importamos la clase de Roles -->
-@model IEnumerable<Vetcore.Models.Jaulas>
-
->>>>>>> 7af84dbc4060a8bbaa8bab50c489e93f45a0ceba
 @{
     ViewBag.Title = "Tablero de Hospitalización";
     var activas = ViewBag.HospitalizacionesActivas as List<Vetcore.Models.Hospitalizaciones> ?? new List<Vetcore.Models.Hospitalizaciones>();
@@ -22,13 +16,8 @@
         </div>
     </div>
 
-<<<<<<< HEAD
     <!-- PROTECCIÓN DE ROL MIGRADA A CLAIMS: Solo Médico y Admin pueden ingresar pacientes nuevos -->
     @if (Context.IsMedicoOrAdmin())
-=======
-    <!-- PROTECCIÓN DE ROL: Solo Médico y Admin pueden ingresar pacientes nuevos -->
-    @if (Session["RolEmpleado"] != null && (Session["RolEmpleado"].ToString() == RolesSistema.Admin || Session["RolEmpleado"].ToString() == RolesSistema.Medico))
->>>>>>> 7af84dbc4060a8bbaa8bab50c489e93f45a0ceba
     {
         <div>
             <button onclick="abrirModalIngreso()" class="btn btn-primary px-4 shadow-sm d-flex align-items-center gap-2">
@@ -85,13 +74,8 @@
                         }
                         else
                         {
-<<<<<<< HEAD
                             <!-- PROTECCIÓN DE ROL MIGRADA A CLAIMS: Recepción no puede asignar jaulas -->
                             if (Context.IsMedicoOrAdmin())
-=======
-                            <!-- PROTECCIÓN DE ROL: Recepción no puede asignar jaulas -->
-                            if (Session["RolEmpleado"] != null && (Session["RolEmpleado"].ToString() == RolesSistema.Admin || Session["RolEmpleado"].ToString() == RolesSistema.Medico))
->>>>>>> 7af84dbc4060a8bbaa8bab50c489e93f45a0ceba
                             {
                                 <button onclick="abrirModalIngreso()" class="btn btn-light border w-100 fw-semibold text-secondary rounded-pill">
                                     Asignar Paciente

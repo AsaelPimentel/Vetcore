@@ -18,14 +18,7 @@ namespace Vetcore.Controllers
     {
         private readonly ProductoService _productoService = new ProductoService();
 
-<<<<<<< HEAD
         // ELIMINADO: Se borró ObtenerIdEmpleadoActual() dependiente de Session
-=======
-        private int ObtenerIdEmpleadoActual()
-        {
-            return Session["IdEmpleado"] != null ? (int)Session["IdEmpleado"] : 1;
-        }
->>>>>>> 7af84dbc4060a8bbaa8bab50c489e93f45a0ceba
 
         public async Task<ActionResult> Index(string search = "", int page = 1)
         {
@@ -74,12 +67,8 @@ namespace Vetcore.Controllers
             {
                 await _productoService.CrearProductoAsync(producto);
 
-<<<<<<< HEAD
                 // MIGRACIÓN A CLAIMS
                 int idEmpleado = HttpContext.ObtenerIdEmpleado();
-=======
-                int idEmpleado = ObtenerIdEmpleadoActual();
->>>>>>> 7af84dbc4060a8bbaa8bab50c489e93f45a0ceba
                 await AuditoriaService.RegistrarAccionAsync(
                     idEmpleado,
                     "CREAR_PRODUCTO",
@@ -98,12 +87,8 @@ namespace Vetcore.Controllers
             return PartialView("_CreateModal", producto);
         }
 
-<<<<<<< HEAD
         // CORRECCIÓN: Uso de constante en lugar de string quemado
         [AuthorizeRol(RolesSistema.Admin)]
-=======
-        [AuthorizeRol("Administrador")]
->>>>>>> 7af84dbc4060a8bbaa8bab50c489e93f45a0ceba
         public async Task<ActionResult> Edit(int? id)
         {
             if (id == null) return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
@@ -125,12 +110,8 @@ namespace Vetcore.Controllers
             {
                 await _productoService.ActualizarProductoAsync(producto);
 
-<<<<<<< HEAD
                 // MIGRACIÓN A CLAIMS
                 int idEmpleado = HttpContext.ObtenerIdEmpleado();
-=======
-                int idEmpleado = ObtenerIdEmpleadoActual();
->>>>>>> 7af84dbc4060a8bbaa8bab50c489e93f45a0ceba
                 await AuditoriaService.RegistrarAccionAsync(
                     idEmpleado,
                     "MODIFICAR_PRODUCTO",
@@ -145,11 +126,8 @@ namespace Vetcore.Controllers
             return PartialView("_EditModal", producto);
         }
 
-<<<<<<< HEAD
         // CORRECCIÓN: Protección de ruta financiera confidencial
         [AuthorizeRol(RolesSistema.Admin)]
-=======
->>>>>>> 7af84dbc4060a8bbaa8bab50c489e93f45a0ceba
         public async Task<ActionResult> ReporteInventario()
         {
             var productos = await _productoService.ObtenerInventarioCompletoAsync();
@@ -162,11 +140,8 @@ namespace Vetcore.Controllers
             return View(productos);
         }
 
-<<<<<<< HEAD
         // CORRECCIÓN: Protección de ruta financiera confidencial
         [AuthorizeRol(RolesSistema.Admin)]
-=======
->>>>>>> 7af84dbc4060a8bbaa8bab50c489e93f45a0ceba
         public async Task<ActionResult> ReporteInventarioImprimir()
         {
             var productos = await _productoService.ObtenerInventarioCompletoAsync();
@@ -179,12 +154,8 @@ namespace Vetcore.Controllers
             return PartialView("_ReporteInventarioPrint", productos);
         }
 
-<<<<<<< HEAD
         // CORRECCIÓN: Condición OR en roles (Admin O Medico)
         [AuthorizeRol(RolesSistema.Admin, RolesSistema.Medico)]
-=======
-        [AuthorizeRol(RolesSistema.Admin), AuthorizeRol(RolesSistema.Medico)]
->>>>>>> 7af84dbc4060a8bbaa8bab50c489e93f45a0ceba
         public async Task<ActionResult> AjusteInventario(int? id)
         {
             if (id == null) return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
@@ -219,19 +190,12 @@ namespace Vetcore.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-<<<<<<< HEAD
         // CORRECCIÓN: Condición OR en roles (Admin O Medico)
         [AuthorizeRol(RolesSistema.Admin, RolesSistema.Medico)]
         public async Task<ActionResult> AjusteInventario(KardexInventario modelo)
         {
             // MIGRACIÓN A CLAIMS
             int idEmpleadoSesion = HttpContext.ObtenerIdEmpleado();
-=======
-        [AuthorizeRol(RolesSistema.Admin), AuthorizeRol(RolesSistema.Medico)]
-        public async Task<ActionResult> AjusteInventario(KardexInventario modelo)
-        {
-            int idEmpleadoSesion = ObtenerIdEmpleadoActual();
->>>>>>> 7af84dbc4060a8bbaa8bab50c489e93f45a0ceba
 
             if (ModelState.IsValid)
             {
@@ -384,12 +348,8 @@ namespace Vetcore.Controllers
 
                 worksheet.Columns().AdjustToContents();
 
-<<<<<<< HEAD
                 // MIGRACIÓN A CLAIMS
                 int idAdmin = HttpContext.ObtenerIdEmpleado();
-=======
-                int idAdmin = ObtenerIdEmpleadoActual();
->>>>>>> 7af84dbc4060a8bbaa8bab50c489e93f45a0ceba
                 await AuditoriaService.RegistrarAccionAsync(
                     idAdmin,
                     "EXPORTAR_INVENTARIO_EXCEL",

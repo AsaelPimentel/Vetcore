@@ -22,13 +22,8 @@
 
             @foreach (var item in Model)
             {
-<<<<<<< HEAD
                 // MIGRACIÓN A CLAIMS: Obtenemos de forma segura el ID del empleado logueado actual
                 int idUsuarioEnSesion = Context.ObtenerIdEmpleado();
-=======
-                // Obtenemos el ID del empleado que está usando el sistema actualmente
-                int idUsuarioEnSesion = Session["IdEmpleado"] != null ? (int)Session["IdEmpleado"] : 0;
->>>>>>> 7af84dbc4060a8bbaa8bab50c489e93f45a0ceba
 
                 <tr>
                     <td>
@@ -74,13 +69,7 @@
                             <i class="fa-solid fa-pen text-primary"></i>
                         </button>
 
-<<<<<<< HEAD
                         <!-- SEGURIDAD MANTENIDA: El usuario en sesión no puede eliminarse a sí mismo y no se muestra si está inactivo -->
-=======
-                        <!-- MEJORA DE SEGURIDAD MANTENIDA: -->
-                        <!-- 1. El usuario en sesión NO puede eliminarse a sí mismo -->
-                        <!-- 2. No mostramos el botón eliminar si el empleado ya está Inactivo (borrado lógico) -->
->>>>>>> 7af84dbc4060a8bbaa8bab50c489e93f45a0ceba
                         @if (item.IdEmpleado != idUsuarioEnSesion && item.Activo == true)
                         {
                             <button onclick="abrirModalDelete(@item.IdEmpleado)" class="btn btn-icon btn-outlined" title="Eliminar / Desactivar">

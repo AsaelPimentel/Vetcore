@@ -1,10 +1,5 @@
-<<<<<<< HEAD
-﻿@using Vetcore.Helpers
+@using Vetcore.Helpers
 @model IEnumerable<Vetcore.Models.Productos>
-=======
-﻿@model IEnumerable<Vetcore.Models.Productos>
-
->>>>>>> 7af84dbc4060a8bbaa8bab50c489e93f45a0ceba
 @{
     ViewBag.Title = "Reporte de Inventario";
 }
@@ -20,39 +15,22 @@
             <p class="body-text text-muted mb-0 small">Estado actual de la farmacia, costos de inversión y proyecciones de venta.</p>
         </div>
     </div>
-<<<<<<< HEAD
     <!-- Botones de Acción Superior -->
-=======
-
-    <!-- Botones de Acción Superior -->
-    <!-- En el grupo de botones superiores de ReporteInventario.cshtml -->
->>>>>>> 7af84dbc4060a8bbaa8bab50c489e93f45a0ceba
     <div class="d-flex align-items-center gap-2">
         <a href="@Url.Action("Index", "Productos")" class="btn btn-light border px-3 shadow-sm d-flex align-items-center gap-2 text-secondary">
             <i class="fa-solid fa-arrow-left"></i> <span>Regresar a Inventario</span>
         </a>
-<<<<<<< HEAD
         @if (Context.IsAdmin())
-=======
-        @if (Session["RolEmpleado"] != null && Session["RolEmpleado"].ToString() == "Administrador")
->>>>>>> 7af84dbc4060a8bbaa8bab50c489e93f45a0ceba
         {
             <!-- Botón para Exportar a Excel -->
             <a href="@Url.Action("ExportarExcel", "Productos")" class="btn btn-success px-4 shadow-sm d-flex align-items-center gap-2 text-white fw-bold">
                 <i class="fa-solid fa-file-excel"></i> <span>Exportar a Excel</span>
             </a>
         }
-<<<<<<< HEAD
         <button type="button" onclick="window.open('@Url.Action("ReporteInventarioImprimir", "Productos")', '_blank')" class="btn btn-outlined px-4 shadow-sm d-flex align-items-center gap-2">
             <i class="fa-solid fa-print"></i> <span>Imprimir Reporte</span>
         </button>
     </div>
-=======
-            <button type="button" onclick="window.open('@Url.Action("ReporteInventarioImprimir", "Productos")', '_blank')" class="btn btn-outlined px-4 shadow-sm d-flex align-items-center gap-2">
-                <i class="fa-solid fa-print"></i> <span>Imprimir Reporte</span>
-            </button>
-        </div>
->>>>>>> 7af84dbc4060a8bbaa8bab50c489e93f45a0ceba
 </div>
 
 <!-- Tarjetas de Resumen -->
@@ -146,10 +124,6 @@
                             }
                         </td>
                         <td class="text-end">$@item.PrecioCosto.ToString("N2")</td>
-<<<<<<< HEAD
-=======
-
->>>>>>> 7af84dbc4060a8bbaa8bab50c489e93f45a0ceba
                         <!-- Cálculos protegidos: Si es servicio muestra "-", si es producto físico hace la multiplicación -->
                         <td class="text-end text-muted">
                             @(esServicio ? "-" : "$" + ((decimal)(stockDisponible * item.PrecioCosto)).ToString("N2"))
@@ -171,20 +145,12 @@
             $('#inputFiltroReporte').on('keyup', function () {
                 var valor = $(this).val().toLowerCase();
                 var visibles = 0;
-<<<<<<< HEAD
-=======
-
->>>>>>> 7af84dbc4060a8bbaa8bab50c489e93f45a0ceba
                 $('#tablaReporteInventario tbody tr.fila-producto').filter(function () {
                     var textoFila = $(this).data('search');
                     var coincide = textoFila.indexOf(valor) > -1;
                     $(this).toggle(coincide);
                     if (coincide) visibles++;
                 });
-<<<<<<< HEAD
-=======
-
->>>>>>> 7af84dbc4060a8bbaa8bab50c489e93f45a0ceba
                 $('#contadorVisibles').text(visibles);
             });
         });

@@ -13,14 +13,6 @@ namespace Vetcore.Controllers
     {
         private readonly CatalogoService _catalogoService = new CatalogoService();
 
-<<<<<<< HEAD
-=======
-        private int ObtenerIdEmpleadoActual()
-        {
-            return Session["IdEmpleado"] != null ? (int)Session["IdEmpleado"] : 1;
-        }
-
->>>>>>> 7af84dbc4060a8bbaa8bab50c489e93f45a0ceba
         public async Task<ActionResult> Index()
         {
             ViewBag.Puestos = await _catalogoService.ObtenerPuestosAsync();
@@ -78,12 +70,8 @@ namespace Vetcore.Controllers
                         return Json(new { success = false, message = "Entidad no válida." });
                 }
 
-<<<<<<< HEAD
                 // MIGRACIÓN A CLAIMS: Usar la extensión HttpContext en lugar de Session
                 int idAdmin = HttpContext.ObtenerIdEmpleado();
-=======
-                int idAdmin = ObtenerIdEmpleadoActual();
->>>>>>> 7af84dbc4060a8bbaa8bab50c489e93f45a0ceba
                 await AuditoriaService.RegistrarAccionAsync(
                     idAdmin,
                     "CREAR_CATALOGO",
@@ -147,12 +135,8 @@ namespace Vetcore.Controllers
                         return Json(new { success = false, message = "Entidad no válida." });
                 }
 
-<<<<<<< HEAD
                 // MIGRACIÓN A CLAIMS: Usar la extensión HttpContext en lugar de Session
                 int idAdmin = HttpContext.ObtenerIdEmpleado();
-=======
-                int idAdmin = ObtenerIdEmpleadoActual();
->>>>>>> 7af84dbc4060a8bbaa8bab50c489e93f45a0ceba
                 await AuditoriaService.RegistrarAccionAsync(
                     idAdmin,
                     "MODIFICAR_CATALOGO",

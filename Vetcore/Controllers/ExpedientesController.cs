@@ -12,12 +12,8 @@ using Vetcore.Services;
 
 namespace Vetcore.Controllers
 {
-<<<<<<< HEAD
     [Authorize] // Asegura que el usuario esté autenticado antes de evaluar los roles
     [AuthorizeRol(RolesSistema.Admin, RolesSistema.Medico)]
-=======
-    [AuthorizeRol(RolesSistema.Admin), AuthorizeRol(RolesSistema.Medico)]
->>>>>>> 7af84dbc4060a8bbaa8bab50c489e93f45a0ceba
     public class ExpedientesController : Controller
     {
         private readonly ExpedienteService _expedienteService = new ExpedienteService();
@@ -38,10 +34,6 @@ namespace Vetcore.Controllers
         }
 
         [HttpGet]
-<<<<<<< HEAD
-=======
-        [AuthorizeRol(RolesSistema.Admin), AuthorizeRol(RolesSistema.Medico)]
->>>>>>> 7af84dbc4060a8bbaa8bab50c489e93f45a0ceba
         public async Task<ActionResult> RegistrarConsulta(int idExpediente)
         {
             var consulta = new Consultas
@@ -58,10 +50,6 @@ namespace Vetcore.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-<<<<<<< HEAD
-=======
-        [AuthorizeRol(RolesSistema.Admin), AuthorizeRol(RolesSistema.Medico)]
->>>>>>> 7af84dbc4060a8bbaa8bab50c489e93f45a0ceba
         public async Task<ActionResult> RegistrarConsulta(Consultas consulta, HttpPostedFileBase EstudioFile)
         {
             ModelState.Remove("Sintomas");
@@ -73,7 +61,6 @@ namespace Vetcore.Controllers
             {
                 try
                 {
-<<<<<<< HEAD
                     // MIGRACIÓN A CLAIMS: Obtenemos el ID del empleado usando la extensión
                     consulta.IdEmpleado = HttpContext.ObtenerIdEmpleado();
 
@@ -88,25 +75,12 @@ namespace Vetcore.Controllers
                             return Json(new { success = false, message = "Formato de archivo no permitido. Solo se aceptan imágenes o PDF." });
                         }
 
-=======
-                    if (Session["IdEmpleado"] != null)
-                    {
-                        consulta.IdEmpleado = (int)Session["IdEmpleado"];
-                    }
-
-                    if (EstudioFile != null && EstudioFile.ContentLength > 0)
-                    {
->>>>>>> 7af84dbc4060a8bbaa8bab50c489e93f45a0ceba
                         string folderPath = Server.MapPath("~/Content/Estudios");
                         if (!Directory.Exists(folderPath))
                         {
                             Directory.CreateDirectory(folderPath);
                         }
 
-<<<<<<< HEAD
-=======
-                        string extension = Path.GetExtension(EstudioFile.FileName);
->>>>>>> 7af84dbc4060a8bbaa8bab50c489e93f45a0ceba
                         string fileName = Guid.NewGuid().ToString() + extension;
                         string path = Path.Combine(folderPath, fileName);
 
@@ -151,10 +125,6 @@ namespace Vetcore.Controllers
             return View(consulta);
         }
 
-<<<<<<< HEAD
-=======
-        [AuthorizeRol(RolesSistema.Admin), AuthorizeRol(RolesSistema.Medico)]
->>>>>>> 7af84dbc4060a8bbaa8bab50c489e93f45a0ceba
         public async Task<ActionResult> EditarConsulta(int? id)
         {
             if (id == null) return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
@@ -175,10 +145,6 @@ namespace Vetcore.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-<<<<<<< HEAD
-=======
-        [AuthorizeRol(RolesSistema.Admin), AuthorizeRol(RolesSistema.Medico)]
->>>>>>> 7af84dbc4060a8bbaa8bab50c489e93f45a0ceba
         public async Task<ActionResult> EditarConsulta(Consultas modelo)
         {
             ModelState.Remove("Sintomas");

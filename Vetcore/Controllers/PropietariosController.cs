@@ -27,11 +27,7 @@ namespace Vetcore.Controllers
             int totalPages = (int)Math.Ceiling((double)totalRecords / pageSize);
 
             var propietariosPaginated = propietariosList
-<<<<<<< HEAD
                 .Skip((page - 1) * pageSize) // CORRECCIÓN: Error de compilación en el cálculo de paginación
-=======
-                .Skip((page - 1) * pageSize)
->>>>>>> 7af84dbc4060a8bbaa8bab50c489e93f45a0ceba
                 .Take(pageSize)
                 .ToList();
 
@@ -122,20 +118,12 @@ namespace Vetcore.Controllers
                 // Procedemos a eliminar
                 await _propietarioService.EliminarPropietarioAsync(id);
 
-<<<<<<< HEAD
                 // MIGRACIÓN A CLAIMS: Leer ID del empleado autenticado de forma segura
                 int idEmpleadoActual = HttpContext.ObtenerIdEmpleado();
                 await AuditoriaService.RegistrarAccionAsync(
                     idEmpleadoActual,
                     "ELIMINAR_CLIENTE",
                     $"Se eliminó permanentemente al cliente: {nombreCliente} (ID: {id})"
-=======
-                int idEmpleadoActual = Session["IdEmpleado"] != null ? (int)Session["IdEmpleado"] : 1;
-                await AuditoriaService.RegistrarAccionAsync(
-                    idEmpleadoActual,
-                    "ELIMINAR_CLIENTE",
-                    "Se eliminó permanentemente al cliente: " + nombreCliente + " (ID: " + id + ")"
->>>>>>> 7af84dbc4060a8bbaa8bab50c489e93f45a0ceba
                 );
             }
             return Json(new { success = true });

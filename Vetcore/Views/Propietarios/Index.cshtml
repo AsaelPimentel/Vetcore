@@ -1,8 +1,4 @@
 ﻿@model IEnumerable<Vetcore.Models.Propietarios>
-<<<<<<< HEAD
-=======
-
->>>>>>> 7af84dbc4060a8bbaa8bab50c489e93f45a0ceba
 @{
     ViewBag.Title = "Directorio de Propietarios";
 }
@@ -18,10 +14,6 @@
             <p class="body-text text-muted mb-0 small">Gestión integral de propietarios y dueños de mascotas registrados.</p>
         </div>
     </div>
-<<<<<<< HEAD
-=======
-
->>>>>>> 7af84dbc4060a8bbaa8bab50c489e93f45a0ceba
     <!-- Botón que abre el modal de Crear -->
     <div>
         <button onclick="abrirModalCreate()" class="btn btn-primary px-4 shadow-sm d-flex align-items-center gap-2">
@@ -55,10 +47,7 @@
         // ==========================================
         // 1. FUNCIONES GLOBALES (Modales y Tabla)
         // ==========================================
-<<<<<<< HEAD
 
-=======
->>>>>>> 7af84dbc4060a8bbaa8bab50c489e93f45a0ceba
         function loadTable(search, page) {
             $('#table-container').css('opacity', '0.5');
             $.ajax({
@@ -107,10 +96,6 @@
         // 2. EVENTOS DEL DOCUMENTO
         // ==========================================
         $(document).ready(function () {
-<<<<<<< HEAD
-=======
-
->>>>>>> 7af84dbc4060a8bbaa8bab50c489e93f45a0ceba
             // --- Búsqueda y Paginación ---
             let timeout = null;
             $('#searchInput').on('keyup', function () {
@@ -143,10 +128,6 @@
                                 if (modal) modal.hide();
                                 $('.modal-backdrop').remove();
                                 $('body').removeClass('modal-open');
-<<<<<<< HEAD
-=======
-
->>>>>>> 7af84dbc4060a8bbaa8bab50c489e93f45a0ceba
                                 loadTable($('#searchInput').val(), 1);
                             } else {
                                 $('#modal-container').html(response);
@@ -168,10 +149,6 @@
                             if (modal) modal.hide();
                             $('.modal-backdrop').remove();
                             $('body').removeClass('modal-open');
-<<<<<<< HEAD
-=======
-
->>>>>>> 7af84dbc4060a8bbaa8bab50c489e93f45a0ceba
                             loadTable($('#searchInput').val(), 1);
                         } else {
                             $('#modal-container').html(response);
@@ -191,18 +168,10 @@
                         if (modal) modal.hide();
                         $('.modal-backdrop').remove();
                         $('body').removeClass('modal-open');
-<<<<<<< HEAD
-=======
-
->>>>>>> 7af84dbc4060a8bbaa8bab50c489e93f45a0ceba
                         loadTable($('#searchInput').val(), 1);
                     }
                 });
             });
-<<<<<<< HEAD
-=======
-
->>>>>>> 7af84dbc4060a8bbaa8bab50c489e93f45a0ceba
         });
     </script>
 }

@@ -1,9 +1,5 @@
-<<<<<<< HEAD
-﻿@using Vetcore.Helpers
+@using Vetcore.Helpers
 @model IEnumerable<Vetcore.Models.Citas>
-=======
-﻿@model IEnumerable<Vetcore.Models.Citas>
->>>>>>> 7af84dbc4060a8bbaa8bab50c489e93f45a0ceba
 @{
     ViewBag.Title = "Dashboard";
 }
@@ -30,10 +26,7 @@
             </div>
         </div>
     </div>
-<<<<<<< HEAD
 
-=======
->>>>>>> 7af84dbc4060a8bbaa8bab50c489e93f45a0ceba
     <!-- Tarjeta: Pacientes Totales -->
     <div class="col-md-4">
         <div class="card-modern p-4 d-flex align-items-center gap-3 shadow-sm" style="border-left: 4px solid #10b981;">
@@ -46,10 +39,7 @@
             </div>
         </div>
     </div>
-<<<<<<< HEAD
 
-=======
->>>>>>> 7af84dbc4060a8bbaa8bab50c489e93f45a0ceba
     <!-- Tarjeta: Clientes Totales -->
     <div class="col-md-4">
         <div class="card-modern p-4 d-flex align-items-center gap-3 shadow-sm" style="border-left: 4px solid #8b5cf6;">
@@ -64,7 +54,6 @@
     </div>
 </div>
 
-<<<<<<< HEAD
 <!-- 2. WIDGET DE ALERTAS DE STOCK BAJO (MIGRACIÓN A CLAIMS) -->
 @if (Context.IsMedicoOrAdmin())
 {
@@ -124,68 +113,10 @@
 }
 
 <!-- 3. TABLA DE PRÓXIMAS CITAS (Visible para todos) -->
-=======
-<!-- 2. WIDGET DE ALERTAS DE STOCK BAJO (NUEVO) -->
-<div class="card-modern shadow-sm mb-4">
-    <div class="p-4 border-bottom d-flex justify-content-between align-items-center bg-white" style="border-radius: 12px 12px 0 0;">
-        <div>
-            <h4 class="headline mb-1" style="font-size: 1.15rem; color: #b91c1c;"><i class="fa-solid fa-triangle-exclamation me-2"></i> Alertas de Stock en Farmacia</h4>
-            <p class="body-text small text-muted mb-0">Productos que han alcanzado o caído por debajo de su stock mínimo permitido.</p>
-        </div>
-        <a href="@Url.Action("Index", "Productos")" class="btn btn-outlined btn-sm">Ir a Inventario <i class="fa-solid fa-arrow-right ms-1"></i></a>
-    </div>
-    <div class="table-responsive">
-        <table class="table-modern align-middle mb-0">
-            <thead>
-                <tr>
-                    <th class="ps-4">Producto</th>
-                    <th>Categoría</th>
-                    <th class="text-center">Stock Actual</th>
-                    <th class="text-center">Stock Mínimo</th>
-                    <th class="text-end pe-4">Acción</th>
-                </tr>
-            </thead>
-            <tbody>
-                @{
-                    var stockBajoList = ViewBag.ProductosStockBajoLista as List<Vetcore.Models.Productos>;
-                }
-                @if (stockBajoList == null || !stockBajoList.Any())
-                {
-                    <tr>
-                        <td colspan="5" class="text-center py-4 text-muted">
-                            <i class="fa-solid fa-circle-check text-success fs-3 mb-2 d-block"></i>
-                            Excelente. No hay productos con stock bajo en este momento.
-                        </td>
-                    </tr>
-                }
-                else
-                {
-                    foreach (var prod in stockBajoList)
-                    {
-                        <tr>
-                            <td class="ps-4 fw-bold text-dark">@prod.Nombre</td>
-                            <td><span class="badge bg-light text-dark border">@(prod.Categorias != null ? prod.Categorias.Nombre : "General")</span></td>
-                            <td class="text-center fw-bold text-danger">@prod.StockActual</td>
-                            <td class="text-center text-muted">@prod.StockMinimo</td>
-                            <td class="text-end pe-4">
-                                <a href="@Url.Action("Index", "Productos", new { search = prod.Nombre })" class="btn btn-sm btn-outline-primary">
-                                    <i class="fa-solid fa-box-open me-1"></i> Surtir
-                                </a>
-                            </td>
-                        </tr>
-                    }
-                }
-            </tbody>
-        </table>
-    </div>
-</div>
-
-<!-- 3. TABLA DE PRÓXIMAS CITAS -->
->>>>>>> 7af84dbc4060a8bbaa8bab50c489e93f45a0ceba
 <div class="card-modern shadow-sm">
     <div class="p-4 border-bottom d-flex justify-content-between align-items-center bg-white" style="border-radius: 12px 12px 0 0;">
         <div>
-            <h4 class="headline mb-1" style="font-size: 1.15rem;"><i class="fa-regular fa-clock text-primary me-2"></i> Próximos en ser atendidos</h4>
+            <h4 class="headline mb-1" style="font-size: 1.15rem;"><i class="fa-regular fa-clock text-primary me-2"></i> Proximos en ser atendidos</h4>
             <p class="body-text small text-muted mb-0">Citas programadas para las próximas horas del día de hoy.</p>
         </div>
         <a href="@Url.Action("Index", "Citas")" class="btn btn-outlined btn-sm">Ver Calendario Completo <i class="fa-solid fa-arrow-right ms-1"></i></a>

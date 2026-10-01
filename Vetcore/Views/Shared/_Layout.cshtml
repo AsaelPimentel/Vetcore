@@ -244,10 +244,6 @@
                 </li>
 
                 <!-- Opciones restringidas por Rol: Personal Médico (Solo Administrador) -->
-<<<<<<< HEAD
-=======
-                <!-- MEJORA APLICADA: Uso de Context.IsAdmin() con Claims -->
->>>>>>> 7af84dbc4060a8bbaa8bab50c489e93f45a0ceba
                 @if (Context.IsAdmin())
                 {
                     <li>
@@ -264,10 +260,6 @@
                 </li>
 
                 <!-- Hospitalización visible para Administradores y Médicos Veterinarios -->
-<<<<<<< HEAD
-=======
-                <!-- MEJORA APLICADA: Uso de Context.IsMedicoOrAdmin() con Claims -->
->>>>>>> 7af84dbc4060a8bbaa8bab50c489e93f45a0ceba
                 @if (Context.IsMedicoOrAdmin())
                 {
                     <li>
@@ -289,10 +281,6 @@
                 </li>
 
                 <!-- SECCIÓN: CONFIGURACIÓN (Estrictamente Administrador) -->
-<<<<<<< HEAD
-=======
-                <!-- MEJORA APLICADA: Uso de Context.IsAdmin() con Claims -->
->>>>>>> 7af84dbc4060a8bbaa8bab50c489e93f45a0ceba
                 @if (Context.IsAdmin())
                 {
                     <li>
@@ -318,11 +306,7 @@
                     <i class="fa-solid fa-bars"></i>
                 </button>
 
-<<<<<<< HEAD
                 <!-- Perfil del Usuario Logueado con Iniciales Dinámicas -->
-=======
-                <!-- Perfil del Usuario Logueado con Iniciales Dinámicas (Modificado para Claims) -->
->>>>>>> 7af84dbc4060a8bbaa8bab50c489e93f45a0ceba
                 <div class="d-flex align-items-center gap-3">
                     <div class="text-end d-none d-md-block">
                         <div class="fw-bold text-dark" style="font-size: 0.9rem;">

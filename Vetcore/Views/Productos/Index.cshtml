@@ -15,38 +15,20 @@
             <p class="body-text text-muted mb-0 small">Control integral de stock, medicamentos, alimentos y suministros de la clínica.</p>
         </div>
     </div>
-<<<<<<< HEAD
     <!-- Grupo de Botones de Acción y Reportes -->
     <div class="d-flex flex-wrap align-items-center gap-2">
         <!-- PROTECCIÓN TOTAL: Reportes financieros, Bitácora y Creación son EXCLUSIVOS del Admin -->
         @if (Context.IsAdmin())
-=======
-
-    <!-- Grupo de Botones de Acción y Reportes -->
-    <div class="d-flex flex-wrap align-items-center gap-2">
-
-        <!-- PROTECCIÓN TOTAL: Reportes financieros, Bitácora y Creación son EXCLUSIVOS del Admin -->
-        @if (Session["RolEmpleado"] != null && Session["RolEmpleado"].ToString() == RolesSistema.Admin)
->>>>>>> 7af84dbc4060a8bbaa8bab50c489e93f45a0ceba
         {
             <!-- Enlace al Reporte de Valorización (Contiene costos financieros privados) -->
             <a href="@Url.Action("ReporteInventario", "Productos")" class="btn btn-light border px-3 shadow-sm d-flex align-items-center gap-2 text-secondary">
                 <i class="fa-solid fa-file-invoice-dollar text-primary"></i> <span>Reporte Stock</span>
             </a>
-<<<<<<< HEAD
-=======
-
->>>>>>> 7af84dbc4060a8bbaa8bab50c489e93f45a0ceba
             <!-- Enlace a la Bitácora de Kardex -->
             <a href="@Url.Action("KardexHistorial", "Productos")" class="btn btn-light border px-3 shadow-sm d-flex align-items-center gap-2 text-secondary">
                 <i class="fa-solid fa-clock-rotate-left text-secondary"></i> <span>Bitácora Kardex</span>
             </a>
-<<<<<<< HEAD
             <!-- Botón para Nuevo Producto -->
-=======
-
-            <!-- Botón para Nuevo Producto (Corregido para que no se escape del if) -->
->>>>>>> 7af84dbc4060a8bbaa8bab50c489e93f45a0ceba
             <button onclick="abrirModalCreate()" class="btn btn-primary px-4 shadow-sm d-flex align-items-center gap-2">
                 <i class="fa-solid fa-plus"></i> <span>Nuevo Producto</span>
             </button>
@@ -76,10 +58,6 @@
 
 @section Scripts {
     @Scripts.Render("~/bundles/jqueryval")
-<<<<<<< HEAD
-=======
-
->>>>>>> 7af84dbc4060a8bbaa8bab50c489e93f45a0ceba
     <script>
         // ==========================================
         // 1. FUNCIONES PARA ABRIR MODALES Y CARGAR TABLA
@@ -121,10 +99,6 @@
         // 2. EVENTOS DEL DOCUMENTO (Buscador y Loader Unificado)
         // ==========================================
         $(document).ready(function () {
-<<<<<<< HEAD
-=======
-
->>>>>>> 7af84dbc4060a8bbaa8bab50c489e93f45a0ceba
             // Búsqueda Dinámica con Retraso (Debounce)
             let timeout = null;
             $('#searchInput').on('keyup', function () {
@@ -135,11 +109,7 @@
                 }, 400);
             });
 
-<<<<<<< HEAD
             // Paginación AJAX
-=======
-            // Paginación vía AJAX
->>>>>>> 7af84dbc4060a8bbaa8bab50c489e93f45a0ceba
             $(document).on('click', '.page-link-ajax', function (e) {
                 e.preventDefault();
                 var page = $(this).data('page');
@@ -150,10 +120,6 @@
             // Motor Genérico de Guardado (con Loader visual)
             $(document).on('submit', '#frmCreateProducto, #frmEditProducto, #frmAjusteInventario', function (e) {
                 e.preventDefault();
-<<<<<<< HEAD
-=======
-
->>>>>>> 7af84dbc4060a8bbaa8bab50c489e93f45a0ceba
                 var $form = $(this);
                 var formId = $form.attr('id');
                 var $btn = $form.find('button[type="submit"]');
@@ -176,18 +142,10 @@
                         if (response.success) {
                             // Éxito: Palomita verde y cierre
                             $btn.removeClass('btn-primary').addClass('btn-success').html('<i class="fa-solid fa-check"></i> ¡Guardado!');
-<<<<<<< HEAD
-=======
-
->>>>>>> 7af84dbc4060a8bbaa8bab50c489e93f45a0ceba
                             setTimeout(function() {
                                 $('.modal').modal('hide');
                                 $('.modal-backdrop').remove();
                                 $('body').removeClass('modal-open');
-<<<<<<< HEAD
-=======
-
->>>>>>> 7af84dbc4060a8bbaa8bab50c489e93f45a0ceba
                                 // Recarga solo la tabla, manteniendo el valor de la búsqueda actual
                                 loadTable($('#searchInput').val(), 1);
                             }, 500);
@@ -202,10 +160,6 @@
                     }
                 });
             });
-<<<<<<< HEAD
-=======
-
->>>>>>> 7af84dbc4060a8bbaa8bab50c489e93f45a0ceba
         });
     </script>
 }

@@ -33,10 +33,7 @@
                     bool esServicio = item.StockActual == null;
                     int stockDisponible = esServicio ? 0 : item.StockActual.Value;
                     int stockMinimo = item.StockMinimo ?? 0;
-<<<<<<< HEAD
 
-=======
->>>>>>> 7af84dbc4060a8bbaa8bab50c489e93f45a0ceba
                     <tr>
                         <td class="ps-4">
                             <div class="fw-bold text-dark" style="font-size: 0.95rem;">@item.Nombre</div>
@@ -110,13 +107,8 @@
                                 </button>
                             }
 
-<<<<<<< HEAD
                             <!-- AJUSTE / MERMA: Administrador y Médico (Corrección de rol según tu controlador) -->
                             @if (Context.IsMedicoOrAdmin())
-=======
-                            <!-- AJUSTE / MERMA: Administrador y Médico. MIGRACIÓN A CLAIMS -->
-                            @if (Context.IsAdmin())
->>>>>>> 7af84dbc4060a8bbaa8bab50c489e93f45a0ceba
                             {
                                 if (!esServicio)
                                 {

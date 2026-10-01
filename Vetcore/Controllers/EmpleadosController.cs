@@ -15,14 +15,7 @@ namespace Vetcore.Controllers
     {
         private readonly EmpleadoService _empleadoService = new EmpleadoService();
 
-<<<<<<< HEAD
         // ELIMINADO: Se borró el método ObtenerIdEmpleadoActual() que dependía de Session
-=======
-        private int ObtenerIdEmpleadoActual()
-        {
-            return Session["IdEmpleado"] != null ? (int)Session["IdEmpleado"] : 1;
-        }
->>>>>>> 7af84dbc4060a8bbaa8bab50c489e93f45a0ceba
 
         public async Task<ActionResult> Index(string search = "", int page = 1)
         {
@@ -69,12 +62,8 @@ namespace Vetcore.Controllers
             {
                 await _empleadoService.CrearEmpleadoYUsuarioAsync(empleado, Username, PasswordHash, IdRol);
 
-<<<<<<< HEAD
                 // MIGRACIÓN A CLAIMS: Usamos HttpContext en lugar de Session
                 int idAdmin = HttpContext.ObtenerIdEmpleado();
-=======
-                int idAdmin = ObtenerIdEmpleadoActual();
->>>>>>> 7af84dbc4060a8bbaa8bab50c489e93f45a0ceba
                 await AuditoriaService.RegistrarAccionAsync(
                     idAdmin,
                     "REGISTRAR_EMPLEADO",
@@ -119,12 +108,8 @@ namespace Vetcore.Controllers
             {
                 await _empleadoService.ActualizarEmpleadoYUsuarioAsync(empleado, Username, PasswordHash, IdRol);
 
-<<<<<<< HEAD
                 // MIGRACIÓN A CLAIMS
                 int idAdmin = HttpContext.ObtenerIdEmpleado();
-=======
-                int idAdmin = ObtenerIdEmpleadoActual();
->>>>>>> 7af84dbc4060a8bbaa8bab50c489e93f45a0ceba
                 await AuditoriaService.RegistrarAccionAsync(
                     idAdmin,
                     "MODIFICAR_EMPLEADO",
@@ -173,12 +158,8 @@ namespace Vetcore.Controllers
             {
                 string nombreCompleto = $"{empleadoEliminado.Nombre} {empleadoEliminado.Apellidos}";
 
-<<<<<<< HEAD
                 // MIGRACIÓN A CLAIMS
                 int idAdmin = HttpContext.ObtenerIdEmpleado();
-=======
-                int idAdmin = ObtenerIdEmpleadoActual();
->>>>>>> 7af84dbc4060a8bbaa8bab50c489e93f45a0ceba
                 await AuditoriaService.RegistrarAccionAsync(
                     idAdmin,
                     "ELIMINAR_EMPLEADO",

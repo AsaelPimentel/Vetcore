@@ -8,24 +8,13 @@ using Vetcore.Services;
 
 namespace Vetcore.Controllers
 {
-<<<<<<< HEAD
     [Authorize] // Buena práctica: Asegura que haya una sesión activa (Claims) antes de verificar el rol
     [AuthorizeRol(RolesSistema.Admin, RolesSistema.Medico)]
-=======
-    [AuthorizeRol(RolesSistema.Admin), AuthorizeRol(RolesSistema.Medico)]
->>>>>>> 7af84dbc4060a8bbaa8bab50c489e93f45a0ceba
     public class HospitalizacionController : Controller
     {
         private readonly HospitalizacionService _hospitalizacionService = new HospitalizacionService();
 
-<<<<<<< HEAD
         // ELIMINADO: Se borró el método ObtenerIdEmpleadoActual() que dependía de Session
-=======
-        private int ObtenerIdEmpleadoActual()
-        {
-            return Session["IdEmpleado"] != null ? (int)Session["IdEmpleado"] : 1;
-        }
->>>>>>> 7af84dbc4060a8bbaa8bab50c489e93f45a0ceba
 
         public async Task<ActionResult> Index()
         {
@@ -53,12 +42,8 @@ namespace Vetcore.Controllers
         {
             if (ModelState.IsValid)
             {
-<<<<<<< HEAD
                 // MIGRACIÓN A CLAIMS: Usamos la extensión HttpContext para leer la cookie segura
                 modelo.IdEmpleado = HttpContext.ObtenerIdEmpleado();
-=======
-                modelo.IdEmpleado = ObtenerIdEmpleadoActual();
->>>>>>> 7af84dbc4060a8bbaa8bab50c489e93f45a0ceba
 
                 await _hospitalizacionService.IngresarPacienteAsync(modelo);
 
@@ -95,12 +80,8 @@ namespace Vetcore.Controllers
         {
             try
             {
-<<<<<<< HEAD
                 // MIGRACIÓN A CLAIMS: Registramos la nota a nombre de quien tiene la sesión
                 int idEmpleadoActual = HttpContext.ObtenerIdEmpleado();
-=======
-                int idEmpleadoActual = ObtenerIdEmpleadoActual();
->>>>>>> 7af84dbc4060a8bbaa8bab50c489e93f45a0ceba
 
                 bool resultado = await _hospitalizacionService.AgregarNotaYConsumoAsync(
                     IdHospitalizacion,
@@ -127,12 +108,8 @@ namespace Vetcore.Controllers
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> DarAlta(int IdHospitalizacion, string DiagnosticoSalida)
         {
-<<<<<<< HEAD
             // MIGRACIÓN A CLAIMS: Leemos el ID del empleado desde el ticket cifrado
             int idEmpleadoActual = HttpContext.ObtenerIdEmpleado();
-=======
-            int idEmpleadoActual = ObtenerIdEmpleadoActual();
->>>>>>> 7af84dbc4060a8bbaa8bab50c489e93f45a0ceba
 
             bool resultado = await _hospitalizacionService.DarAltaAsync(IdHospitalizacion, DiagnosticoSalida, idEmpleadoActual);
 

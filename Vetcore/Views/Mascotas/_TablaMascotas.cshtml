@@ -65,29 +65,17 @@
                         <button onclick="abrirModalEdit(@item.IdMascota)" class="btn btn-icon btn-outlined" title="Editar Paciente">
                             <i class="fa-solid fa-pen text-primary"></i>
                         </button>
-<<<<<<< HEAD
-=======
-
->>>>>>> 7af84dbc4060a8bbaa8bab50c489e93f45a0ceba
                         <!-- Resumen general -->
                         <button onclick="abrirModalDetails(@item.IdMascota)" class="btn btn-icon btn-outlined" title="Resumen del Paciente">
                             <i class="fa-solid fa-notes-medical text-secondary"></i>
                         </button>
-<<<<<<< HEAD
-=======
-
->>>>>>> 7af84dbc4060a8bbaa8bab50c489e93f45a0ceba
                         <!-- EXPEDIENTE CLÍNICO: Visible para TODOS.
                              La recepcionista lo verá en modo lectura, el Médico/Admin podrán agregar consultas. -->
                         <button onclick="location.href='@Url.Action("Historial", "Expedientes", new { id = item.IdMascota })'" class="btn btn-icon btn-outlined" title="Ver Expediente Médico">
                             <i class="fa-solid fa-folder-open" style="color: var(--vc-primary);"></i>
                         </button>
 
-<<<<<<< HEAD
                         <!-- ELIMINAR: ESTRICTAMENTE ADMINISTRADOR. MIGRACIÓN A CLAIMS VALIDADA -->
-=======
-                        <!-- ELIMINAR: ESTRICTAMENTE ADMINISTRADOR. MIGRACIÓN A CLAIMS -->
->>>>>>> 7af84dbc4060a8bbaa8bab50c489e93f45a0ceba
                         @if (Context.IsAdmin())
                         {
                             <button onclick="abrirModalDelete(@item.IdMascota)" class="btn btn-icon btn-outlined" title="Eliminar">

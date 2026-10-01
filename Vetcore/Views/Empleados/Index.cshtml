@@ -1,8 +1,4 @@
 ﻿@model IEnumerable<Vetcore.Models.Empleados>
-<<<<<<< HEAD
-=======
-
->>>>>>> 7af84dbc4060a8bbaa8bab50c489e93f45a0ceba
 @{
     ViewBag.Title = "Personal de la Clínica";
 }
@@ -18,10 +14,6 @@
             <p class="body-text text-muted mb-0 small">Gestión integral de médicos veterinarios, estilistas y personal administrativo.</p>
         </div>
     </div>
-<<<<<<< HEAD
-=======
-
->>>>>>> 7af84dbc4060a8bbaa8bab50c489e93f45a0ceba
     <!-- Botón que abre el modal de Crear -->
     <div>
         <button onclick="abrirModalCreate()" class="btn btn-primary px-4 shadow-sm d-flex align-items-center gap-2">
@@ -40,10 +32,6 @@
             </div>
         </div>
     </div>
-<<<<<<< HEAD
-=======
-
->>>>>>> 7af84dbc4060a8bbaa8bab50c489e93f45a0ceba
     <div id="table-container">
         @Html.Partial("_TablaEmpleados", Model)
     </div>
@@ -117,15 +105,8 @@
                         var myModalEl = document.getElementById('modalCreateEmpleado');
                         var modal = bootstrap.Modal.getInstance(myModalEl);
                         if (modal) modal.hide();
-<<<<<<< HEAD
                         $('.modal-backdrop').remove();
                         $('body').removeClass('modal-open');
-=======
-
-                        $('.modal-backdrop').remove();
-                        $('body').removeClass('modal-open');
-
->>>>>>> 7af84dbc4060a8bbaa8bab50c489e93f45a0ceba
                         loadTable($('#searchInput').val(), 1);
                     } else {
                         $('#modal-container').html(response);
@@ -142,15 +123,8 @@
                         var myModalEl = document.getElementById('modalEditEmpleado');
                         var modal = bootstrap.Modal.getInstance(myModalEl);
                         if (modal) modal.hide();
-<<<<<<< HEAD
                         $('.modal-backdrop').remove();
                         $('body').removeClass('modal-open');
-=======
-
-                        $('.modal-backdrop').remove();
-                        $('body').removeClass('modal-open');
-
->>>>>>> 7af84dbc4060a8bbaa8bab50c489e93f45a0ceba
                         loadTable($('#searchInput').val(), 1);
                     } else {
                         $('#modal-container').html(response);
@@ -167,15 +141,8 @@
                         var myModalEl = document.getElementById('modalDeleteEmpleado');
                         var modal = bootstrap.Modal.getInstance(myModalEl);
                         if (modal) modal.hide();
-<<<<<<< HEAD
                         $('.modal-backdrop').remove();
                         $('body').removeClass('modal-open');
-=======
-
-                        $('.modal-backdrop').remove();
-                        $('body').removeClass('modal-open');
-
->>>>>>> 7af84dbc4060a8bbaa8bab50c489e93f45a0ceba
                         loadTable($('#searchInput').val(), 1);
                     }
                 });

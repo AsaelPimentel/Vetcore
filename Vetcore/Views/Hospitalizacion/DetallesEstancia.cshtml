@@ -158,10 +158,11 @@
 
             $.post('@Url.Action("AgregarNotaOConsumo", "Hospitalizacion")', form.serialize(), function (response) {
                 if (response.success) {
-                    location.reload();
+                    window.location.href = '@Url.Action("Index", "Hospitalizacion")';
                 } else {
-                    alert("Error: " + response.message);
-                    btn.html('<i class="fa-solid fa-plus me-1"></i> Registrar Nota / Cargo').prop('disabled', false);
+                    // CAMBIO DE ALERT A SWAL
+                    Swal.fire('Error', 'No se pudo procesar el alta del paciente.', 'error');
+                    btn.html('Confirmar Alta y Liberar Jaula').prop('disabled', false);
                 }
             });
         });

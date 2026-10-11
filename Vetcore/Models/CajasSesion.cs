@@ -18,6 +18,8 @@ namespace Vetcore.Models
         public CajasSesion()
         {
             this.Ventas = new HashSet<Ventas>();
+            this.GastosOperativos = new HashSet<GastosOperativos>();
+            this.PagosRecibidos = new HashSet<PagosRecibidos>();
         }
     
         public int IdSesion { get; set; }
@@ -31,5 +33,9 @@ namespace Vetcore.Models
         public virtual Empleados Empleados { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Ventas> Ventas { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<GastosOperativos> GastosOperativos { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<PagosRecibidos> PagosRecibidos { get; set; }
     }
 }

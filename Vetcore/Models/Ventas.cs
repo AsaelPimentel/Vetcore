@@ -18,6 +18,7 @@ namespace Vetcore.Models
         public Ventas()
         {
             this.VentasDetalle = new HashSet<VentasDetalle>();
+            this.CuentasPorCobrar = new HashSet<CuentasPorCobrar>();
         }
     
         public int IdVenta { get; set; }
@@ -33,5 +34,7 @@ namespace Vetcore.Models
         public virtual Propietarios Propietarios { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<VentasDetalle> VentasDetalle { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<CuentasPorCobrar> CuentasPorCobrar { get; set; }
     }
 }

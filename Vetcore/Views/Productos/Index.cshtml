@@ -154,9 +154,15 @@
                             $form.closest('.modal-body').html(response);
                         }
                     },
+                    // CÁMBIALO POR ESTO:
                     error: function () {
-                        alert("Ocurrió un error de conexión con el servidor.");
-                        $btn.html(textoOriginal).prop('disabled', false); // Restaurar botón
+                        Swal.fire({
+                            icon: 'error',
+                            title: 'Error de conexión',
+                            text: 'No se pudo comunicar con el servidor.',
+                            confirmButtonColor: '#ef4444'
+                        });
+                        $btn.html(textoOriginal).prop('disabled', false);
                     }
                 });
             });

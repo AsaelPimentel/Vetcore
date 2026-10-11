@@ -27,6 +27,9 @@ namespace Vetcore.Models
             this.HospitalizacionNotas = new HashSet<HospitalizacionNotas>();
             this.Hospitalizaciones = new HashSet<Hospitalizaciones>();
             this.AuditoriaLogs = new HashSet<AuditoriaLogs>();
+            this.GastosOperativos = new HashSet<GastosOperativos>();
+            this.PagosEmitidos = new HashSet<PagosEmitidos>();
+            this.PagosRecibidos = new HashSet<PagosRecibidos>();
         }
     
         public int IdEmpleado { get; set; }
@@ -58,5 +61,11 @@ namespace Vetcore.Models
         public virtual ICollection<Hospitalizaciones> Hospitalizaciones { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<AuditoriaLogs> AuditoriaLogs { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<GastosOperativos> GastosOperativos { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<PagosEmitidos> PagosEmitidos { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<PagosRecibidos> PagosRecibidos { get; set; }
     }
 }

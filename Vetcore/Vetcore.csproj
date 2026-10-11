@@ -201,10 +201,19 @@
     <Compile Include="Models\Categorias.cs">
       <DependentUpon>VetCoreModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\CategoriasGasto.cs">
+      <DependentUpon>VetCoreModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\Citas.cs">
       <DependentUpon>VetCoreModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\Consultas.cs">
+      <DependentUpon>VetCoreModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\CuentasPorCobrar.cs">
+      <DependentUpon>VetCoreModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\CuentasPorPagar.cs">
       <DependentUpon>VetCoreModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\Empleados.cs">
@@ -217,6 +226,9 @@
       <DependentUpon>VetCoreModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\Expedientes.cs">
+      <DependentUpon>VetCoreModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\GastosOperativos.cs">
       <DependentUpon>VetCoreModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\Hospitalizaciones.cs">
@@ -234,10 +246,19 @@
     <Compile Include="Models\Mascotas.cs">
       <DependentUpon>VetCoreModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\PagosEmitidos.cs">
+      <DependentUpon>VetCoreModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\PagosRecibidos.cs">
+      <DependentUpon>VetCoreModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\Productos.cs">
       <DependentUpon>VetCoreModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\Propietarios.cs">
+      <DependentUpon>VetCoreModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Proveedores.cs">
       <DependentUpon>VetCoreModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\Puestos.cs">

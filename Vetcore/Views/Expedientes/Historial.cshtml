@@ -220,7 +220,7 @@
                 $('#modalConsulta').modal('show');
             })
             .fail(function () {
-                alert("Error al cargar el formulario.");
+                Swal.fire('¡Ups!', 'Error al cargar la información solicitada.', 'error');
             });
         }
 
@@ -249,7 +249,7 @@
                     }
                 },
                 error: function () {
-                    alert("Error de conexión al guardar.");
+                    Swal.fire('¡Ups!', 'Error de conexión al guardar.', 'error');
                     btn.html('<i class="fa-solid fa-save me-1"></i> Guardar Consulta').prop('disabled', false);
                 }
             });
@@ -262,8 +262,8 @@
                 $('#modal-container').html(data);
                 $('#modalEditarConsulta').modal('show');
             })
-            .fail(function () {
-                alert("Error al cargar la consulta.");
+                .fail(function() {
+                    Swal.fire('¡Ups!', 'Error al cargar la consulta.', 'error');
             });
         }
 

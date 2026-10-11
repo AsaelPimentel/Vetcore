@@ -18,3 +18,56 @@ select,
 textarea {
     max-width: 280px;
 }
+/* ==========================================
+   AJUSTES DE RESPONSIVIDAD MÓVIL (UX)
+   ========================================== */
+
+/* Forzar que todas las tablas tengan scroll horizontal automático en móviles */
+.table-responsive {
+    display: block;
+    width: 100%;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch; /* Scroll suave en iOS */
+}
+
+/* Evitar que los encabezados de las tablas se aplasten */
+.table-modern th, .table-modern td {
+    white-space: nowrap;
+}
+
+    /* En celdas con mucho texto (como observaciones), permitimos el salto de línea */
+    .table-modern td.text-wrap {
+        white-space: normal !important;
+        min-width: 200px;
+    }
+
+/* Ajustes específicos para el POS (Punto de Venta) en móviles */
+@media (max-width: 768px) {
+    .pos-container {
+        height: auto !important; /* Quita la altura fija en móviles para poder scrollear verticalmente */
+        display: flex;
+        flex-direction: column;
+    }
+
+    /* El carrito toma su propia altura en el celular */
+    #listaCarrito {
+        min-height: 250px;
+        max-height: 400px;
+    }
+
+    /* Reducir el tamaño de los iconos del mosaico en móviles */
+    .item-mosaico i.fa-2x {
+        font-size: 1.5em;
+    }
+}
+
+/* Ajuste para Modales en celulares (que no queden pegados a los bordes) */
+@media (max-width: 576px) {
+    .modal-dialog {
+        margin: 0.5rem;
+    }
+
+    .modal-content {
+        border-radius: 12px !important;
+    }
+}

@@ -48,5 +48,12 @@ namespace Vetcore.Models
         public virtual DbSet<HospitalizacionNotas> HospitalizacionNotas { get; set; }
         public virtual DbSet<Hospitalizaciones> Hospitalizaciones { get; set; }
         public virtual DbSet<AuditoriaLogs> AuditoriaLogs { get; set; }
+        public virtual DbSet<CategoriasGasto> CategoriasGasto { get; set; }
+        public virtual DbSet<CuentasPorCobrar> CuentasPorCobrar { get; set; }
+        public virtual DbSet<CuentasPorPagar> CuentasPorPagar { get; set; }
+        public virtual DbSet<GastosOperativos> GastosOperativos { get; set; }
+        public virtual DbSet<PagosEmitidos> PagosEmitidos { get; set; }
+        public virtual DbSet<PagosRecibidos> PagosRecibidos { get; set; }
+        public virtual DbSet<Proveedores> Proveedores { get; set; }
     }
 }
